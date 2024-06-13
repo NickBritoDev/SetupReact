@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <QueryClientProvider client={new QueryClient}>
+    <QueryClientProvider client={new QueryClient()}>
       <ChakraProvider>
         <Router>
           <App />
