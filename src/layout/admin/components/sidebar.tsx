@@ -7,7 +7,7 @@ import {
   DrawerBody,
   DrawerOverlay,
   DrawerContent,
-  Box
+  Box,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { RiMenuFold4Fill, RiMenuUnfold2Fill } from "react-icons/ri";
