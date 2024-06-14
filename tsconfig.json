@@ -17,6 +17,38 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
+    // "paths": {
+    //   "@/*": [
+    //     "./src/*"
+    //   ],
+    //   "@/api/*": [
+    //     "./src/api/*"
+    //   ],
+    //   "@/components/*": [
+    //     "./src/components/*"
+    //   ],
+    //   "@/helpers/*": [
+    //     "./src/helpers/*"
+    //   ],
+    //   "@/layout/admin/*": [
+    //     "./src/layout/admin/*"
+    //   ],
+    //   "@/layout/public/*": [
+    //     "./src/layout/public/*"
+    //   ],
+    //   "@/pages/*": [
+    //     "./src/pages/*"
+    //   ],
+    //   "@/themes/*": [
+    //     "./src/themes/*"
+    //   ],
+    //   "@/context/*": [
+    //     "./src/context/*"
+    //   ],
+    //   "@/utils/*": [
+    //     "./src/utils/*"
+    //   ]
+    // },
   },
   "include": ["src"],
   "references": [

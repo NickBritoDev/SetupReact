@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import SidebarComponent from "./sidebar";
 import { MdLogout } from "react-icons/md";
+import { useMobile } from "../../../helpers/responsividade/useMediaQuery";
 
 export default function NavbarComponent() {
   return (
@@ -37,6 +38,7 @@ export default function NavbarComponent() {
             />
 
             <Flex
+              display={useMobile() ? "none" : "flex"}
               flexDir={"column"}
               alignItems={"flex-start"}
               justifyContent={"center"}
