@@ -1,10 +1,12 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
+import NavbarComponent from "./components/navbar";
+import { Box } from "@chakra-ui/react";
 
 export default function LayoutAdmin() {
   return (
-    <React.Fragment>
+    <Box w={'100%'} overflowX={"hidden"}>
+      <NavbarComponent/>
       <Outlet />
-    </React.Fragment>
+    </Box>
   );
 }
