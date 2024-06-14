@@ -4,8 +4,8 @@ import { Box } from "@chakra-ui/react";
 
 export default function LayoutAdmin() {
   return (
-    <Box w={'100%'} overflowX={"hidden"}>
-      <NavbarComponent/>
+    <Box w={"100%"} overflowX={"hidden"}>
+      <NavbarComponent />
       <Outlet />
     </Box>
   );

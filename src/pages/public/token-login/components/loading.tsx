@@ -6,5 +6,5 @@ export default function LoadingComponent() {
       <Heading>Carregando Configurações...</Heading>
       <Spinner size={"lg"} />
     </Flex>
-  )
+  );
 }
