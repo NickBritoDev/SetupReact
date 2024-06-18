@@ -1,7 +1,7 @@
 {
   "name": "setup-react",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "commit": "git-cz",
-    "release": "standard-version",
+    "release": "standard-version && git push --follow-tags origin main",
     "add": "npm run format && npm run check && git pull origin HEAD && git add .  && npm run commit && git push origin HEAD"
   },
   "dependencies": {
@@ -31,8 +31,6 @@
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^12.0.1",
     "@types/js-cookie": "^3.0.6",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -42,7 +40,6 @@
     "globals": "^15.4.0",
     "husky": "^9.0.11",
     "prettier": "^3.3.2",
-    "semantic-release": "^24.0.0",
     "standard-version": "^9.5.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
