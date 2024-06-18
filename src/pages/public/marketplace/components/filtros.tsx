@@ -4,10 +4,8 @@ import {
   Flex,
   Stack,
   Text,
+  Tooltip,
   useDisclosure,
-} from "@chakra-ui/react";
-import { useRef, useState } from "react";
-import {
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -16,6 +14,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 import { FcClearFilters, FcFilledFilter } from "react-icons/fc";
 import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import ferramentasData from "../../../../json/marketplace/data.json";
@@ -30,6 +29,7 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
     "Ativos",
     "Expirados",
   ]);
+
   const [selectedGrupos, setSelectedGrupos] = useState([
     "Sem grupo de confiança",
     "Com grupo de confiança",
@@ -62,30 +62,34 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
 
   return (
     <>
-      <Button
-        ref={btnRef}
-        onClick={onOpen}
-        _hover={{ backgroundColor: "green", color: "white" }}
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        gap={2}
-      >
-        <Text display={useMobile() ? "none" : ""}>Filtros</Text>
-        <FcFilledFilter size={22} />
-      </Button>
+      <Tooltip placement="left" hasArrow label={"Criar filtros"}>
+        <Button
+          ref={btnRef}
+          onClick={onOpen}
+          _hover={{ backgroundColor: "green", color: "white" }}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          gap={2}
+        >
+          <Text display={useMobile() ? "none" : ""}>Filtros</Text>
+          <FcFilledFilter size={22} />
+        </Button>
+      </Tooltip>
 
-      <Button
-        _hover={{ backgroundColor: "red", color: "white" }}
-        display={showLimparFiltros ? "flex" : "none"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        gap={2}
-        onClick={handleClearFilters}
-      >
-        <Text display={useMobile() ? "none" : ""}>Limpar filtros</Text>
-        <FcClearFilters size={22} />
-      </Button>
+      <Tooltip placement="left" hasArrow label={"Apagar filtros"}>
+        <Button
+          _hover={{ backgroundColor: "red", color: "white" }}
+          display={showLimparFiltros ? "flex" : "none"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          gap={2}
+          onClick={handleClearFilters}
+        >
+          <Text display={useMobile() ? "none" : ""}>Limpar filtros</Text>
+          <FcClearFilters size={22} />
+        </Button>
+      </Tooltip>
 
       <Drawer
         isOpen={isOpen}

@@ -12,6 +12,7 @@ import {
   MenuList,
   Text,
   Grid,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { BsThreeDots } from "react-icons/bs";
@@ -94,15 +95,23 @@ export default function CardsComponent({ filters }: FiltrosType) {
                 {card.ativo ? "Ativo" : "Inativo"}
               </Badge>
               <Menu>
-                <MenuButton
-                  top={-2}
-                  right={-6}
-                  pos={"absolute"}
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<BsThreeDots size={22} />}
-                  variant="unstyled"
-                />
+                <Tooltip
+                  mb={-4}
+                  ml={-4}
+                  placement="top"
+                  hasArrow
+                  label={"Exibir opções"}
+                >
+                  <MenuButton
+                    top={-2}
+                    right={-6}
+                    pos={"absolute"}
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<BsThreeDots size={22} />}
+                    variant="unstyled"
+                  />
+                </Tooltip>
                 <MenuList mt={-4}>
                   <MenuItem>Solicitar cancelamento</MenuItem>
                   <MenuItem>Solicitar renovação</MenuItem>
