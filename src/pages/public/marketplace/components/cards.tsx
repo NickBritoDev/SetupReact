@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Avatar,
   AvatarGroup,
@@ -22,6 +23,7 @@ import chatbot from "../images/chatbot.png";
 import confirmacaowpp from "../images/confirmacaowpp.png";
 import disparador from "../images/disparador.png";
 import ferramentasData from "../../../../json/marketplace/data.json";
+import { FiltrosType } from "../types/types";
 
 const bannerImages: Record<string, string> = {
   simuladorProposta,
@@ -30,14 +32,44 @@ const bannerImages: Record<string, string> = {
   disparador,
 };
 
-export default function CardsComponent() {
+export default function CardsComponent({ filters }: FiltrosType) {
+  const [filteredData, setFilteredData] = useState(ferramentasData);
+
+  useEffect(() => {
+    let newFilteredData = ferramentasData;
+
+    if (filters.ferramentas.length > 0) {
+      newFilteredData = newFilteredData.filter((f) =>
+        filters.ferramentas.includes(f.ferramenta),
+      );
+    }
+    if (filters.status.length > 0) {
+      newFilteredData = newFilteredData.filter((f) => {
+        const status = f.ativo ? "Ativos" : "Inativos";
+        return filters.status.includes(status);
+      });
+    }
+    if (filters.grupos.length > 0) {
+      newFilteredData = newFilteredData.filter((f) => {
+        const grupo =
+          f.grupo.length > 0
+            ? "Com grupo de confiança"
+            : "Sem grupo de confiança";
+        return filters.grupos.includes(grupo);
+      });
+    }
+
+    setFilteredData(newFilteredData);
+  }, [filters]);
+
   return (
     <Grid
       templateColumns={useMobile() ? "repeat(1, 1fr)" : "repeat(4, 1fr)"}
       gap={6}
     >
-      {ferramentasData.map((card, index) => (
+      {filteredData.map((card, index) => (
         <Flex
+          mt={-4}
           key={index}
           boxShadow={"lg"}
           p={4}

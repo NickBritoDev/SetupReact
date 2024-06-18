@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.1.2](https://github.com/NickBritoDev/SetupReact/compare/v0.1.1...v0.1.2) (2024-06-18)
 
-
 ### Features
 
-* **modal ferramenta:** inicio do modal de interaçãoda ferramenta ainda sem funcionalidades internas ([97df602](https://github.com/NickBritoDev/SetupReact/commit/97df602186308b2d86d492042db8b4619cc9eeba))
+- **modal ferramenta:** inicio do modal de interaçãoda ferramenta ainda sem funcionalidades internas ([97df602](https://github.com/NickBritoDev/SetupReact/commit/97df602186308b2d86d492042db8b4619cc9eeba))
 
 ### [0.1.1](https://github.com/NickBritoDev/SetupReact/compare/v0.1.0...v0.1.1) (2024-06-18)
 
