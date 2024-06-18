@@ -1,0 +1,91 @@
+[
+  {
+    "ferramenta": "Simulador",
+    "foto": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL7rqz8ic1a_VrB6RflA2i39AKcJtvEAwwhg&s",
+    "banner": "simuladorProposta",
+    "descricao": "Software de comunicação interna entre colaboradores, com diversar ferramentas",
+    "ativo": false,
+    "grupo": []
+  },
+  {
+    "ferramenta": "Chatbot",
+    "foto": "https://img.freepik.com/vetores-gratis/letra-colorida-um-design-de-logotipo-gradiente_474888-2309.jpg",
+    "banner": "chatbot",
+    "descricao": "Software de comunicação interna entre colaboradores, com diversar ferramentas",
+    "ativo": true,
+    "grupo": [
+      {
+        "nome": "Nicolas Brito da Cruz",
+        "foto": "https://bit.ly/ryan-florence",
+        "idUsuario": 6810,
+        "ativo": true
+      },
+      {
+        "nome": "Caio Emidio Daniel",
+        "foto": "https://bit.ly/sage-adebayo",
+        "idUsuario": 5776,
+        "ativo": true
+      },
+      {
+        "nome": "Danillo Raimundo",
+        "foto": "https://bit.ly/kent-c-dodds",
+        "idUsuario": 6810,
+        "ativo": true
+      }
+    ]
+  },
+  {
+    "ferramenta": "Disparador de Vagas",
+    "foto": "https://img.freepik.com/vetores-premium/elemento-de-design-de-lindo-beija-flor-de-vetor-livre-para-banners-cartazes-folhetos-e-folhetos_1009653-1.jpg",
+    "banner": "disparador",
+    "descricao": "Software de comunicação interna entre colaboradores, com diversar ferramentas",
+    "ativo": true,
+    "grupo": [
+      {
+        "nome": "Nicolas Brito da Cruz",
+        "foto": "https://bit.ly/ryan-florence",
+        "idUsuario": 6810,
+        "ativo": true
+      },
+      {
+        "nome": "Caio Emidio Daniel",
+        "foto": "https://bit.ly/sage-adebayo",
+        "idUsuario": 5776,
+        "ativo": true
+      },
+      {
+        "nome": "Danillo Raimundo",
+        "foto": "https://bit.ly/kent-c-dodds",
+        "idUsuario": 6810,
+        "ativo": true
+      }
+    ]
+  },
+  {
+    "ferramenta": "Confirmação de Propostas",
+    "foto": "https://png.pngtree.com/png-vector/20190225/ourmid/pngtree-circuit-logo-template-vector-png-image_704226.jpg",
+    "banner": "confirmacaowpp",
+    "descricao": "Software de comunicação interna entre colaboradores, com diversar ferramentas",
+    "ativo": true,
+    "grupo": [
+      {
+        "nome": "Nicolas Brito da Cruz",
+        "foto": "https://bit.ly/ryan-florence",
+        "idUsuario": 6810,
+        "ativo": true
+      },
+      {
+        "nome": "Caio Emidio Daniel",
+        "foto": "https://bit.ly/sage-adebayo",
+        "idUsuario": 5776,
+        "ativo": true
+      },
+      {
+        "nome": "Danillo Raimundo",
+        "foto": "https://bit.ly/kent-c-dodds",
+        "idUsuario": 6810,
+        "ativo": true
+      }
+    ]
+  }
+]

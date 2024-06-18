@@ -17,98 +17,18 @@ import { BsThreeDots } from "react-icons/bs";
 import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import logo from "../images/logo.png";
 import ModalComponent from "./modal";
+import simuladorProposta from "../images/simuladorProposta.png";
+import chatbot from "../images/chatbot.png";
+import confirmacaowpp from "../images/confirmacaowpp.png";
+import disparador from "../images/disparador.png";
+import ferramentasData from "../../../../json/marketplace/data.json";
 
-const ferramentas = [
-  {
-    ferramenta: "Simulador",
-    foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL7rqz8ic1a_VrB6RflA2i39AKcJtvEAwwhg&s",
-    descricao:
-      "Software de comunicação interna entre colaboradores, com diversar ferramentas",
-    ativo: false,
-    grupo: [],
-  },
-  {
-    ferramenta: "Chatbot",
-    foto: "https://img.freepik.com/vetores-gratis/letra-colorida-um-design-de-logotipo-gradiente_474888-2309.jpg",
-    descricao:
-      "Software de comunicação interna entre colaboradores, com diversar ferramentas",
-    ativo: true,
-    grupo: [
-      {
-        nome: "Nicolas Brito da Cruz",
-        foto: "https://bit.ly/ryan-florence",
-        idUsuario: 6810,
-        ativo: true,
-      },
-      {
-        nome: "Caio Emidio Daniel",
-        foto: "https://bit.ly/sage-adebayo",
-        idUsuario: 5776,
-        ativo: true,
-      },
-      {
-        nome: "Danillo Raimundo",
-        foto: "https://bit.ly/kent-c-dodds",
-        idUsuario: 6810,
-        ativo: true,
-      },
-    ],
-  },
-  {
-    ferramenta: "Disparador de Vagas",
-    foto: "https://img.freepik.com/vetores-premium/elemento-de-design-de-lindo-beija-flor-de-vetor-livre-para-banners-cartazes-folhetos-e-folhetos_1009653-1.jpg",
-    descricao:
-      "Software de comunicação interna entre colaboradores, com diversar ferramentas",
-    ativo: true,
-    grupo: [
-      {
-        nome: "Nicolas Brito da Cruz",
-        foto: "https://bit.ly/ryan-florence",
-        idUsuario: 6810,
-        ativo: true,
-      },
-      {
-        nome: "Caio Emidio Daniel",
-        foto: "https://bit.ly/sage-adebayo",
-        idUsuario: 5776,
-        ativo: true,
-      },
-      {
-        nome: "Danillo Raimundo",
-        foto: "https://bit.ly/kent-c-dodds",
-        idUsuario: 6810,
-        ativo: true,
-      },
-    ],
-  },
-  {
-    ferramenta: "Confirmação de Propostas",
-    foto: "https://png.pngtree.com/png-vector/20190225/ourmid/pngtree-circuit-logo-template-vector-png-image_704226.jpg",
-    descricao:
-      "Software de comunicação interna entre colaboradores, com diversar ferramentas",
-    ativo: true,
-    grupo: [
-      {
-        nome: "Nicolas Brito da Cruz",
-        foto: "https://bit.ly/ryan-florence",
-        idUsuario: 6810,
-        ativo: true,
-      },
-      {
-        nome: "Caio Emidio Daniel",
-        foto: "https://bit.ly/sage-adebayo",
-        idUsuario: 5776,
-        ativo: true,
-      },
-      {
-        nome: "Danillo Raimundo",
-        foto: "https://bit.ly/kent-c-dodds",
-        idUsuario: 6810,
-        ativo: true,
-      },
-    ],
-  },
-];
+const bannerImages: Record<string, string> = {
+  simuladorProposta,
+  chatbot,
+  confirmacaowpp,
+  disparador,
+};
 
 export default function CardsComponent() {
   return (
@@ -116,7 +36,7 @@ export default function CardsComponent() {
       templateColumns={useMobile() ? "repeat(1, 1fr)" : "repeat(4, 1fr)"}
       gap={6}
     >
-      {ferramentas.map((card, index) => (
+      {ferramentasData.map((card, index) => (
         <Flex
           key={index}
           boxShadow={"lg"}
@@ -157,7 +77,11 @@ export default function CardsComponent() {
                   <MenuItem>Solicitar acessos</MenuItem>
                   <MenuItem>Editar acessos</MenuItem>
                   <MenuItem>
-                    <ModalComponent descricao={card.descricao} />
+                    <ModalComponent
+                      banner={bannerImages[card.banner]}
+                      descricao={card.descricao}
+                      ferramenta={card.ferramenta}
+                    />
                   </MenuItem>
                 </MenuList>
               </Menu>

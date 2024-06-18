@@ -1,0 +1,21 @@
+/* Adicione este CSS ao seu arquivo global de estilos */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: green transparent;
+}
+
+/* Para navegadores Webkit (Chrome, Safari, etc.) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  /* Ajuste a largura da barra */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: green;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
