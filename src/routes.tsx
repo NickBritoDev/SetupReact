@@ -7,13 +7,14 @@ import Perfil from "./pages/admin/perfil";
 import TokenLogin from "./pages/public/token-login";
 import NaoLocalizado404 from "./pages/public/nao-localizado";
 import NaoAutorizado401 from "./pages/public/nao-autorizado";
+import Marketplace from "./pages/public/marketplace";
 
 const Routes: React.FC = () => {
   const { keyStatus } = useKey();
 
   const routing = useRoutes([
     {
-      path: "/admin",
+      path: "/",
       element: <LayoutAdmin />,
       children: [
         {
@@ -21,7 +22,7 @@ const Routes: React.FC = () => {
           element: keyStatus ? (
             <Home />
           ) : (
-            <Navigate to="/public/nao-autorizado" replace />
+            <Navigate to="/nao-autorizado" replace />
           ),
         },
         {
@@ -29,22 +30,23 @@ const Routes: React.FC = () => {
           element: keyStatus ? (
             <Perfil />
           ) : (
-            <Navigate to="/public/nao-autorizado" replace />
+            <Navigate to="/nao-autorizado" replace />
           ),
         },
       ],
     },
     {
-      path: "/public",
+      path: "/",
       element: <LayoutPublic />,
       children: [
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },
+        { path: "marketplace", element: <Marketplace /> },
       ],
     },
-    { path: "*", element: <Navigate to="/public/nao-localizado" replace /> },
-    { path: "/", element: <Navigate to="/admin/home" replace /> },
+    { path: "*", element: <Navigate to="/nao-localizado" replace /> },
+    { path: "/", element: <Navigate to="/home" replace /> },
   ]);
 
   return routing;
