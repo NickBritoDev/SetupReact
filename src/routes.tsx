@@ -14,7 +14,7 @@ const Routes: React.FC = () => {
 
   const routing = useRoutes([
     {
-      path: "/",
+      path: "/admin",
       element: <LayoutAdmin />,
       children: [
         {
@@ -36,7 +36,7 @@ const Routes: React.FC = () => {
       ],
     },
     {
-      path: "/",
+      path: "/public",
       element: <LayoutPublic />,
       children: [
         { path: "token/login", element: <TokenLogin /> },
@@ -46,7 +46,7 @@ const Routes: React.FC = () => {
       ],
     },
     { path: "*", element: <Navigate to="/nao-localizado" replace /> },
-    { path: "/", element: <Navigate to="/home" replace /> },
+    { path: "/", element: <Navigate to="/public/marketplace" replace /> },
   ]);
 
   return routing;
