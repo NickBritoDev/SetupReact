@@ -11,6 +11,7 @@ import {
 import SidebarComponent from "./sidebar";
 import { MdLogout } from "react-icons/md";
 import { useMobile } from "../../../helpers/responsividade/useMediaQuery";
+import dadosUsuario from "../../../json/usuario/data.json";
 
 export default function NavbarComponent() {
   return (
@@ -33,8 +34,8 @@ export default function NavbarComponent() {
           >
             <Avatar
               size={"sm"}
-              name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
+              name={dadosUsuario[0].nome}
+              src={dadosUsuario[0].foto}
             />
 
             <Flex
@@ -43,14 +44,14 @@ export default function NavbarComponent() {
               alignItems={"flex-start"}
               justifyContent={"center"}
             >
-              <Text fontWeight={"semibold"}>Nicolas Brito da Cruz</Text>
+              <Text fontWeight={"semibold"}>{dadosUsuario[0].nome}</Text>
               <Text
                 color={"brand.invert_color_subtitle"}
                 fontWeight={"semibold"}
                 fontSize={14}
                 mt={-2}
               >
-                Desenvolvimento
+                {dadosUsuario[0].cargo}
               </Text>
             </Flex>
 
