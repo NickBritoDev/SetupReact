@@ -13,6 +13,10 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { FcClearFilters, FcFilledFilter } from "react-icons/fc";
@@ -107,77 +111,92 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
           <DrawerBody>
             <Flex flexDir={"column"} gap={4}>
               <Flex flexDir={"column"}>
-                <Text fontSize={18} fontWeight={"semibold"}>
-                  Ferramentas
-                </Text>
                 <Stack mt={2} spacing={2} direction="column">
-                  {ferramentasData.map((ferramenta) => (
-                    <Checkbox
-                      key={ferramenta.ferramenta}
-                      colorScheme="green"
-                      isChecked={selectedFerramentas.includes(
-                        ferramenta.ferramenta,
+                  <Menu closeOnSelect={false}>
+                    <MenuButton textAlign={"left"} w={'100%'} as={Button} rightIcon={<FcFilledFilter />}>
+                      Selecione Ferramentas
+                    </MenuButton>
+                    <MenuList>
+                      {ferramentasData.map((ferramenta) => (
+                        <MenuItem key={ferramenta.ferramenta}>
+                          <Checkbox
+                            colorScheme="green"
+                            isChecked={selectedFerramentas.includes(
+                              ferramenta.ferramenta,
+                            )}
+                            onChange={(e) => {
+                              const newSelection = e.target.checked
+                                ? [...selectedFerramentas, ferramenta.ferramenta]
+                                : selectedFerramentas.filter(
+                                  (f) => f !== ferramenta.ferramenta,
+                                );
+                              setSelectedFerramentas(newSelection);
+                            }}
+                          >
+                            {ferramenta.ferramenta}
+                          </Checkbox>
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Menu>
+                </Stack>
+              </Flex>
+
+              <Flex flexDir={"column"}>
+                <Stack mt={2} spacing={2} direction="column">
+                  <Menu closeOnSelect={false}>
+                    <MenuButton textAlign={"left"} w={'100%'} as={Button} rightIcon={<FcFilledFilter />}>
+                      Selecione Status
+                    </MenuButton>
+                    <MenuList>
+                      {["Inativos", "Ativos", "Expirados"].map((status) => (
+                        <MenuItem key={status}>
+                          <Checkbox
+                            colorScheme="green"
+                            isChecked={selectedStatus.includes(status)}
+                            onChange={(e) => {
+                              const newSelection = e.target.checked
+                                ? [...selectedStatus, status]
+                                : selectedStatus.filter((s) => s !== status);
+                              setSelectedStatus(newSelection);
+                            }}
+                          >
+                            {status}
+                          </Checkbox>
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Menu>
+                </Stack>
+              </Flex>
+
+              <Flex flexDir={"column"}>
+                <Stack mt={2} spacing={2} direction="column">
+                  <Menu closeOnSelect={false}>
+                    <MenuButton textAlign={"left"} w={'100%'} as={Button} rightIcon={<FcFilledFilter />}>
+                      Selecione Grupo de confiança
+                    </MenuButton>
+                    <MenuList>
+                      {["Sem grupo de confiança", "Com grupo de confiança"].map(
+                        (grupo) => (
+                          <MenuItem key={grupo}>
+                            <Checkbox
+                              colorScheme="green"
+                              isChecked={selectedGrupos.includes(grupo)}
+                              onChange={(e) => {
+                                const newSelection = e.target.checked
+                                  ? [...selectedGrupos, grupo]
+                                  : selectedGrupos.filter((g) => g !== grupo);
+                                setSelectedGrupos(newSelection);
+                              }}
+                            >
+                              {grupo}
+                            </Checkbox>
+                          </MenuItem>
+                        ),
                       )}
-                      onChange={(e) => {
-                        const newSelection = e.target.checked
-                          ? [...selectedFerramentas, ferramenta.ferramenta]
-                          : selectedFerramentas.filter(
-                              (f) => f !== ferramenta.ferramenta,
-                            );
-                        setSelectedFerramentas(newSelection);
-                      }}
-                    >
-                      {ferramenta.ferramenta}
-                    </Checkbox>
-                  ))}
-                </Stack>
-              </Flex>
-
-              <Flex flexDir={"column"}>
-                <Text fontSize={18} fontWeight={"semibold"}>
-                  Status
-                </Text>
-                <Stack mt={2} spacing={2} direction="column">
-                  {["Inativos", "Ativos", "Expirados"].map((status) => (
-                    <Checkbox
-                      key={status}
-                      colorScheme="green"
-                      isChecked={selectedStatus.includes(status)}
-                      onChange={(e) => {
-                        const newSelection = e.target.checked
-                          ? [...selectedStatus, status]
-                          : selectedStatus.filter((s) => s !== status);
-                        setSelectedStatus(newSelection);
-                      }}
-                    >
-                      {status}
-                    </Checkbox>
-                  ))}
-                </Stack>
-              </Flex>
-
-              <Flex flexDir={"column"}>
-                <Text fontSize={18} fontWeight={"semibold"}>
-                  Grupo de confiança
-                </Text>
-                <Stack mt={2} spacing={2} direction="column">
-                  {["Sem grupo de confiança", "Com grupo de confiança"].map(
-                    (grupo) => (
-                      <Checkbox
-                        key={grupo}
-                        colorScheme="green"
-                        isChecked={selectedGrupos.includes(grupo)}
-                        onChange={(e) => {
-                          const newSelection = e.target.checked
-                            ? [...selectedGrupos, grupo]
-                            : selectedGrupos.filter((g) => g !== grupo);
-                          setSelectedGrupos(newSelection);
-                        }}
-                      >
-                        {grupo}
-                      </Checkbox>
-                    ),
-                  )}
+                    </MenuList>
+                  </Menu>
                 </Stack>
               </Flex>
             </Flex>

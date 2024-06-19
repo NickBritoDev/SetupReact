@@ -10,6 +10,7 @@ export default function TokenLogin() {
   const { updateKeyStatus } = useKey();
   const query = useQuery();
   const tokenFromUrl = query.get("TK");
+  const redirectPath = query.get("redirect");
   const navigate = useNavigate();
   const toast = useToast();
   const [toastShown, setToastShown] = useState(false);
@@ -27,11 +28,20 @@ export default function TokenLogin() {
           position: "top-right",
           isClosable: true,
         });
-        navigate("/admin/home");
+
+        switch (redirectPath) {
+          case "marketplace":
+            navigate("/public/marketplace");
+            break;
+          default:
+            navigate(`/admin/${redirectPath}`);
+            break;
+        }
+
         setToastShown(true);
       }
     }
-  }, [data, toastShown, updateKeyStatus, toast, navigate, tokenFromUrl]);
+  }, [data, toastShown, updateKeyStatus, toast, navigate, tokenFromUrl, redirectPath]);
 
   useEffect(() => {
     if (isError) {
