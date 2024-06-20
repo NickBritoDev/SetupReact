@@ -15,7 +15,7 @@ import { BsInfoCircleFill } from "react-icons/bs";
 import { maskCPF, maskPhone } from "../../../../utils/mask/mascaras";
 import { ReactNode } from "react";
 
-export default function InteracaoComponent({ logs, user, detalhesLeads }: any) {
+export default function InteracaoComponent({ user, detalhesLeads }: any) {
   const isNovo = detalhesLeads.status === "NOVO";
   const telefone = isNovo
     ? "(**) *********"
