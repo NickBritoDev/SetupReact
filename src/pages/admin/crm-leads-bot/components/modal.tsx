@@ -8,10 +8,6 @@ import {
   Button,
   Text,
   Flex,
-  Image,
-  Heading,
-  Tooltip,
-  Divider,
 } from "@chakra-ui/react";
 import contatos from "../../../../json/crm/data2.json";
 import { RiUserSettingsLine } from "react-icons/ri";
@@ -21,11 +17,7 @@ import back from "../images/back.png";
 import FiltroComponent from "./filtro";
 import RecepcaoComponent from "./recepcao";
 import SidebarComponent from "./sidebar";
-import { LuPhoneOutgoing } from "react-icons/lu";
-import { TfiEmail } from "react-icons/tfi";
-import { SiWhatsapp } from "react-icons/si";
-import { BsInfoCircleFill } from "react-icons/bs";
-import { maskCPF, maskPhone } from "../../../../utils/mask/mascaras";
+import InteracaoComponent from "./interacao";
 
 const ModalComponent: React.FC<{ contatos: ContactTypes[] }> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -129,149 +121,13 @@ const ModalComponent: React.FC<{ contatos: ContactTypes[] }> = () => {
                 h={"90vh"}
                 w={"75%"}
               >
-                {hideRecepcao ? (
-                  <Flex gap={10} w={"100%"}>
-                    <Flex
-                      w={"60%"}
-                      flexDir={"column"}
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                    >
-                      <Image
-                        w={"150px"}
-                        src={user}
-                        alt="foto do usuario card"
-                      />
-                      <Heading mt={-4}>{detalhesLeads.nome}</Heading>
-                      <Text fontWeight={"semibold"}>{detalhesLeads.email}</Text>
-
-                      <Flex gap={6} mt={4}>
-                        <Tooltip
-                          hasArrow
-                          placement="bottom"
-                          label="Ir para discadora"
-                        >
-                          <Button
-                            display={"flex"}
-                            alignItems={"center"}
-                            justifyContent={"center"}
-                            gap={2}
-                          >
-                            <Text>Discadora</Text>
-                            <LuPhoneOutgoing size={22} />
-                          </Button>
-                        </Tooltip>
-
-                        <Tooltip
-                          hasArrow
-                          placement="bottom"
-                          label="Ir para o email"
-                        >
-                          <Button
-                            display={"flex"}
-                            alignItems={"center"}
-                            justifyContent={"center"}
-                            gap={2}
-                          >
-                            <Text>Email</Text>
-                            <TfiEmail size={22} />
-                          </Button>
-                        </Tooltip>
-
-                        <Tooltip
-                          hasArrow
-                          placement="bottom"
-                          label="Ir para o whatsapp"
-                        >
-                          <Button
-                            display={"flex"}
-                            alignItems={"center"}
-                            justifyContent={"center"}
-                            gap={2}
-                          >
-                            <Text>WhatsApp</Text>
-                            <SiWhatsapp size={22} />
-                          </Button>
-                        </Tooltip>
-                      </Flex>
-                    </Flex>
-
-                    <Flex
-                      p={2}
-                      flexDir={"column"}
-                      w={"40%"}
-                      borderLeft={"solid 1px gray"}
-                    >
-                      <Flex
-                        alignItems={"center"}
-                        justifyContent={"flex-start"}
-                        gap={2}
-                      >
-                        <BsInfoCircleFill color="#44B3CF" size={24} />
-                        <Heading mt={-0.5} size={"md"}>
-                          MAIS INFORMAÇÕES
-                        </Heading>
-                      </Flex>
-                      <Divider mt={2} />
-                      <Text
-                        boxShadow={"md"}
-                        p={2}
-                        rounded={"xl"}
-                        fontWeight={"semibold"}
-                      >
-                        <strong>Nome: </strong>
-                        {detalhesLeads.nome}
-                      </Text>
-                      <Text
-                        boxShadow={"md"}
-                        p={2}
-                        rounded={"xl"}
-                        fontWeight={"semibold"}
-                      >
-                        <strong>Email: </strong>
-                        {detalhesLeads.email}
-                      </Text>
-                      <Text
-                        boxShadow={"md"}
-                        p={2}
-                        rounded={"xl"}
-                        fontWeight={"semibold"}
-                      >
-                        <strong>CPF: </strong>
-                        {maskCPF(detalhesLeads.cpf)}
-                      </Text>
-                      <Text
-                        boxShadow={"md"}
-                        p={2}
-                        rounded={"xl"}
-                        fontWeight={"semibold"}
-                      >
-                        <strong>Telefone: </strong>
-                        {maskPhone(detalhesLeads.telefone)}
-                      </Text>
-                      <Text
-                        boxShadow={"md"}
-                        p={2}
-                        rounded={"xl"}
-                        fontWeight={"semibold"}
-                      >
-                        <strong>Produto: </strong>
-                        {detalhesLeads.produto}
-                      </Text>
-                      <Text
-                        boxShadow={"md"}
-                        p={2}
-                        rounded={"xl"}
-                        fontWeight={"semibold"}
-                      >
-                        <strong>Origem: </strong>
-                        {detalhesLeads.origem}
-                      </Text>
-                    </Flex>
-                  </Flex>
-                ) : (
-                  <RecepcaoComponent back={back} />
+                {hideRecepcao && (
+                  <InteracaoComponent
+                    detalhesLeads={detalhesLeads}
+                    user={user}
+                  />
                 )}
+                {!hideRecepcao && <RecepcaoComponent back={back} />}
               </Flex>
             </Flex>
           </ModalBody>

@@ -8,7 +8,19 @@
     "produto": "AUXILIO BRASIL",
     "origem": "SITE",
     "status": "CONTATO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      }
+    ]
   },
   {
     "id": 2,
@@ -19,7 +31,19 @@
     "produto": "AUXILIO BRASIL",
     "origem": "SITE",
     "status": "CONTATO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      }
+    ]
   },
   {
     "id": 3,
@@ -30,7 +54,19 @@
     "produto": "AUXILIO BRASIL",
     "origem": "SITE",
     "status": "CONTATO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      }
+    ]
   },
   {
     "id": 4,
@@ -41,7 +77,19 @@
     "produto": "AUXILIO BRASIL",
     "origem": "SITE",
     "status": "CONTATO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      }
+    ]
   },
   {
     "id": 5,
@@ -52,7 +100,19 @@
     "produto": "AUXILIO BRASIL",
     "origem": "SITE",
     "status": "CONTATO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      }
+    ]
   },
   {
     "id": 6,
@@ -63,7 +123,19 @@
     "produto": "AUXILIO BRASIL",
     "origem": "SITE",
     "status": "CONTATO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      }
+    ]
   },
   {
     "id": 7,
@@ -74,7 +146,14 @@
     "produto": "CP BAIXA RENDA",
     "origem": "SITE",
     "status": "NOVO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      }
+    ]
   },
   {
     "id": 8,
@@ -85,7 +164,14 @@
     "produto": "CP BAIXA RENDA",
     "origem": "REDES SOCIAIS",
     "status": "NOVO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      }
+    ]
   },
   {
     "id": 9,
@@ -96,7 +182,14 @@
     "produto": "CP BAIXA RENDA",
     "origem": "REDES SOCIAIS",
     "status": "NOVO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      }
+    ]
   },
   {
     "id": 10,
@@ -107,7 +200,14 @@
     "produto": "CP BAIXA RENDA",
     "origem": "REDES SOCIAIS",
     "status": "NOVO",
-    "score": "QUENTE"
+    "score": "QUENTE",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      }
+    ]
   },
   {
     "id": 11,
@@ -118,7 +218,14 @@
     "produto": "CP BAIXA RENDA",
     "origem": "REDES SOCIAIS",
     "status": "NOVO",
-    "score": "MEDIO"
+    "score": "MEDIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      }
+    ]
   },
   {
     "id": 12,
@@ -129,7 +236,14 @@
     "produto": "CP BAIXA RENDA",
     "origem": "REDES SOCIAIS",
     "status": "NOVO",
-    "score": "MEDIO"
+    "score": "MEDIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      }
+    ]
   },
   {
     "id": 13,
@@ -140,7 +254,14 @@
     "produto": "PORTABILIDADE",
     "origem": "REDES SOCIAIS",
     "status": "NOVO",
-    "score": "MEDIO"
+    "score": "MEDIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      }
+    ]
   },
   {
     "id": 14,
@@ -151,7 +272,24 @@
     "produto": "PORTABILIDADE",
     "origem": "REDES SOCIAIS",
     "status": "NEGOCIANDO",
-    "score": "MEDIO"
+    "score": "MEDIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      }
+    ]
   },
   {
     "id": 15,
@@ -162,7 +300,24 @@
     "produto": "PORTABILIDADE",
     "origem": "LANDING PAGE",
     "status": "NEGOCIANDO",
-    "score": "MEDIO"
+    "score": "MEDIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      }
+    ]
   },
   {
     "id": 16,
@@ -173,7 +328,24 @@
     "produto": "PORTABILIDADE",
     "origem": "LANDING PAGE",
     "status": "NEGOCIANDO",
-    "score": "MEDIO"
+    "score": "MEDIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      }
+    ]
   },
   {
     "id": 17,
@@ -184,7 +356,24 @@
     "produto": "PORTABILIDADE",
     "origem": "LANDING PAGE",
     "status": "NEGOCIANDO",
-    "score": "MEDIO"
+    "score": "MEDIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      }
+    ]
   },
   {
     "id": 18,
@@ -195,7 +384,29 @@
     "produto": "PORTABILIDADE",
     "origem": "LANDING PAGE",
     "status": "FINALIZADO",
-    "score": "MEDIO"
+    "score": "MEDIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "FINALIZADO",
+        "data_atualizacao": "20/06/2024 - 16:20"
+      }
+    ]
   },
   {
     "id": 19,
@@ -206,7 +417,29 @@
     "produto": "REFIN",
     "origem": "LANDING PAGE",
     "status": "FINALIZADO",
-    "score": "FRIO"
+    "score": "FRIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "FINALIZADO",
+        "data_atualizacao": "20/06/2024 - 16:20"
+      }
+    ]
   },
   {
     "id": 20,
@@ -217,7 +450,29 @@
     "produto": "REFIN",
     "origem": "LANDING PAGE",
     "status": "FINALIZADO",
-    "score": "FRIO"
+    "score": "FRIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "FINALIZADO",
+        "data_atualizacao": "20/06/2024 - 16:20"
+      }
+    ]
   },
   {
     "id": 21,
@@ -228,7 +483,29 @@
     "produto": "REFIN",
     "origem": "LANDING PAGE",
     "status": "FINALIZADO",
-    "score": "FRIO"
+    "score": "FRIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "FINALIZADO",
+        "data_atualizacao": "20/06/2024 - 16:20"
+      }
+    ]
   },
   {
     "id": 22,
@@ -239,7 +516,29 @@
     "produto": "REFIN",
     "origem": "SITE",
     "status": "FINALIZADO",
-    "score": "FRIO"
+    "score": "FRIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "FINALIZADO",
+        "data_atualizacao": "20/06/2024 - 16:20"
+      }
+    ]
   },
   {
     "id": 23,
@@ -250,7 +549,29 @@
     "produto": "INSS",
     "origem": "SITE",
     "status": "FINALIZADO",
-    "score": "FRIO"
+    "score": "FRIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "FINALIZADO",
+        "data_atualizacao": "20/06/2024 - 16:20"
+      }
+    ]
   },
   {
     "id": 24,
@@ -261,6 +582,28 @@
     "produto": "INSS",
     "origem": "SITE",
     "status": "FINALIZADO",
-    "score": "FRIO"
+    "score": "FRIO",
+    "logs": [
+      {
+        "responsavel": "CHATBOT",
+        "status": "NOVO",
+        "data_atualizacao": "20/06/2024 - 13:12"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "CONTATO",
+        "data_atualizacao": "20/06/2024 - 13:45"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "NEGOCIANDO",
+        "data_atualizacao": "20/06/2024 - 15:38"
+      },
+      {
+        "responsavel": "Igor Guilherme",
+        "status": "FINALIZADO",
+        "data_atualizacao": "20/06/2024 - 16:20"
+      }
+    ]
   }
 ]
