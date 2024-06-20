@@ -32,7 +32,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
       >
         <Image w={"150px"} src={user} alt="foto do usuario card" />
         <Heading mt={-4}>{detalhesLeads.nome}</Heading>
-        <Text fontWeight={"semibold"}>{detalhesLeads.email}</Text>
+        <Text fontWeight={"semibold"}>{email}</Text>
 
         <Flex gap={6} mt={4}>
           <Tooltip hasArrow placement="bottom" label="Ir para discadora">
