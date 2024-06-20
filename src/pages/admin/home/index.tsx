@@ -8,10 +8,10 @@ export default function Home() {
       <Text>Home</Text>
       <Button
         onClick={() => {
-          navigate("/admin/perfil");
+          navigate("/admin/crm");
         }}
       >
-        Ir para Perfil
+        Ir para o crm
       </Button>
     </Box>
   );

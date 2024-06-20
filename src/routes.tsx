@@ -55,7 +55,7 @@ const Routes: React.FC = () => {
       ],
     },
     { path: "*", element: <Navigate to="/public/nao-localizado" replace /> },
-    { path: "/", element: <Navigate to="/public/marketplace" replace /> },
+    { path: "/", element: <Navigate to="/admin/home" replace /> },
   ]);
 
   return routing;
