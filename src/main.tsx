@@ -5,7 +5,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import theme from "./themes/theme.ts";
 import React from "react";
-import "./themes/scrollbar.css";
 
 const queryClient = new QueryClient();
 

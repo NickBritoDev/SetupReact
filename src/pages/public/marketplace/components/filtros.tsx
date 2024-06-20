@@ -113,7 +113,12 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
               <Flex flexDir={"column"}>
                 <Stack mt={2} spacing={2} direction="column">
                   <Menu closeOnSelect={false}>
-                    <MenuButton textAlign={"left"} w={'100%'} as={Button} rightIcon={<FcFilledFilter />}>
+                    <MenuButton
+                      textAlign={"left"}
+                      w={"100%"}
+                      as={Button}
+                      rightIcon={<FcFilledFilter />}
+                    >
                       Selecione Ferramentas
                     </MenuButton>
                     <MenuList>
@@ -126,10 +131,13 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
                             )}
                             onChange={(e) => {
                               const newSelection = e.target.checked
-                                ? [...selectedFerramentas, ferramenta.ferramenta]
+                                ? [
+                                    ...selectedFerramentas,
+                                    ferramenta.ferramenta,
+                                  ]
                                 : selectedFerramentas.filter(
-                                  (f) => f !== ferramenta.ferramenta,
-                                );
+                                    (f) => f !== ferramenta.ferramenta,
+                                  );
                               setSelectedFerramentas(newSelection);
                             }}
                           >
@@ -145,7 +153,12 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
               <Flex flexDir={"column"}>
                 <Stack mt={2} spacing={2} direction="column">
                   <Menu closeOnSelect={false}>
-                    <MenuButton textAlign={"left"} w={'100%'} as={Button} rightIcon={<FcFilledFilter />}>
+                    <MenuButton
+                      textAlign={"left"}
+                      w={"100%"}
+                      as={Button}
+                      rightIcon={<FcFilledFilter />}
+                    >
                       Selecione Status
                     </MenuButton>
                     <MenuList>
@@ -173,7 +186,12 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
               <Flex flexDir={"column"}>
                 <Stack mt={2} spacing={2} direction="column">
                   <Menu closeOnSelect={false}>
-                    <MenuButton textAlign={"left"} w={'100%'} as={Button} rightIcon={<FcFilledFilter />}>
+                    <MenuButton
+                      textAlign={"left"}
+                      w={"100%"}
+                      as={Button}
+                      rightIcon={<FcFilledFilter />}
+                    >
                       Selecione Grupo de confiança
                     </MenuButton>
                     <MenuList>

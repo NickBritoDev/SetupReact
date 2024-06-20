@@ -41,7 +41,15 @@ export default function TokenLogin() {
         setToastShown(true);
       }
     }
-  }, [data, toastShown, updateKeyStatus, toast, navigate, tokenFromUrl, redirectPath]);
+  }, [
+    data,
+    toastShown,
+    updateKeyStatus,
+    toast,
+    navigate,
+    tokenFromUrl,
+    redirectPath,
+  ]);
 
   useEffect(() => {
     if (isError) {

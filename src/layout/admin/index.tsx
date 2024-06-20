@@ -6,7 +6,7 @@ export default function LayoutAdmin() {
   return (
     <Box w={"100%"} overflowX={"hidden"}>
       <NavbarComponent />
-      <Box p={4} w={'100%'}>
+      <Box p={4} w={"100%"}>
         <Outlet />
       </Box>
     </Box>
