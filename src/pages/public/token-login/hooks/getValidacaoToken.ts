@@ -8,7 +8,9 @@ const useGetValidacaoToken = (token: string | null) => {
       if (!token) {
         throw new Error("Token is null");
       }
-      const response = await connectApi.get(`/v1/api/public/auth/?h=${token}`);
+      const response = await connectApi.get(
+        `/v1/usuarios/auth/login?h=${token}`,
+      );
       return response.data;
     },
     {

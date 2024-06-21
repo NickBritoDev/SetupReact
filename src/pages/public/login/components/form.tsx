@@ -16,10 +16,12 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { MdDoubleArrow } from "react-icons/md";
 import { validationSchema } from "../schema/login";
 import { useState } from "react";
+import { usePostLogin } from "../hooks/usePostLogin";
 
 export default function FormComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const { UseRequestLogin } = usePostLogin();
 
   return (
     <Flex
@@ -47,10 +49,10 @@ export default function FormComponent() {
       />
 
       <Formik
-        initialValues={{ username: "", password: "" }}
+        initialValues={{ usuario: "", senha: "" }}
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
-          console.log(values);
+          UseRequestLogin(values);
           actions.setSubmitting(false);
         }}
       >
@@ -59,30 +61,30 @@ export default function FormComponent() {
             <Heading mt={14} w={"100%"} textAlign={"left"} mb={14}>
               Login
             </Heading>
-            <Field name="username">
+            <Field name="usuario">
               {({ field, form }: any) => (
                 <FormControl
-                  isInvalid={form.errors.username && form.touched.username}
+                  isInvalid={form.errors.usuario && form.touched.usuario}
                   mb={4}
                 >
                   <Input
                     mt={10}
                     variant={"flushed"}
                     {...field}
-                    id="username"
+                    id="usuario"
                     placeholder="Usuário"
                   />
                   <FormErrorMessage fontWeight={"bold"}>
-                    * {form.errors.username}
+                    * {form.errors.usuario}
                   </FormErrorMessage>
                 </FormControl>
               )}
             </Field>
 
-            <Field name="password">
+            <Field name="senha">
               {({ field, form }: any) => (
                 <FormControl
-                  isInvalid={form.errors.password && form.touched.password}
+                  isInvalid={form.errors.senha && form.touched.senha}
                   mb={4}
                 >
                   <InputGroup>
@@ -90,7 +92,7 @@ export default function FormComponent() {
                       variant={"flushed"}
                       {...field}
                       type={showPassword ? "text" : "password"}
-                      id="password"
+                      id="senha"
                       placeholder="Senha"
                     />
                     <InputRightElement width="4.5rem">
@@ -111,7 +113,7 @@ export default function FormComponent() {
                     </InputRightElement>
                   </InputGroup>
                   <FormErrorMessage fontWeight={"bold"}>
-                    * {form.errors.password}
+                    * {form.errors.senha}
                   </FormErrorMessage>
                 </FormControl>
               )}
