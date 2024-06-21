@@ -15,13 +15,21 @@ import logo from "../images/logo.png";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { MdDoubleArrow } from "react-icons/md";
 import { validationSchema } from "../schema/login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePostLogin } from "../hooks/usePostLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function FormComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
-  const { UseRequestLogin } = usePostLogin();
+  const { UseRequestLogin, isLoading, isSuccess } = usePostLogin();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/admin/home");
+    }
+  }, [isSuccess]);
 
   return (
     <Flex
@@ -56,7 +64,7 @@ export default function FormComponent() {
           actions.setSubmitting(false);
         }}
       >
-        {(props) => (
+        {() => (
           <Form style={{ width: "80%" }}>
             <Heading mt={14} w={"100%"} textAlign={"left"} mb={14}>
               Login
@@ -128,7 +136,7 @@ export default function FormComponent() {
               mt={10}
               w={"100%"}
               colorScheme="green"
-              isLoading={props.isSubmitting}
+              isLoading={isLoading}
               type="submit"
             >
               <Text>ACESSAR</Text>
