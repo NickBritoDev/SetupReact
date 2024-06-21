@@ -7,8 +7,8 @@ import Perfil from "./pages/admin/perfil";
 import TokenLogin from "./pages/public/token-login";
 import NaoLocalizado404 from "./pages/public/nao-localizado";
 import NaoAutorizado401 from "./pages/public/nao-autorizado";
-import Marketplace from "./pages/public/marketplace";
-import CrmLeadsBot from "./pages/admin/crm-leads-bot";
+import Marketplace from "./modules/public/marketplace";
+import CrmLeadsBot from "./modules/admin/crm-leads-bot";
 
 const Routes: React.FC = () => {
   const { keyStatus } = useKey();
