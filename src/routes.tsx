@@ -1,14 +1,19 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import { useKey } from "./context/auth/token-login/authContext";
+
 import LayoutAdmin from "./layout/admin";
 import LayoutPublic from "./layout/public";
+
 import Home from "./pages/admin/home";
 import Perfil from "./pages/admin/perfil";
+
 import TokenLogin from "./pages/public/token-login";
 import NaoLocalizado404 from "./pages/public/nao-localizado";
 import NaoAutorizado401 from "./pages/public/nao-autorizado";
-import Marketplace from "./modules/public/marketplace";
+import Login from "./pages/public/login";
+
 import CrmLeadsBot from "./modules/admin/crm-leads-bot";
+import Marketplace from "./modules/public/marketplace";
 
 const Routes: React.FC = () => {
   const { keyStatus } = useKey();
@@ -48,6 +53,7 @@ const Routes: React.FC = () => {
       path: "/public",
       element: <LayoutPublic />,
       children: [
+        { path: "login", element: <Login /> },
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },

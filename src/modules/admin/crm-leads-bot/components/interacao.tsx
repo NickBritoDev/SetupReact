@@ -32,7 +32,12 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
       >
         <Image w={"150px"} src={user} alt="foto do usuario card" />
         <Heading mt={-4}>{detalhesLeads.nome}</Heading>
-        <Text fontWeight={"semibold"}>{email}</Text>
+        <Text
+          sx={isNovo ? { filter: "blur(5px)" } : {}}
+          fontWeight={"semibold"}
+        >
+          {email}
+        </Text>
 
         <Flex gap={6} mt={4}>
           <Tooltip hasArrow placement="bottom" label="Ir para discadora">
@@ -83,7 +88,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           mt={6}
           ml={10}
           p={2}
-          h={"300px"}
+          maxH={"300px"}
           overflowY={"scroll"}
         >
           {detalhesLeads?.logs?.map(
