@@ -1,8 +1,7 @@
-import { Box, Flex } from "@chakra-ui/react";
-// import { useNavigate } from "react-router-dom";
+import { Box } from "@chakra-ui/react";
+import BannerComponent from "./components/banner";
 
 export default function Home() {
-  // const navigate = useNavigate();
   return (
     <Box
       w={"100%"}
@@ -12,8 +11,7 @@ export default function Home() {
       alignItems={"center"}
       justifyContent={"space-between"}
     >
-      <Flex></Flex>
-      <Flex></Flex>
+      <BannerComponent />
     </Box>
   );
 }

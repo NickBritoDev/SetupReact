@@ -3,15 +3,17 @@ import {
   Box,
   Button,
   Flex,
+  Image,
   Text,
   Tooltip,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import SidebarComponent from "./sidebar";
+// import SidebarComponent from "./sidebar";
 import { MdLogout } from "react-icons/md";
 import { useMobile } from "../../../helpers/responsividade/useMediaQuery";
 import dadosUsuario from "../../../json/usuario/data.json";
+import logo from "../images/logo.png";
 
 export default function NavbarComponent() {
   return (
@@ -22,7 +24,17 @@ export default function NavbarComponent() {
       justifyContent={"space-between"}
       py={1}
     >
-      <SidebarComponent />
+      <Flex
+        boxShadow={"lg"}
+        pr={4}
+        rounded={"2xl"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Image w={50} src={logo} alt="logo eagles software house" />
+        <Text fontWeight={"semibold"}>Eagles Software House</Text>
+      </Flex>
+      {/* <SidebarComponent /> */}
 
       <Box>
         <Wrap>
