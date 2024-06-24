@@ -53,23 +53,25 @@ export default function FiltroComponent({
         borderRight={"solid 1px gray"}
       >
         <Menu>
-          <MenuButton w={"100%"} as={Button} colorScheme="transparent">
-            <Flex
-              w={"100%"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-            >
-              <Text
-                ml={-4}
-                color={"black"}
-                fontWeight={"semibold"}
-                fontSize={18}
+          <Tooltip hasArrow label="Filtros de leads" placement="right">
+            <MenuButton w={"100%"} as={Button} colorScheme="transparent">
+              <Flex
+                w={"100%"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
               >
-                Filtros
-              </Text>
-              <FcFilledFilter size={22} />
-            </Flex>
-          </MenuButton>
+                <Text
+                  ml={-4}
+                  color={"black"}
+                  fontWeight={"semibold"}
+                  fontSize={18}
+                >
+                  Filtros
+                </Text>
+                <FcFilledFilter size={22} />
+              </Flex>
+            </MenuButton>
+          </Tooltip>
           <MenuList>
             <MenuGroup w={"280px"} title="SCORE">
               {["FRIO", "MEDIO", "QUENTE"].map((score) => (

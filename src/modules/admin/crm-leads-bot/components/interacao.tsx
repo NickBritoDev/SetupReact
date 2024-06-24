@@ -1,19 +1,12 @@
-import {
-  Button,
-  Text,
-  Flex,
-  Image,
-  Heading,
-  Tooltip,
-  Divider,
-  Badge,
-} from "@chakra-ui/react";
+import { Button, Text, Flex, Image, Heading, Tooltip } from "@chakra-ui/react";
 import { LuPhoneOutgoing } from "react-icons/lu";
 import { TfiEmail } from "react-icons/tfi";
 import { SiWhatsapp } from "react-icons/si";
-import { BsInfoCircleFill } from "react-icons/bs";
-import { maskCPF, maskPhone } from "../../../../utils/mask/mascaras";
-import { ReactNode } from "react";
+import { maskPhone } from "../../../../utils/mask/mascaras";
+import { MdOutlineTextsms } from "react-icons/md";
+import InfosComponent from "./infos";
+import LogsComponent from "./logs";
+import AgendaComponent from "./agenda";
 
 export default function InteracaoComponent({ user, detalhesLeads }: any) {
   const isNovo = detalhesLeads.status === "NOVO";
@@ -39,20 +32,39 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           {email}
         </Text>
 
-        <Flex gap={6} mt={4}>
-          <Tooltip hasArrow placement="bottom" label="Ir para discadora">
+        <Flex
+          w={"100%"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          ml={6}
+          gap={6}
+          mt={4}
+        >
+          <Tooltip hasArrow placement="top" label="Ligar para o cliente">
             <Button
               display={"flex"}
               alignItems={"center"}
               justifyContent={"center"}
               gap={2}
             >
-              <Text>Discadora</Text>
+              <Text>Ligar</Text>
               <LuPhoneOutgoing size={22} />
             </Button>
           </Tooltip>
 
-          <Tooltip hasArrow placement="bottom" label="Ir para o email">
+          <Tooltip hasArrow placement="top" label="Enviar SMS">
+            <Button
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              gap={2}
+            >
+              <Text>SMS</Text>
+              <MdOutlineTextsms size={22} />
+            </Button>
+          </Tooltip>
+
+          <Tooltip hasArrow placement="top" label="Enviar email">
             <Button
               display={"flex"}
               alignItems={"center"}
@@ -64,7 +76,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             </Button>
           </Tooltip>
 
-          <Tooltip hasArrow placement="bottom" label="Ir para o whatsapp">
+          <Tooltip hasArrow placement="top" label="Enviar whatsapp">
             <Button
               display={"flex"}
               alignItems={"center"}
@@ -75,140 +87,19 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
               <SiWhatsapp size={22} />
             </Button>
           </Tooltip>
+
+          <AgendaComponent detalhesLeads={detalhesLeads} />
         </Flex>
 
-        <Flex
-          gap={2}
-          rounded={"xl"}
-          alignItems={"center"}
-          justifyContent={"flex-start"}
-          flexDir={"column"}
-          bg={"gray.100"}
-          w={"100%"}
-          mt={6}
-          ml={10}
-          p={2}
-          maxH={"300px"}
-          overflowY={"scroll"}
-        >
-          {detalhesLeads?.logs?.map(
-            (log: {
-              data_atualizacao: any;
-              status: ReactNode;
-              responsavel: ReactNode;
-            }) => (
-              <Flex
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                w={"100%"}
-                key={log.data_atualizacao}
-                gap={4}
-                bg={"white"}
-                p={2}
-                rounded={"xl"}
-                boxShadow={"lg"}
-              >
-                <Text w={"100%"}>
-                  <strong>Responsavel</strong> <br />
-                  {log.responsavel}
-                </Text>
-                <Text w={"100%"} textAlign={"center"}>
-                  <strong>Data</strong> <br />
-                  {log.data_atualizacao}
-                </Text>
-                <Text w={"100%"} textAlign={"right"}>
-                  <strong>Status</strong> <br />
-                  <Badge
-                    variant={"solid"}
-                    bg={
-                      log.status === "NOVO"
-                        ? "#44B3CF"
-                        : log.status === "CONTATO"
-                          ? "#F4B61D"
-                          : log.status === "NEGOCIANDO"
-                            ? "#F44B1D"
-                            : log.status === "FINALIZADO"
-                              ? "#229544"
-                              : "black"
-                    }
-                  >
-                    {log.status}
-                  </Badge>
-                </Text>
-              </Flex>
-            ),
-          )}
-        </Flex>
+        <LogsComponent detalhesLeads={detalhesLeads} />
       </Flex>
 
-      <Flex p={2} flexDir={"column"} w={"40%"} borderLeft={"solid 1px gray"}>
-        <Flex alignItems={"center"} justifyContent={"flex-start"} gap={2}>
-          <BsInfoCircleFill color="#44B3CF" size={24} />
-          <Heading mt={-0.5} size={"md"}>
-            MAIS INFORMAÇÕES
-          </Heading>
-        </Flex>
-        <Divider mt={2} />
-        <Text
-          mt={4}
-          mb={4}
-          boxShadow={"md"}
-          p={2}
-          rounded={"xl"}
-          fontWeight={"semibold"}
-        >
-          <strong>Nome</strong> <br />
-          {detalhesLeads.nome}
-        </Text>
-        <Text
-          mb={4}
-          display={"flex"}
-          flexDir={"column"}
-          boxShadow="md"
-          p={2}
-          rounded="xl"
-          fontWeight="semibold"
-        >
-          <strong>Email</strong>
-          <Text sx={isNovo ? { filter: "blur(5px)" } : {}}>{email}</Text>
-        </Text>
-        <Text
-          mb={4}
-          boxShadow={"md"}
-          p={2}
-          rounded={"xl"}
-          fontWeight={"semibold"}
-        >
-          <strong>CPF</strong> <br />
-          {maskCPF(detalhesLeads.cpf)}
-        </Text>
-        <Text
-          mb={4}
-          display={"flex"}
-          flexDir={"column"}
-          boxShadow="md"
-          p={2}
-          rounded="xl"
-          fontWeight="semibold"
-        >
-          <strong>Telefone</strong>
-          <Text sx={isNovo ? { filter: "blur(5px)" } : {}}>{telefone}</Text>
-        </Text>
-        <Text
-          mb={4}
-          boxShadow={"md"}
-          p={2}
-          rounded={"xl"}
-          fontWeight={"semibold"}
-        >
-          <strong>Produto</strong> <br />
-          {detalhesLeads.produto}
-        </Text>
-        <Text boxShadow={"md"} p={2} rounded={"xl"} fontWeight={"semibold"}>
-          <strong>Origem</strong> <br />
-          {detalhesLeads.origem}
-        </Text>
-      </Flex>
+      <InfosComponent
+        detalhesLeads={detalhesLeads}
+        email={email}
+        isNovo={isNovo}
+        telefone={telefone}
+      />
     </Flex>
   );
 }

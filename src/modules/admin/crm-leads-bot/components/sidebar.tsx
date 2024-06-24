@@ -32,7 +32,7 @@ export default function SidebarComponent({
       overflowY={"scroll"}
       flexDir={"column"}
       w={"25%"}
-      borderRight={"solid 1px gray"}
+      boxShadow={"lg"}
     >
       <Flex position={"relative"} h={"100vh"} flexDir={"column"}>
         {filteredContatos.map(
@@ -85,7 +85,7 @@ export default function SidebarComponent({
               }}
               cursor={"pointer"}
               p={2}
-              borderBottom={"solid gray 1px"}
+              boxShadow={"lg"}
               key={index}
             >
               <Flex

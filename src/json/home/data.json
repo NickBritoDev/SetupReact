@@ -1,0 +1,14 @@
+[
+  {
+    "ferramentas": [
+      {
+        "crm": true,
+        "chatbot": false,
+        "confirmacao_proposta": false,
+        "simulador": true,
+        "importador_vagas": false,
+        "marketplace": true
+      }
+    ]
+  }
+]

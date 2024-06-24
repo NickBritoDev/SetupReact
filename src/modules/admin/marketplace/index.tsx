@@ -1,5 +1,4 @@
 import { Box } from "@chakra-ui/react";
-import NavbarComponent from "./components/navbar";
 import AcoesComponents from "./components/acoes";
 import CardsComponent from "./components/cards";
 import { SetStateAction, useState } from "react";
@@ -22,7 +21,6 @@ export default function Marketplace() {
   };
   return (
     <Box>
-      <NavbarComponent />
       <AcoesComponents onApplyFilters={handleApplyFilters} />
       <Box p={4}>
         <CardsComponent filters={filters} />

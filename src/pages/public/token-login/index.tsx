@@ -31,7 +31,7 @@ export default function TokenLogin() {
 
         switch (redirectPath) {
           case "marketplace":
-            navigate("/public/marketplace");
+            navigate("/admin/marketplace");
             break;
           default:
             navigate(`/admin/${redirectPath}`);

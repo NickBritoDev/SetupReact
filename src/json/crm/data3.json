@@ -1,0 +1,27 @@
+[
+  {
+    "observacoes": [
+      {
+        "data": "24/06/2024",
+        "hora": "10:30",
+        "nota": "Enviou um e-mail solicitando mais informações sobre o produto X.",
+        "metodo_contato": "email",
+        "pessoa_contato": "João Silva"
+      },
+      {
+        "data": "25/06/2024",
+        "hora": "15:00",
+        "nota": "Ligação telefônica realizada para follow-up. João demonstrou interesse em agendar uma demonstração.",
+        "metodo_contato": "telefone",
+        "pessoa_contato": "João Silva"
+      },
+      {
+        "data": "26/06/2024",
+        "hora": "09:00",
+        "nota": "Demonstração agendada para o dia 30/06/2024 às 14:00.",
+        "metodo_contato": "email",
+        "pessoa_contato": "João Silva"
+      }
+    ]
+  }
+]

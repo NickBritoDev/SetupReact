@@ -14,8 +14,12 @@ import { MdLogout } from "react-icons/md";
 import { useMobile } from "../../../helpers/responsividade/useMediaQuery";
 import dadosUsuario from "../../../json/usuario/data.json";
 import logo from "../images/logo.png";
+import { FaHome } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function NavbarComponent() {
+  const navigate = useNavigate();
+
   return (
     <Flex
       boxShadow={"lg"}
@@ -25,6 +29,7 @@ export default function NavbarComponent() {
       py={1}
     >
       <Flex
+        ml={4}
         boxShadow={"lg"}
         pr={4}
         rounded={"2xl"}
@@ -68,7 +73,7 @@ export default function NavbarComponent() {
             </Flex>
 
             <a href="https://www.portalmaisvalor.com/paginas/home.html">
-              <Tooltip mr={-4} hasArrow label="Sair" placement="right">
+              <Tooltip mr={-4} hasArrow label="Sair" placement="left">
                 <Button
                   color={"brand.invert_colors"}
                   _hover={{ transform: "translateX(5px)" }}
@@ -79,6 +84,18 @@ export default function NavbarComponent() {
                 </Button>
               </Tooltip>
             </a>
+            <Tooltip hasArrow label="Ir para home" placement="left">
+              <button>
+                <FaHome
+                  onClick={() => {
+                    navigate("/admin/home");
+                  }}
+                  style={{ marginRight: "20px" }}
+                  color={"black"}
+                  size={24}
+                />
+              </button>
+            </Tooltip>
           </WrapItem>
         </Wrap>
       </Box>

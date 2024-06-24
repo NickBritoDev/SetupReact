@@ -1,0 +1,23 @@
+[
+  {
+    "cliente": "João Silva",
+    "agenda": [
+      {
+        "horario": "24/06/2024 10:30",
+        "assunto": "Solicitação de mais informações sobre o produto X"
+      },
+      {
+        "horario": "24/06/2024 15:00",
+        "assunto": "Follow-up telefônico e interesse em agendar demonstração"
+      },
+      {
+        "horario": "24/06/2024 09:00",
+        "assunto": "Confirmação de demonstração agendada para 2024-06-30 às 14:00"
+      },
+      {
+        "horario": "24/06/2024 14:00",
+        "assunto": "Demonstração do produto X"
+      }
+    ]
+  }
+]

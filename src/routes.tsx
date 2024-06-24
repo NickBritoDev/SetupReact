@@ -13,7 +13,7 @@ import NaoAutorizado401 from "./pages/public/nao-autorizado";
 import Login from "./pages/public/login";
 
 import CrmLeadsBot from "./modules/admin/crm-leads-bot";
-import Marketplace from "./modules/public/marketplace";
+import Marketplace from "./modules/admin/marketplace";
 
 const Routes: React.FC = () => {
   const { keyStatus } = useKey();
@@ -47,6 +47,14 @@ const Routes: React.FC = () => {
             <Navigate to="/public/nao-autorizado" replace />
           ),
         },
+        {
+          path: "marketplace",
+          element: keyStatus ? (
+            <Marketplace />
+          ) : (
+            <Navigate to="/public/nao-autorizado" replace />
+          ),
+        },
       ],
     },
     {
@@ -57,7 +65,6 @@ const Routes: React.FC = () => {
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },
-        { path: "marketplace", element: <Marketplace /> },
       ],
     },
     { path: "*", element: <Navigate to="/public/nao-localizado" replace /> },
