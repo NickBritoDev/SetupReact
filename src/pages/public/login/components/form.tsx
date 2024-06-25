@@ -9,6 +9,7 @@ import {
   FormControl,
   FormErrorMessage,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import logo from "../images/logo.png";
@@ -20,6 +21,7 @@ import { usePostLogin } from "../hooks/usePostLogin";
 import { useNavigate } from "react-router-dom";
 
 export default function FormComponent() {
+  const toast = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const { UseRequestLogin, isLoading, isSuccess } = usePostLogin();
@@ -27,6 +29,14 @@ export default function FormComponent() {
 
   useEffect(() => {
     if (isSuccess) {
+      toast({
+        title: "Bem Vindo(a)",
+        description: "Você acessou um serviço Mais Valor",
+        status: "success",
+        duration: 5000,
+        position: "top-right",
+        isClosable: true,
+      });
       navigate("/admin/home");
     }
   }, [isSuccess]);

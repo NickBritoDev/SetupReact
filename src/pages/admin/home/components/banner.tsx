@@ -42,7 +42,7 @@ export default function BannerComponent() {
         top={0}
         flexDir={"column"}
       >
-        <Box textAlign={"center"} mt={52}>
+        <Box textAlign={"center"} mt={32}>
           <Heading>Tudo que sua empresa precisa em um só lugar!</Heading>
           <Text fontSize={22} fontWeight={"semibold"}>
             Explore suas ferramentas e impulsione suas vendas.

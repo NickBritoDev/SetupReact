@@ -19,38 +19,6 @@ export const useKey = (): KeyContextType => {
   return context;
 };
 
-// const base64UrlDecode = (str) => {
-//   let output = str.replace(/-/g, '+').replace(/_/g, '/');
-//   switch (output.length % 4) {
-//     case 0:
-//       break;
-//     case 2:
-//       output += '==';
-//       break;
-//     case 3:
-//       output += '=';
-//       break;
-//     default:
-//       throw 'Invalid base64 string';
-//   }
-//   const decodedStr = atob(output);
-//   try {
-//     console.log(JSON.parse(decodedStr))
-//     return JSON.parse(decodedStr);
-//   } catch (e) {
-//     console.error('Erro ao decodificar base64:', e);
-//     return null;
-//   }
-// };
-
-// const decodeJWT = (token) => {
-//   const parts = token.split('.');
-//   if (parts.length !== 3) {
-//     throw 'Token JWT inválido';
-//   }
-//   return base64UrlDecode(parts[1]);
-// };
-
 export const KeyProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
@@ -90,10 +58,7 @@ export const KeyProvider: React.FC<{ children: ReactNode }> = ({
     }, 5000);
   }, [data, error, token]);
 
-  // const decodedToken = token ? decodeJWT(token) : null;
-
   return (
-    // <KeyContext.Provider value={{ keyStatus, token, updateKeyStatus, decodedToken }}>
     <KeyContext.Provider value={{ keyStatus, token, updateKeyStatus }}>
       {children}
     </KeyContext.Provider>
