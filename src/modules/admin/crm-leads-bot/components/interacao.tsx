@@ -15,8 +15,11 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
     : maskPhone(detalhesLeads.telefone);
   const email = isNovo ? "email@exemple.com" : detalhesLeads.email;
 
-  const handleCall = () => {
-    window.location.href = `tel:+55${detalhesLeads.telefone}`;
+  const openZoiper = () => {
+    const telefone = detalhesLeads.telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
+    const linkZoiper = `zoiper:380${telefone}@sip.donnsolucoes.com.br`;
+    console.log("Link Zoiper:", linkZoiper); // Verifica o link no console
+    window.location.href = linkZoiper;
   };
 
   return (
@@ -50,7 +53,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
               alignItems={"center"}
               justifyContent={"center"}
               gap={2}
-              onClick={handleCall}
+              onClick={openZoiper}
             >
               <Text>Ligar</Text>
               <LuPhoneOutgoing size={22} />
