@@ -15,6 +15,10 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
     : maskPhone(detalhesLeads.telefone);
   const email = isNovo ? "email@exemple.com" : detalhesLeads.email;
 
+  const handleCall = () => {
+    window.location.href = `tel:+55${detalhesLeads.telefone}`;
+  };
+
   return (
     <Flex gap={10} w={"100%"}>
       <Flex
@@ -46,6 +50,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
               alignItems={"center"}
               justifyContent={"center"}
               gap={2}
+              onClick={handleCall}
             >
               <Text>Ligar</Text>
               <LuPhoneOutgoing size={22} />

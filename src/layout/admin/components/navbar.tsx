@@ -27,6 +27,7 @@ export default function NavbarComponent() {
       alignItems={"center"}
       justifyContent={"space-between"}
       py={1}
+      borderRadius={"0 0 20px 20px"}
     >
       <Flex
         ml={4}
