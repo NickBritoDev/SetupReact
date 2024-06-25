@@ -11,17 +11,17 @@ import {
 } from "@chakra-ui/react";
 import contatos from "../../../../json/crm/data2.json";
 import { RiUserSettingsLine } from "react-icons/ri";
-import { ContactTypes } from "../types/types";
 import user from "../images/user.png";
 import back from "../images/back.png";
 import FiltroComponent from "./filtro";
 import RecepcaoComponent from "./recepcao";
 import SidebarComponent from "./sidebar";
 import InteracaoComponent from "./interacao";
+import { Contato } from "../types/types";
 
-const ModalComponent: React.FC<{ contatos: ContactTypes[] }> = () => {
+const ModalComponent: React.FC<{ contatos: Contato[] }> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [detalhesLeads, setDetalhesLeads] = useState({} as ContactTypes);
+  const [detalhesLeads, setDetalhesLeads] = useState({} as Contato);
   const [hideRecepcao, setHideRecepcao] = useState(false);
 
   const [filterScore, setFilterScore] = useState<{ [key: string]: boolean }>({
@@ -49,7 +49,7 @@ const ModalComponent: React.FC<{ contatos: ContactTypes[] }> = () => {
     FINALIZADO: 4,
   };
 
-  const compareContacts = (a: ContactTypes, b: ContactTypes): number => {
+  const compareContacts = (a: Contato, b: Contato): number => {
     if (statusPriority[a.status!] !== statusPriority[b.status!]) {
       return statusPriority[a.status!] - statusPriority[b.status!];
     }
