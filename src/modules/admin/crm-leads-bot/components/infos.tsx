@@ -12,7 +12,7 @@ export default function InfosComponent({
 }: any) {
   return (
     <Flex p={2} flexDir={"column"} w={"40%"} rounded={"2xl"} boxShadow={"lg"}>
-      <Flex flexDir={"column"} mb={4} gap={1} w={"100%"}>
+      <Flex flexDir={"column"} mb={2} gap={1} w={"100%"}>
         <DialogStatusComponent detalhesLeads={detalhesLeads} />
         <DialogObservacoesComponent />
       </Flex>
@@ -27,7 +27,7 @@ export default function InfosComponent({
       <Divider mt={2} />
       <Text
         mt={4}
-        mb={4}
+        mb={2}
         boxShadow={"md"}
         p={2}
         rounded={"xl"}
@@ -37,7 +37,7 @@ export default function InfosComponent({
         {detalhesLeads.nome}
       </Text>
       <Text
-        mb={4}
+        mb={2}
         display={"flex"}
         flexDir={"column"}
         boxShadow="md"
@@ -49,7 +49,7 @@ export default function InfosComponent({
         <Text sx={isNovo ? { filter: "blur(5px)" } : {}}>{email}</Text>
       </Text>
       <Text
-        mb={4}
+        mb={2}
         boxShadow={"md"}
         p={2}
         rounded={"xl"}
@@ -59,7 +59,7 @@ export default function InfosComponent({
         {maskCPF(detalhesLeads.cpf)}
       </Text>
       <Text
-        mb={4}
+        mb={2}
         display={"flex"}
         flexDir={"column"}
         boxShadow="md"
@@ -71,7 +71,7 @@ export default function InfosComponent({
         <Text sx={isNovo ? { filter: "blur(5px)" } : {}}>{telefone}</Text>
       </Text>
       <Text
-        mb={4}
+        mb={2}
         boxShadow={"md"}
         p={2}
         rounded={"xl"}

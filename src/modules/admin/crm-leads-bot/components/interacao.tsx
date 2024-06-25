@@ -36,7 +36,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           w={"100%"}
           alignItems={"center"}
           justifyContent={"center"}
-          ml={6}
+          ml={8}
           gap={6}
           mt={4}
         >

@@ -18,6 +18,7 @@ import {
   Td,
   Textarea,
   Flex,
+  AlertDialogCloseButton,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { FaUserClock } from "react-icons/fa6";
@@ -36,7 +37,10 @@ export default function DialogObservacoesComponent() {
         label="Incluir/Visualizar observações do lead"
       >
         <Button
-          onClick={onOpen}
+          onClick={() => {
+            onOpen();
+            setExibeCampoInclusao(false);
+          }}
           colorScheme="orange"
           w={"100%"}
           display={"flex"}
@@ -60,6 +64,7 @@ export default function DialogObservacoesComponent() {
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Visualizar/Incluir observações
             </AlertDialogHeader>
+            <AlertDialogCloseButton />
 
             <AlertDialogBody>
               <TableContainer>
@@ -85,27 +90,6 @@ export default function DialogObservacoesComponent() {
                 </Table>
               </TableContainer>
 
-              <Flex gap={2} mt={10} flexDir={"column"}>
-                <Button
-                  display={exibeCampoInclusao ? "none" : ""}
-                  onClick={() => {
-                    setExibeCampoInclusao(true);
-                  }}
-                  w={"100%"}
-                  colorScheme="green"
-                >
-                  Incluir nova observação
-                </Button>
-                <Button
-                  display={exibeCampoInclusao ? "none" : ""}
-                  onClick={onClose}
-                  w={"100%"}
-                  colorScheme="red"
-                >
-                  Fechar observações
-                </Button>
-              </Flex>
-
               {exibeCampoInclusao && (
                 <>
                   <Text mt={4} fontWeight={"semibold"} fontSize={20}>
@@ -116,19 +100,37 @@ export default function DialogObservacoesComponent() {
               )}
             </AlertDialogBody>
 
-            <AlertDialogFooter display={exibeCampoInclusao ? "flex" : "none"}>
-              <Button
-                colorScheme="red"
-                ref={cancelRef}
-                onClick={() => {
-                  setExibeCampoInclusao(false);
-                }}
-              >
-                Cancelar
-              </Button>
-              <Button colorScheme="green" onClick={onClose} ml={3}>
-                Incluir
-              </Button>
+            <AlertDialogFooter display={"flex"}>
+              {exibeCampoInclusao ? (
+                <Flex>
+                  <Button
+                    colorScheme="red"
+                    ref={cancelRef}
+                    onClick={() => {
+                      setExibeCampoInclusao(false);
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button colorScheme="green" onClick={onClose} ml={3}>
+                    Incluir
+                  </Button>
+                </Flex>
+              ) : (
+                <Flex gap={2} flexDir={"row"}>
+                  <Button onClick={onClose} colorScheme="red">
+                    Fechar observações
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setExibeCampoInclusao(true);
+                    }}
+                    colorScheme="green"
+                  >
+                    Incluir nova observação
+                  </Button>
+                </Flex>
+              )}
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
