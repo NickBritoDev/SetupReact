@@ -35,5 +35,5 @@ export interface Contato {
   origem: string;
   status: string;
   score: string;
-  logs: Log[];
+  logs?: Log[];
 }
