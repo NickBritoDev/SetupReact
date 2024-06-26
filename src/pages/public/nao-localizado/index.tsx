@@ -10,8 +10,10 @@ import {
 import imgNaoLocalizado from "./image/nao-localizado.png";
 import { useMobile } from "../../../helpers/responsividade/useMediaQuery";
 import { MdLogout } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function NaoLocalizado404() {
+  const navigate = useNavigate();
   return (
     <Flex
       flexDir={"column"}
@@ -52,19 +54,20 @@ export default function NaoLocalizado404() {
         suporte.
       </Text>
 
-      <a href="http://localhost:5173/">
-        <Tooltip mr={-4} hasArrow label="Sair" placement="right">
-          <Button
-            mt={4}
-            gap={2}
-            _hover={{ transform: "translateX(5px)" }}
-            colorScheme="green"
-          >
-            <Text>Voltar para a página inicial</Text>
-            <MdLogout size={24} />
-          </Button>
-        </Tooltip>
-      </a>
+      <Tooltip mr={-4} hasArrow label="Sair" placement="right">
+        <Button
+          onClick={() => {
+            navigate("/");
+          }}
+          mt={4}
+          gap={2}
+          _hover={{ transform: "translateX(5px)" }}
+          colorScheme="green"
+        >
+          <Text>Voltar para a página inicial</Text>
+          <MdLogout size={24} />
+        </Button>
+      </Tooltip>
     </Flex>
   );
 }
