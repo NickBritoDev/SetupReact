@@ -15,7 +15,6 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 
-import dadosUsuario from "../../../../json/usuario/data.json";
 import { FcFilledFilter } from "react-icons/fc";
 import { BsFire } from "react-icons/bs";
 import { BiSolidPhoneCall } from "react-icons/bi";
