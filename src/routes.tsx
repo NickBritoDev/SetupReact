@@ -1,3 +1,4 @@
+import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { useKey } from "./context/auth/token-login/authContext";
 
@@ -23,7 +24,11 @@ const Routes: React.FC = () => {
   const routing = useRoutes([
     {
       path: "/admin",
-      element: <LayoutAdmin />,
+      element: keyStatus ? (
+        <LayoutAdmin />
+      ) : (
+        <Navigate to="/public/login" replace />
+      ),
       children: [
         {
           path: "home",

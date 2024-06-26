@@ -183,9 +183,9 @@ export default function CardsComponent({ filters }: FiltrosType) {
               mb={-3}
             >
               <AvatarGroup size="sm" max={2}>
-                {card.grupo.map((member) => (
+                {card.grupo.map((member, index) => (
                   <Avatar
-                    key={member.idUsuario}
+                    key={index}
                     name={member.nome}
                     src={`https://appbancos.s3.amazonaws.com/${member.foto}`}
                   />
