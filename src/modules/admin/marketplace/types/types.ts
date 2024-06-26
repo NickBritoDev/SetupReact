@@ -14,3 +14,17 @@ export interface UsuariosType {
   cnpj_matriz: string;
   foto: string;
 }
+
+export interface CardType {
+  status: string;
+  ferramenta: string;
+  ativo: boolean;
+  banner: string;
+  descricao: string | null;
+  foto: string | null;
+  grupo: {
+    idUsuario: string;
+    nome: string;
+    foto: string;
+  }[];
+}

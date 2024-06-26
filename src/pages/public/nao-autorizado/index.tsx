@@ -57,7 +57,7 @@ export default function NaoAutorizado401() {
             _hover={{ transform: "translateX(5px)" }}
             colorScheme="green"
           >
-            <Text>Voltar ao Portal</Text>
+            <Text>Voltar para a página inicial</Text>
             <MdLogout size={24} />
           </Button>
         </Tooltip>

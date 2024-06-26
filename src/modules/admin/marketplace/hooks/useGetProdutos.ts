@@ -16,6 +16,7 @@ const useGetProdutos = () => {
       return response.data;
     },
     {
+      enabled: !!token,
       refetchOnWindowFocus: true,
       staleTime: 5000,
       refetchInterval: 5000,

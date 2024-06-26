@@ -1,11 +1,4 @@
-import {
-  useState,
-  useEffect,
-  JSXElementConstructor,
-  Key,
-  ReactElement,
-  ReactNode,
-} from "react";
+import { useState, useEffect, Key } from "react";
 import {
   Avatar,
   AvatarGroup,
@@ -30,7 +23,7 @@ import simuladorProposta from "../images/simuladorProposta.png";
 import chatbot from "../images/chatbot.png";
 import confirmacaowpp from "../images/confirmacaowpp.png";
 import disparador from "../images/disparador.png";
-import { FiltrosType } from "../types/types";
+import { CardType, FiltrosType } from "../types/types";
 import { useGetProdutos } from "../hooks/useGetProdutos";
 
 const bannerImages: Record<string, string> = {
@@ -41,183 +34,167 @@ const bannerImages: Record<string, string> = {
 };
 
 export default function CardsComponent({ filters }: FiltrosType) {
-  const { data } = useGetProdutos();
-  const [filteredData, setFilteredData] = useState(data ? data : []);
+  const { data, isLoading } = useGetProdutos();
+  const [filteredData, setFilteredData] = useState<CardType[]>([]);
+  const isMobile = useMobile();
 
   useEffect(() => {
-    let newFilteredData = data ? data : [];
+    if (!isLoading && data) {
+      let newFilteredData: CardType[] = [...data];
 
-    if (filters.ferramentas.length > 0) {
-      newFilteredData = newFilteredData.filter((f: { ferramenta: any }) =>
-        filters.ferramentas.includes(f.ferramenta),
-      );
-    }
-    if (filters.status.length > 0) {
-      newFilteredData = newFilteredData.filter((f: { ativo: any }) => {
-        const status = f.ativo ? "Ativos" : "Inativos";
-        return filters.status.includes(status);
-      });
-    }
-    if (filters.grupos.length > 0) {
-      newFilteredData = newFilteredData.filter(
-        (f: { grupo: string | any[] }) => {
+      if (filters.ferramentas.length > 0) {
+        newFilteredData = newFilteredData.filter((f: CardType) =>
+          filters.ferramentas.includes(f.ferramenta),
+        );
+      }
+      if (filters.status.length > 0) {
+        newFilteredData = newFilteredData.filter((f: CardType) => {
+          const status = f.ativo ? "Ativos" : "Inativos";
+          return filters.status.includes(status);
+        });
+      }
+      if (filters.grupos.length > 0) {
+        newFilteredData = newFilteredData.filter((f: CardType) => {
           const grupo =
             f.grupo.length > 0
               ? "Com grupo de confiança"
               : "Sem grupo de confiança";
           return filters.grupos.includes(grupo);
-        },
-      );
-    }
+        });
+      }
 
-    setFilteredData(newFilteredData);
-  }, [filters]);
+      setFilteredData(newFilteredData);
+    }
+  }, [filters, data, isLoading]);
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <Grid
       h={"100vh"}
-      templateColumns={useMobile() ? "repeat(1, 1fr)" : "repeat(4, 1fr)"}
+      templateColumns={isMobile ? "repeat(1, 1fr)" : "repeat(4, 1fr)"} // Use a variável isMobile aqui
       gap={6}
     >
-      {filteredData.map(
-        (
-          card: {
-            status: any;
-            ferramenta:
-              | string
-              | number
-              | boolean
-              | ReactElement<any, string | JSXElementConstructor<any>>
-              | Iterable<ReactNode>
-              | null
-              | undefined;
-            ativo: any;
-            banner: string | number;
-            descricao: string | null;
-            foto: string | undefined;
-            grupo: any[];
-          },
-          index: Key | null | undefined,
-        ) => (
+      {filteredData.map((card: CardType, index: Key | null | undefined) => (
+        <Flex
+          h={"max-content"}
+          mt={-4}
+          key={index}
+          boxShadow={"lg"}
+          p={4}
+          rounded={"xl"}
+          border={"1px solid #229544"}
+          w={"100%"}
+          flexDir={"column"}
+        >
           <Flex
-            h={"max-content"}
-            mt={-4}
-            key={index}
-            boxShadow={"lg"}
-            p={4}
-            rounded={"xl"}
-            border={"1px solid #229544"}
-            w={"100%"}
-            flexDir={"column"}
+            pos={"relative"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
           >
-            <Flex
-              pos={"relative"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-            >
-              <Text fontWeight={"semibold"}>{card.ferramenta}</Text>
-              <Flex>
-                <Badge
-                  top={1}
-                  right={6}
-                  pos={"absolute"}
-                  colorScheme={
-                    card.status === "Liberado"
-                      ? "green"
-                      : card.status === "Não Solicitado"
-                        ? "orange"
-                        : "red"
-                  }
-                >
-                  {card.status}
-                </Badge>
-                <Menu>
-                  <Tooltip
-                    mb={-4}
-                    ml={-4}
-                    placement="top"
-                    hasArrow
-                    label={"Exibir opções"}
-                  >
-                    <MenuButton
-                      top={-2}
-                      right={-6}
-                      pos={"absolute"}
-                      as={IconButton}
-                      aria-label="Options"
-                      icon={<BsThreeDots size={22} />}
-                      variant="unstyled"
-                    />
-                  </Tooltip>
-                  <MenuList mt={-4}>
-                    <MenuItem>Solicitar cancelamento</MenuItem>
-                    <MenuItem>Solicitar renovação</MenuItem>
-                    <MenuItem>Solicitar acessos</MenuItem>
-                    <MenuItem>Editar acessos</MenuItem>
-                    <MenuItem>
-                      <ModalComponent
-                        banner={bannerImages[card.banner]}
-                        descricao={card.descricao}
-                        ferramenta={card.ferramenta}
-                      />
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              </Flex>
-            </Flex>
-
-            <Flex
-              w={"100%"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-            >
-              <Flex
-                mt={4}
-                gap={4}
-                w={"100%"}
-                alignItems={"center"}
-                justifyContent={"flex-start"}
+            <Text fontWeight={"semibold"}>{card.ferramenta}</Text>
+            <Flex>
+              <Badge
+                top={1}
+                right={6}
+                pos={"absolute"}
+                colorScheme={
+                  card.status === "Liberado"
+                    ? "green"
+                    : card.status === "Não Solicitado"
+                      ? "orange"
+                      : "red"
+                }
               >
-                <Image
-                  rounded={"xl"}
-                  w={"50px"}
-                  src={logo}
-                  alt="logo mais valor"
-                />
-                <FaArrowRightArrowLeft color="gray" size={30} />
-                <Image
-                  rounded={"xl"}
-                  w={"50px"}
-                  src={
-                    card.foto !== null
-                      ? `https://appbancos.s3.amazonaws.com/${card.foto}`
-                      : "https://img.freepik.com/vetores-premium/design-de-logotipo-de-produtos-originais-e-icone-de-vetor-original-design-de-cracha-de-confianca_526569-594.jpg"
-                  }
-                  alt="logo mais valor"
-                />
-              </Flex>
-
-              <Flex alignItems={"center"} justifyContent={"center"} mb={-3}>
-                <AvatarGroup size="sm" max={2}>
-                  {card.grupo.map(
-                    (member: {
-                      idUsuario: Key | null | undefined;
-                      nome: string | undefined;
-                      foto: string | undefined;
-                    }) => (
-                      <Avatar
-                        key={member.idUsuario}
-                        name={member.nome}
-                        src={`https://appbancos.s3.amazonaws.com/${member.foto}`}
-                      />
-                    ),
-                  )}
-                </AvatarGroup>
-              </Flex>
+                {card.status}
+              </Badge>
+              <Menu>
+                <Tooltip
+                  mb={-4}
+                  ml={-4}
+                  placement="top"
+                  hasArrow
+                  label={"Exibir opções"}
+                >
+                  <MenuButton
+                    top={-2}
+                    right={-6}
+                    pos={"absolute"}
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<BsThreeDots size={22} />}
+                    variant="unstyled"
+                  />
+                </Tooltip>
+                <MenuList mt={-4}>
+                  <MenuItem>Solicitar cancelamento</MenuItem>
+                  <MenuItem>Solicitar renovação</MenuItem>
+                  <MenuItem>Solicitar acessos</MenuItem>
+                  <MenuItem>Editar acessos</MenuItem>
+                  <MenuItem>
+                    <ModalComponent
+                      banner={bannerImages[card.banner]}
+                      descricao={card.descricao}
+                      ferramenta={card.ferramenta}
+                    />
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </Flex>
           </Flex>
-        ),
-      )}
+
+          <Flex
+            w={"100%"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
+            <Flex
+              mt={4}
+              gap={4}
+              w={"100%"}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              <Image
+                rounded={"xl"}
+                w={"50px"}
+                src={logo}
+                alt="logo mais valor"
+              />
+              <FaArrowRightArrowLeft color="gray" size={30} />
+              <Image
+                rounded={"xl"}
+                w={"50px"}
+                src={
+                  card.foto !== null
+                    ? `https://appbancos.s3.amazonaws.com/${card.foto}`
+                    : "https://img.freepik.com/vetores-premium/design-de-logotipo-de-produtos-originais-e-icone-de-vetor-original-design-de-cracha-de-confianca_526569-594.jpg"
+                }
+                alt="logo mais valor"
+              />
+            </Flex>
+
+            <Flex
+              display={card.grupo.length > 3 ? "flex" : "none"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              mb={-3}
+            >
+              <AvatarGroup size="sm" max={2}>
+                {card.grupo.map((member) => (
+                  <Avatar
+                    key={member.idUsuario}
+                    name={member.nome}
+                    src={`https://appbancos.s3.amazonaws.com/${member.foto}`}
+                  />
+                ))}
+              </AvatarGroup>
+            </Flex>
+          </Flex>
+        </Flex>
+      ))}
     </Grid>
   );
 }
