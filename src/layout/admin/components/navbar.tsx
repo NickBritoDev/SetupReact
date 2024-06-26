@@ -9,16 +9,28 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-// import SidebarComponent from "./sidebar";
 import { MdLogout } from "react-icons/md";
 import { useMobile } from "../../../helpers/responsividade/useMediaQuery";
-import dadosUsuario from "../../../json/usuario/data.json";
 import logo from "../images/logo.png";
 import { FaHome } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useGetMinhaConta } from "../../../hooks/useGetMinhaConta";
+// import SidebarComponent from "./sidebar";
 
 export default function NavbarComponent() {
+  const { data } = useGetMinhaConta();
   const navigate = useNavigate();
+
+  const deleteCookie = (name: string) => {
+    document.cookie =
+      name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
+  };
+
+  const handleLogout = () => {
+    deleteCookie("keyStatus");
+    deleteCookie("token");
+    window.location.href = "http://localhost:5173/";
+  };
 
   return (
     <Flex
@@ -50,41 +62,37 @@ export default function NavbarComponent() {
             justifyContent={"center"}
             gap={2}
           >
-            <Avatar
-              size={"sm"}
-              name={dadosUsuario[0].nome}
-              src={dadosUsuario[0].foto}
-            />
+            <Avatar size={"sm"} name={data?.nome} src={data?.foto} />
 
             <Flex
               display={useMobile() ? "none" : "flex"}
               flexDir={"column"}
-              alignItems={"flex-start"}
+              alignItems={"flex-end"}
               justifyContent={"center"}
             >
-              <Text fontWeight={"semibold"}>{dadosUsuario[0].nome}</Text>
+              <Text fontWeight={"semibold"}>{data?.nome}</Text>
               <Text
                 color={"brand.invert_color_subtitle"}
                 fontWeight={"semibold"}
                 fontSize={14}
                 mt={-2}
               >
-                {dadosUsuario[0].cargo}
+                {data?.cnpjMatriz}
               </Text>
             </Flex>
 
-            <a href="https://www.portalmaisvalor.com/paginas/home.html">
-              <Tooltip mr={-4} hasArrow label="Sair" placement="left">
-                <Button
-                  color={"brand.invert_colors"}
-                  _hover={{ transform: "translateX(5px)" }}
-                  colorScheme="transparent"
-                  bg={"none"}
-                >
-                  <MdLogout size={24} />
-                </Button>
-              </Tooltip>
-            </a>
+            <Tooltip mr={-4} hasArrow label="Sair" placement="left">
+              <Button
+                color={"brand.invert_colors"}
+                _hover={{ transform: "translateX(5px)" }}
+                colorScheme="transparent"
+                bg={"none"}
+                onClick={handleLogout}
+              >
+                <MdLogout size={24} />
+              </Button>
+            </Tooltip>
+
             <Tooltip hasArrow label="Ir para home" placement="left">
               <button>
                 <FaHome

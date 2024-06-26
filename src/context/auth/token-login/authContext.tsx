@@ -1,13 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import Cookies from "js-cookie";
 import { KeyContextType } from "./types";
-import { useGetValidacaoToken } from "../../../pages/public/token-login/hooks/getValidacaoToken";
 
 const KeyContext = createContext<KeyContextType | undefined>(undefined);
 
@@ -47,16 +40,6 @@ export const KeyProvider: React.FC<{ children: ReactNode }> = ({
       Cookies.remove("token");
     }
   };
-
-  const { data, error } = useGetValidacaoToken(token);
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (!data.token) {
-        updateKeyStatus(null, null);
-      }
-    }, 5000);
-  }, [data, error, token]);
 
   return (
     <KeyContext.Provider value={{ keyStatus, token, updateKeyStatus }}>

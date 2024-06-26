@@ -1,26 +1,21 @@
 [
   {
-    "total": 100,
     "leads": [
       {
         "status": "NOVO",
-        "quantidade": 18,
-        "concluidos": 12
+        "quantidade": 18
       },
       {
         "status": "CONTATO",
-        "quantidade": 32,
-        "concluidos": 7
+        "quantidade": 32
       },
       {
         "status": "NEGOCIANDO",
-        "quantidade": 10,
-        "concluidos": 9
+        "quantidade": 10
       },
       {
         "status": "FINALIZADO",
-        "quantidade": 40,
-        "concluidos": 17
+        "quantidade": 40
       }
     ]
   }

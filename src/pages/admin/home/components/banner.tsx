@@ -1,18 +1,39 @@
-import { Box, Flex, Heading, Image, Text, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  Tooltip,
+  useToast,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import banner from "../images/banner.jpg";
-import { FaFileImport, FaRoad } from "react-icons/fa6";
+import { FaFileImport, FaRoad } from "react-icons/fa";
 import {
   BsCreditCard2Front,
   BsFillPatchCheckFill,
   BsRobot,
 } from "react-icons/bs";
-import { TbBrandSpeedtest } from "react-icons/tb";
-import ferramentas from "../../../../json/home/data.json";
+import { GrDashboard } from "react-icons/gr";
+import { useAuthHelpers } from "../../../../helpers/conta/permissao";
 
 export default function BannerComponent() {
   const navigate = useNavigate();
-  const permissoes = ferramentas[0].ferramentas[0];
+  const toast = useToast();
+  const { isAdmin, temPermissao } = useAuthHelpers();
+
+  const exibeToast = () => {
+    return toast({
+      title: "Eagle Software House",
+      description:
+        "Você não tem permissão de acesso a essa ferramenta, entre em contato com seu gestor para solicitação de uso.",
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+      position: "top-right",
+    });
+  };
 
   return (
     <Flex
@@ -60,23 +81,29 @@ export default function BannerComponent() {
           <Tooltip
             hasArrow
             label={
-              permissoes.crm ? "acessar ferramenta" : "sem permissão de acesso"
+              temPermissao("CRM")
+                ? "acessar ferramenta"
+                : "sem permissão de acesso"
             }
             placement="top"
           >
             <Box
+              cursor={temPermissao("CRM") ? "pointer" : "not-allowed"}
               onClick={() => {
-                navigate("/admin/crm");
+                if (temPermissao("CRM")) {
+                  navigate("/admin/crm");
+                } else {
+                  exibeToast();
+                }
               }}
               _hover={{
                 transform: "translateY(-20px)",
-                bg: permissoes.crm ? "#229544" : "red",
+                bg: temPermissao("CRM") ? "#229544" : "red",
                 color: "white",
               }}
               transition="transform 0.2s, background-color 0.2s, color 0.2s"
               boxShadow={"xl"}
               bg={"white"}
-              cursor={permissoes.crm ? "pointer" : "not-allowed"}
               rounded={"2xl"}
               w={"200px"}
               h={"150px"}
@@ -95,22 +122,29 @@ export default function BannerComponent() {
           <Tooltip
             hasArrow
             label={
-              permissoes.chatbot
+              temPermissao("Chatbot")
                 ? "acessar ferramenta"
                 : "sem permissão de acesso"
             }
             placement="top"
           >
             <Box
+              cursor={temPermissao("Chatbot") ? "pointer" : "not-allowed"}
+              onClick={() => {
+                if (temPermissao("Chatbot")) {
+                  navigate("/admin/chatbot");
+                } else {
+                  exibeToast();
+                }
+              }}
               _hover={{
                 transform: "translateY(-20px)",
-                bg: permissoes.chatbot ? "#229544" : "red",
+                bg: temPermissao("Chatbot") ? "#229544" : "red",
                 color: "white",
               }}
               transition="transform 0.2s, background-color 0.2s, color 0.2s"
               boxShadow={"xl"}
               bg={"white"}
-              cursor={permissoes.chatbot ? "pointer" : "not-allowed"}
               rounded={"2xl"}
               w={"200px"}
               h={"150px"}
@@ -126,27 +160,26 @@ export default function BannerComponent() {
             </Box>
           </Tooltip>
 
-          <Tooltip
-            hasArrow
-            label={
-              permissoes.confirmacao_proposta
-                ? "acessar ferramenta"
-                : "sem permissão de acesso"
-            }
-            placement="top"
-          >
+          <Tooltip hasArrow label={"acessar ferramenta"} placement="top">
             <Box
+              cursor={
+                temPermissao("ConfirmacaoProposta") ? "pointer" : "not-allowed"
+              }
+              onClick={() => {
+                if (temPermissao("ConfirmacaoProposta")) {
+                  navigate("/admin/confirmacao-proposta");
+                } else {
+                  exibeToast();
+                }
+              }}
               _hover={{
                 transform: "translateY(-20px)",
-                bg: permissoes.confirmacao_proposta ? "#229544" : "red",
+                bg: temPermissao("ConfirmacaoProposta") ? "#229544" : "red",
                 color: "white",
               }}
               transition="transform 0.2s, background-color 0.2s, color 0.2s"
               boxShadow={"xl"}
               bg={"white"}
-              cursor={
-                permissoes.confirmacao_proposta ? "pointer" : "not-allowed"
-              }
               rounded={"2xl"}
               w={"200px"}
               h={"150px"}
@@ -162,25 +195,24 @@ export default function BannerComponent() {
             </Box>
           </Tooltip>
 
-          <Tooltip
-            hasArrow
-            label={
-              permissoes.simulador
-                ? "acessar ferramenta"
-                : "sem permissão de acesso"
-            }
-            placement="top"
-          >
+          <Tooltip hasArrow label={"acessar ferramenta"} placement="top">
             <Box
+              cursor={temPermissao("Simulador") ? "pointer" : "not-allowed"}
+              onClick={() => {
+                if (temPermissao("Simulador")) {
+                  navigate("/admin/simulador");
+                } else {
+                  exibeToast();
+                }
+              }}
               _hover={{
                 transform: "translateY(-20px)",
-                bg: permissoes.simulador ? "#229544" : "red",
+                bg: temPermissao("Simulador") ? "#229544" : "red",
                 color: "white",
               }}
               transition="transform 0.2s, background-color 0.2s, color 0.2s"
               boxShadow={"xl"}
               bg={"white"}
-              cursor={permissoes.simulador ? "pointer" : "not-allowed"}
               rounded={"2xl"}
               w={"200px"}
               h={"150px"}
@@ -189,32 +221,33 @@ export default function BannerComponent() {
               justifyContent={"center"}
               flexDir={"column"}
             >
-              <TbBrandSpeedtest size={40} />
+              <GrDashboard size={40} />
               <Text fontWeight={"semibold"} mt={4}>
                 Simulador
               </Text>
             </Box>
           </Tooltip>
 
-          <Tooltip
-            hasArrow
-            label={
-              permissoes.importador_vagas
-                ? "acessar ferramenta"
-                : "sem permissão de acesso"
-            }
-            placement="top"
-          >
+          <Tooltip hasArrow label={"acessar ferramenta"} placement="top">
             <Box
+              cursor={
+                temPermissao("ImportadorVagas") ? "pointer" : "not-allowed"
+              }
+              onClick={() => {
+                if (temPermissao("ImportadorVagas")) {
+                  navigate("/admin/confirmacao-proposta");
+                } else {
+                  exibeToast();
+                }
+              }}
               _hover={{
                 transform: "translateY(-20px)",
-                bg: permissoes.importador_vagas ? "#229544" : "red",
+                bg: temPermissao("ImportadorVagas") ? "#229544" : "red",
                 color: "white",
               }}
               transition="transform 0.2s, background-color 0.2s, color 0.2s"
               boxShadow={"xl"}
               bg={"white"}
-              cursor={permissoes.importador_vagas ? "pointer" : "not-allowed"}
               rounded={"2xl"}
               w={"200px"}
               h={"150px"}
@@ -230,29 +263,25 @@ export default function BannerComponent() {
             </Box>
           </Tooltip>
 
-          <Tooltip
-            hasArrow
-            label={
-              permissoes.marketplace
-                ? "acessar ferramenta"
-                : "sem permissão de acesso"
-            }
-            placement="top"
-          >
+          <Tooltip hasArrow label={"acessar ferramenta"} placement="top">
             <Box
+              cursor={isAdmin ? "pointer" : "not-allowed"}
               onClick={() => {
-                navigate("/admin/marketplace");
+                if (isAdmin) {
+                  navigate("/admin/marketplace");
+                } else {
+                  exibeToast();
+                }
               }}
-              pointerEvents={permissoes.marketplace ? "all" : "none"}
               _hover={{
                 transform: "translateY(-20px)",
-                bg: "#229544",
+                bg: isAdmin ? "#229544" : "red",
                 color: "white",
               }}
+              pointerEvents={"all"}
               transition="transform 0.2s, background-color 0.2s, color 0.2s"
               boxShadow={"xl"}
               bg={"white"}
-              cursor={permissoes.marketplace ? "pointer" : "not-allowed"}
               rounded={"2xl"}
               w={"200px"}
               h={"150px"}

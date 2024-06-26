@@ -26,6 +26,7 @@ import { FaTemperatureArrowUp, FaUserPlus } from "react-icons/fa6";
 import { SiFireship } from "react-icons/si";
 import { GiIceCube } from "react-icons/gi";
 import { FiltrosTypes } from "../types/types";
+import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 
 export default function FiltroComponent({
   filterStatus,
@@ -34,6 +35,8 @@ export default function FiltroComponent({
   onClose,
   toggleFilterStatus,
 }: FiltrosTypes) {
+  const { data } = useGetMinhaConta();
+
   return (
     <Flex
       alignItems={"center"}
@@ -147,26 +150,22 @@ export default function FiltroComponent({
           justifyContent={"center"}
           gap={2}
         >
-          <Avatar
-            size={"sm"}
-            name={dadosUsuario[0].nome}
-            src={dadosUsuario[0].foto}
-          />
+          <Avatar size={"sm"} name={data?.nome} src={data?.foto} />
 
           <Flex
             display={useMobile() ? "none" : "flex"}
             flexDir={"column"}
-            alignItems={"flex-start"}
+            alignItems={"flex-end"}
             justifyContent={"center"}
           >
-            <Text fontWeight={"semibold"}>{dadosUsuario[0].nome}</Text>
+            <Text fontWeight={"semibold"}>{data?.nome}</Text>
             <Text
               color={"brand.invert_color_subtitle"}
               fontWeight={"semibold"}
               fontSize={14}
               mt={-2}
             >
-              {dadosUsuario[0].cargo}
+              {data.cnpjMatriz}
             </Text>
           </Flex>
 

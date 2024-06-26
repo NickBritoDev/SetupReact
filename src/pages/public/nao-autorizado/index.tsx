@@ -49,7 +49,7 @@ export default function NaoAutorizado401() {
         entre em contato com o desenvolvimento.
       </Text>
 
-      <a href="https://www.portalmaisvalor.com/paginas/home.html">
+      <a href="http://localhost:5173/">
         <Tooltip mr={-4} hasArrow label="Sair" placement="right">
           <Button
             mt={4}

@@ -183,7 +183,7 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
                 </Stack>
               </Flex>
 
-              <Flex flexDir={"column"}>
+              <Flex display={"none"} flexDir={"column"}>
                 <Stack mt={2} spacing={2} direction="column">
                   <Menu closeOnSelect={false}>
                     <MenuButton
