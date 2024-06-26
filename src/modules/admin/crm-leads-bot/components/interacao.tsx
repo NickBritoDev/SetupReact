@@ -1,12 +1,12 @@
 import { Button, Text, Flex, Image, Heading, Tooltip } from "@chakra-ui/react";
 import { LuPhoneOutgoing } from "react-icons/lu";
-import { TfiEmail } from "react-icons/tfi";
 import { SiWhatsapp } from "react-icons/si";
 import { maskPhone } from "../../../../utils/mask/mascaras";
 import { MdOutlineTextsms } from "react-icons/md";
 import InfosComponent from "./infos";
 import LogsComponent from "./logs";
 import AgendaComponent from "./agenda";
+import DialogEmailComponent from "./dialogEmail";
 
 export default function InteracaoComponent({ user, detalhesLeads }: any) {
   const isNovo = detalhesLeads.status === "NOVO";
@@ -68,17 +68,10 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             </Button>
           </Tooltip>
 
-          <Tooltip hasArrow placement="top" label="Enviar email">
-            <Button
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              gap={2}
-            >
-              <Text>Email</Text>
-              <TfiEmail size={22} />
-            </Button>
-          </Tooltip>
+          <DialogEmailComponent
+            produto={detalhesLeads.produto}
+            email={detalhesLeads.email}
+          />
 
           <Tooltip hasArrow placement="top" label="Enviar whatsapp">
             <Button
