@@ -1,17 +1,16 @@
 import { useQuery } from "react-query";
 import connectApi from "../../../../api/connect";
 import { useKey } from "../../../../context/auth/token-login/authContext";
-import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 
-const useGetUsuarios = () => {
+const useGetUsuariosNivelGerente = ({ perfil, nome }: any) => {
   const { token } = useKey();
-  const { data } = useGetMinhaConta();
+  console.log(perfil, nome);
 
   return useQuery(
-    "useGetUsuarios",
+    "useGetUsuariosNivelGerente",
     async () => {
       const response = await connectApi.get(
-        `/v1/usuarios?where={'supervisor': '${data?.nome}'}&select=['id_acesso', 'perfil', 'nome', 'cnpj_matriz', 'foto']`,
+        `/v1/usuarios?where={"${perfil}": "${nome}", "perfil": "supervisor"}&select=["id_acesso", "perfil", "nome", "cnpj_matriz", "foto"]`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -21,11 +20,12 @@ const useGetUsuarios = () => {
       return response.data;
     },
     {
-      refetchOnWindowFocus: true,
-      staleTime: 5000,
-      refetchInterval: 5000,
+      enabled: !!perfil || !!nome,
+      refetchOnWindowFocus: false,
+      // staleTime: 500,
+      refetchInterval: 0,
     },
   );
 };
 
-export { useGetUsuarios };
+export { useGetUsuariosNivelGerente };

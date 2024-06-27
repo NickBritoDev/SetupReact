@@ -18,20 +18,9 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { BsThreeDots } from "react-icons/bs";
 import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import logo from "../images/logo.png";
-import ModalComponent from "./modal";
-import simuladorProposta from "../images/simuladorProposta.png";
-import chatbot from "../images/chatbot.png";
-import confirmacaowpp from "../images/confirmacaowpp.png";
-import disparador from "../images/disparador.png";
 import { CardType, FiltrosType } from "../types/types";
 import { useGetProdutos } from "../hooks/useGetProdutos";
-
-const bannerImages: Record<string, string> = {
-  simuladorProposta,
-  chatbot,
-  confirmacaowpp,
-  disparador,
-};
+import GrupoConfiancaComponent from "./grupoConfianca";
 
 export default function CardsComponent({ filters }: FiltrosType) {
   const { data, isLoading } = useGetProdutos();
@@ -131,15 +120,10 @@ export default function CardsComponent({ filters }: FiltrosType) {
                 <MenuList mt={-4}>
                   <MenuItem>Solicitar cancelamento</MenuItem>
                   <MenuItem>Solicitar renovação</MenuItem>
-                  <MenuItem>Solicitar acessos</MenuItem>
-                  <MenuItem>Editar acessos</MenuItem>
                   <MenuItem>
-                    <ModalComponent
-                      banner={bannerImages[card.banner]}
-                      descricao={card.descricao}
-                      ferramenta={card.ferramenta}
-                    />
+                    <GrupoConfiancaComponent idFerramenta={card.ferramenta} />
                   </MenuItem>
+                  <MenuItem>Editar acessos</MenuItem>
                 </MenuList>
               </Menu>
             </Flex>

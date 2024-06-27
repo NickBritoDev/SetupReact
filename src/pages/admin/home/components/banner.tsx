@@ -21,7 +21,7 @@ import { useAuthHelpers } from "../../../../helpers/conta/permissao";
 export default function BannerComponent() {
   const navigate = useNavigate();
   const toast = useToast();
-  const { isAdmin, temPermissao } = useAuthHelpers();
+  const { isAdmin, temPermissao, isMatriz } = useAuthHelpers();
 
   const exibeToast = () => {
     return toast({
@@ -265,9 +265,9 @@ export default function BannerComponent() {
 
           <Tooltip hasArrow label={"acessar ferramenta"} placement="top">
             <Box
-              cursor={isAdmin ? "pointer" : "not-allowed"}
+              cursor={isAdmin || isMatriz ? "pointer" : "not-allowed"}
               onClick={() => {
-                if (isAdmin) {
+                if (isAdmin || isMatriz) {
                   navigate("/admin/marketplace");
                 } else {
                   exibeToast();
@@ -275,7 +275,7 @@ export default function BannerComponent() {
               }}
               _hover={{
                 transform: "translateY(-20px)",
-                bg: isAdmin ? "#229544" : "red",
+                bg: isAdmin || isMatriz ? "#229544" : "red",
                 color: "white",
               }}
               pointerEvents={"all"}

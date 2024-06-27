@@ -19,7 +19,7 @@ import { useAuthHelpers } from "./helpers/conta/permissao";
 
 const Routes: React.FC = () => {
   const { keyStatus } = useKey();
-  const { isAdmin, temPermissao, isLoading } = useAuthHelpers();
+  const { isAdmin, temPermissao, isMatriz, isLoading } = useAuthHelpers();
 
   const routing = useRoutes([
     {
@@ -60,7 +60,7 @@ const Routes: React.FC = () => {
           path: "marketplace",
           element: isLoading ? (
             true
-          ) : keyStatus && isAdmin ? (
+          ) : keyStatus && (isAdmin || isMatriz) ? (
             <Marketplace />
           ) : (
             <Navigate to="/public/nao-autorizado" replace />

@@ -17,9 +17,9 @@ const useGetProdutos = () => {
     },
     {
       enabled: !!token,
-      refetchOnWindowFocus: true,
-      staleTime: 5000,
-      refetchInterval: 5000,
+      refetchOnWindowFocus: false,
+      // staleTime: 5000,
+      refetchInterval: false,
     },
   );
 };

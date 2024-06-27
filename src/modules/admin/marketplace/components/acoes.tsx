@@ -1,7 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import FiltrosComponent from "./filtros";
-import GrupoConfiancaComponent from "./grupoConfianca";
 import { FiltrosType } from "../types/types";
 
 export default function AcoesComponents({ onApplyFilters }: FiltrosType) {
@@ -18,7 +17,6 @@ export default function AcoesComponents({ onApplyFilters }: FiltrosType) {
         justifyContent={"center"}
         gap={useMobile() ? 2 : 4}
       >
-        <GrupoConfiancaComponent />
         <FiltrosComponent onApplyFilters={onApplyFilters} />
       </Flex>
     </Flex>
