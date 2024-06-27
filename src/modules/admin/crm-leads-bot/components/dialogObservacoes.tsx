@@ -19,6 +19,8 @@ import {
   Textarea,
   Flex,
   AlertDialogCloseButton,
+  Input,
+  Select,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { FaUserClock } from "react-icons/fa6";
@@ -93,9 +95,28 @@ export default function DialogObservacoesComponent() {
               {exibeCampoInclusao && (
                 <>
                   <Text mt={4} fontWeight={"semibold"} fontSize={20}>
+                    Selecione o meio de contato
+                  </Text>
+                  <Select placeholder="Meios de contatos...">
+                    <option value="Whatsapp">Whatsapp</option>
+                    <option value="Telefone">Telefone</option>
+                    <option value="Email">Email</option>
+                    <option value="Sms">Sms</option>
+                  </Select>
+
+                  <Text mt={4} fontWeight={"semibold"} fontSize={20}>
+                    Selecione a data
+                  </Text>
+                  <Input
+                    placeholder="Select Date and Time"
+                    size="md"
+                    type="datetime-local"
+                  />
+
+                  <Text mt={4} fontWeight={"semibold"} fontSize={20}>
                     Incluir nova observação
                   </Text>
-                  <Textarea />
+                  <Textarea placeholder="Inclua sua observação..." />
                 </>
               )}
             </AlertDialogBody>

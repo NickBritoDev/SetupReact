@@ -2,19 +2,19 @@
   {
     "leads": [
       {
-        "status": "NOVO",
+        "status": "Novo",
         "quantidade": 18
       },
       {
-        "status": "CONTATO",
+        "status": "Contato",
         "quantidade": 32
       },
       {
-        "status": "NEGOCIANDO",
+        "status": "Negociando",
         "quantidade": 10
       },
       {
-        "status": "FINALIZADO",
+        "status": "Finalizado",
         "quantidade": 40
       }
     ]

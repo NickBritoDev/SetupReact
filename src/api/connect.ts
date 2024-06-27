@@ -1,6 +1,6 @@
-import axios from "axios";
 import { executar } from "./interceptador";
 import store from "./store";
+import axios from "axios";
 
 const connectApi = axios.create({
   baseURL: "https://apimaisvalorlabs.portalmaisvalor.com/api",

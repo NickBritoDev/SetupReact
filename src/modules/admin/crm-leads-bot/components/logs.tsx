@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Text, Flex, Badge } from "@chakra-ui/react";
+import formatDataHora from "../../../../utils/mask/mascaras";
 
 export default function LogsComponent({ detalhesLeads }: any) {
   return (
@@ -40,20 +41,20 @@ export default function LogsComponent({ detalhesLeads }: any) {
             </Text>
             <Text w={"100%"} textAlign={"center"}>
               <strong>Data</strong> <br />
-              {log.data_atualizacao}
+              {formatDataHora(log.data_atualizacao)}
             </Text>
             <Text w={"100%"} textAlign={"right"}>
               <strong>Status</strong> <br />
               <Badge
                 variant={"solid"}
                 bg={
-                  log.status === "NOVO"
+                  log.status === "Novo"
                     ? "#44B3CF"
-                    : log.status === "CONTATO"
+                    : log.status === "Contato"
                       ? "#F4B61D"
-                      : log.status === "NEGOCIANDO"
+                      : log.status === "Negociando"
                         ? "#F44B1D"
-                        : log.status === "FINALIZADO"
+                        : log.status === "Finalizado"
                           ? "#229544"
                           : "black"
                 }

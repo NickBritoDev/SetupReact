@@ -13,13 +13,13 @@ export default function CardsComponent() {
           key={index}
           color={"white"}
           bg={
-            data.status === "NOVO"
+            data.status === "Novo"
               ? "#44B3CF"
-              : data.status === "CONTATO"
+              : data.status === "Contato"
                 ? "#F4B61D"
-                : data.status === "NEGOCIANDO"
+                : data.status === "Negociando"
                   ? "#F44B1D"
-                  : data.status === "FINALIZADO"
+                  : data.status === "Finalizado"
                     ? "#229544"
                     : "black"
           }
@@ -38,15 +38,15 @@ export default function CardsComponent() {
               {data.quantidade === 0 ? `0${data.quantidade}` : data.quantidade}
             </Text>
             <Flex alignItems={"center"} justifyContent={"center"} gap={2}>
-              {data.status === "NOVO" ? (
+              {data.status === "Novo" ? (
                 <Flex alignItems={"center"} justifyContent={"center"} gap={2}>
                   <FaUserPlus size={30} />
                 </Flex>
-              ) : data.status === "CONTATO" ? (
+              ) : data.status === "Contato" ? (
                 <BiSolidPhoneCall size={30} />
-              ) : data.status === "NEGOCIANDO" ? (
+              ) : data.status === "Negociando" ? (
                 <BsFire size={30} />
-              ) : data.status === "FINALIZADO" ? (
+              ) : data.status === "Finalizado" ? (
                 <TbRosetteDiscountCheckFilled size={30} />
               ) : null}
             </Flex>

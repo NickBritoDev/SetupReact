@@ -9,12 +9,12 @@ import AgendaComponent from "./agenda";
 import DialogEmailComponent from "./dialogEmail";
 
 export default function InteracaoComponent({ user, detalhesLeads }: any) {
-  const isNovo = detalhesLeads.status === "NOVO";
+  const isNovo = detalhesLeads?.status === "Novo";
   const telefone = isNovo
     ? "(**) *********"
-    : maskPhone(detalhesLeads.telefone);
-  const email = isNovo ? "email@exemple.com" : detalhesLeads.email;
-  const telefoneFormatado = "380" + detalhesLeads.telefone;
+    : maskPhone(detalhesLeads?.telefone);
+  const email = isNovo ? "email@exemple.com" : detalhesLeads?.email;
+  const telefoneFormatado = "380" + detalhesLeads?.telefone;
 
   return (
     <Flex gap={10} w={"100%"}>
@@ -25,7 +25,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
         justifyContent={"center"}
       >
         <Image w={"150px"} src={user} alt="foto do usuario card" />
-        <Heading mt={-4}>{detalhesLeads.nome}</Heading>
+        <Heading mt={-4}>{detalhesLeads?.nome}</Heading>
         <Text
           sx={isNovo ? { filter: "blur(5px)" } : {}}
           fontWeight={"semibold"}
@@ -69,8 +69,8 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           </Tooltip>
 
           <DialogEmailComponent
-            produto={detalhesLeads.produto}
-            email={detalhesLeads.email}
+            produto={detalhesLeads?.produto}
+            email={detalhesLeads?.email}
           />
 
           <Tooltip hasArrow placement="top" label="Enviar whatsapp">

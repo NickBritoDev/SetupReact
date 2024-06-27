@@ -4,8 +4,8 @@ export interface ContactTypes {
   email: string;
   telefone: string;
   cpf: string;
-  score: "FRIO" | "MEDIO" | "QUENTE" | null;
-  status: "NOVO" | "CONTATO" | "NEGOCIANDO" | "FINALIZADO" | null;
+  score: "Frio" | "Médio" | "Quente" | null;
+  status: "Novo" | "Contato" | "Negociando" | "Finalizado" | null;
   produto: string;
   origem: string;
   id: number;

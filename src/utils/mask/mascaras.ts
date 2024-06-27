@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const maskCPF = (value: string): any => {
   return value
     .replace(/\D/g, "")
@@ -33,3 +35,9 @@ export const maskOnlyLetters = (value: string): any => {
 export const maskOnlyNumbers = (value: string): any => {
   return value.replace(/\D/g, "");
 };
+
+const formatDataHora = (d: any) => {
+  return dayjs(d).format(" DD/MM/YYYY HH:mm:ss");
+};
+
+export default formatDataHora;

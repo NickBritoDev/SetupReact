@@ -76,7 +76,7 @@ export default function FiltroComponent({
           </Tooltip>
           <MenuList>
             <MenuGroup w={"280px"} title="SCORE">
-              {["FRIO", "MEDIO", "QUENTE"].map((score) => (
+              {["Frio", "Médio", "Quente"].map((score) => (
                 <MenuItem key={score}>
                   <Checkbox
                     colorScheme="green"
@@ -89,13 +89,13 @@ export default function FiltroComponent({
                       justifyContent={"space-between"}
                     >
                       <Text fontWeight={"semibold"}>LEAD {score}</Text>
-                      {score === "FRIO" && (
+                      {score === "Frio" && (
                         <GiIceCube color="#44B3CF" size={22} />
                       )}
-                      {score === "MEDIO" && (
+                      {score === "Médio" && (
                         <FaTemperatureArrowUp color="#F4B61D" size={22} />
                       )}
-                      {score === "QUENTE" && (
+                      {score === "Quente" && (
                         <SiFireship color="#F44B1D" size={22} />
                       )}
                     </Flex>
@@ -105,7 +105,7 @@ export default function FiltroComponent({
             </MenuGroup>
             <MenuDivider />
             <MenuGroup title="STATUS">
-              {["NOVO", "CONTATO", "NEGOCIANDO", "FINALIZADO"].map((status) => (
+              {["Novo", "Contato", "Negociando", "Finalizado"].map((status) => (
                 <MenuItem key={status}>
                   <Checkbox
                     colorScheme="green"
@@ -118,16 +118,16 @@ export default function FiltroComponent({
                       justifyContent={"space-between"}
                     >
                       <Text fontWeight={"semibold"}>{status}</Text>
-                      {status === "NOVO" && (
+                      {status === "Novo" && (
                         <FaUserPlus color="#44B3CF" size={22} />
                       )}
-                      {status === "CONTATO" && (
+                      {status === "Contato" && (
                         <BiSolidPhoneCall color="#F4B61D" size={22} />
                       )}
-                      {status === "NEGOCIANDO" && (
+                      {status === "Negociando" && (
                         <BsFire color="#F44B1D" size={22} />
                       )}
-                      {status === "FINALIZADO" && (
+                      {status === "Finalizado" && (
                         <TbRosetteDiscountCheckFilled
                           color="#229544"
                           size={22}

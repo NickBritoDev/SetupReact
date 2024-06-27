@@ -31,7 +31,7 @@ export default function AgendaComponent({ detalhesLeads }: any) {
       <Tooltip hasArrow placement="top" label="Marcar retorno">
         <Button
           onClick={onOpen}
-          display={detalhesLeads.status !== "FINALIZADO" ? "flex" : "none"}
+          display={detalhesLeads?.status !== "Finalizado" ? "flex" : "none"}
           alignItems={"center"}
           justifyContent={"center"}
           gap={2}
@@ -44,7 +44,7 @@ export default function AgendaComponent({ detalhesLeads }: any) {
       <Modal size={"full"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Agenda - {detalhesLeads.nome}</ModalHeader>
+          <ModalHeader>Agenda - {detalhesLeads?.nome}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <TableContainer>

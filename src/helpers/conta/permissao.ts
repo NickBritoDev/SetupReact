@@ -1,12 +1,10 @@
 import { useGetMinhaConta } from "../../hooks/useGetMinhaConta";
 
 export const useAuthHelpers = () => {
-  const { data } = useGetMinhaConta();
-  const funcionalidades = data?.funcionalidades ? data?.funcionalidades : true;
+  const { data, isLoading } = useGetMinhaConta();
+  const funcionalidades = isLoading ? true : data?.funcionalidades;
 
-  const isAdmin = data?.isAdministradorPromotora
-    ? data?.isAdministradorPromotora
-    : true;
+  const isAdmin = isLoading ? true : data?.isAdministradorPromotora;
 
   const temPermissao = (funcionalidade: string | number) => {
     return funcionalidades && funcionalidades[funcionalidade];
@@ -15,5 +13,6 @@ export const useAuthHelpers = () => {
   return {
     isAdmin,
     temPermissao,
+    isLoading,
   };
 };

@@ -28,13 +28,13 @@ export default function ChartComponent() {
 
   const backgroundColors = crm.leads.map((lead) => {
     switch (lead.status) {
-      case "NOVO":
+      case "Novo":
         return "#44B3CF";
-      case "CONTATO":
+      case "Contato":
         return "#F4B61D";
-      case "NEGOCIANDO":
+      case "Negociando":
         return "#F44B1D";
-      case "FINALIZADO":
+      case "Finalizado":
         return "#229544";
       default:
         return "#000000";

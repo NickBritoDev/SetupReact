@@ -19,7 +19,7 @@ import { useAuthHelpers } from "./helpers/conta/permissao";
 
 const Routes: React.FC = () => {
   const { keyStatus } = useKey();
-  const { isAdmin, temPermissao } = useAuthHelpers();
+  const { isAdmin, temPermissao, isLoading } = useAuthHelpers();
 
   const routing = useRoutes([
     {
@@ -48,21 +48,23 @@ const Routes: React.FC = () => {
         },
         {
           path: "crm",
-          element:
-            keyStatus && temPermissao("CRM") ? (
-              <CrmLeadsBot />
-            ) : (
-              <Navigate to="/public/nao-autorizado" replace />
-            ),
+          element: isLoading ? (
+            true
+          ) : keyStatus && temPermissao("CRM") ? (
+            <CrmLeadsBot />
+          ) : (
+            <Navigate to="/public/nao-autorizado" replace />
+          ),
         },
         {
           path: "marketplace",
-          element:
-            keyStatus && isAdmin ? (
-              <Marketplace />
-            ) : (
-              <Navigate to="/public/nao-autorizado" replace />
-            ),
+          element: isLoading ? (
+            true
+          ) : keyStatus && isAdmin ? (
+            <Marketplace />
+          ) : (
+            <Navigate to="/public/nao-autorizado" replace />
+          ),
         },
       ],
     },

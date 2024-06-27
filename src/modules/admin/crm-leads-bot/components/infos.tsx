@@ -34,7 +34,7 @@ export default function InfosComponent({
         fontWeight={"semibold"}
       >
         <strong>Nome</strong> <br />
-        {detalhesLeads.nome}
+        {detalhesLeads?.nome}
       </Text>
       <Text
         mb={2}
@@ -56,7 +56,7 @@ export default function InfosComponent({
         fontWeight={"semibold"}
       >
         <strong>CPF</strong> <br />
-        {maskCPF(detalhesLeads.cpf)}
+        {maskCPF(detalhesLeads?.cpf)}
       </Text>
       <Text
         mb={2}
@@ -78,11 +78,11 @@ export default function InfosComponent({
         fontWeight={"semibold"}
       >
         <strong>Produto</strong> <br />
-        {detalhesLeads.produto}
+        {detalhesLeads?.produto}
       </Text>
       <Text boxShadow={"md"} p={2} rounded={"xl"} fontWeight={"semibold"}>
         <strong>Origem</strong> <br />
-        {detalhesLeads.origem}
+        {detalhesLeads?.origem}
       </Text>
     </Flex>
   );

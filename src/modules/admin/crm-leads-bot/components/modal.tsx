@@ -9,7 +9,6 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import contatos from "../../../../json/crm/data2.json";
 import { RiUserSettingsLine } from "react-icons/ri";
 import user from "../images/user.png";
 import back from "../images/back.png";
@@ -18,35 +17,37 @@ import RecepcaoComponent from "./recepcao";
 import SidebarComponent from "./sidebar";
 import InteracaoComponent from "./interacao";
 import { Contato } from "../types/types";
+import { useGetLeads } from "../hooks/useGetLeads";
 
-const ModalComponent: React.FC<{ contatos: Contato[] }> = () => {
+const ModalComponent: React.FC = () => {
+  const { data: contatos } = useGetLeads();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [detalhesLeads, setDetalhesLeads] = useState({} as Contato);
+  const [detalhesLeads, setDetalhesLeads] = useState(contatos as Contato);
   const [hideRecepcao, setHideRecepcao] = useState(false);
 
   const [filterScore, setFilterScore] = useState<{ [key: string]: boolean }>({
-    FRIO: true,
-    MEDIO: true,
-    QUENTE: true,
+    Frio: true,
+    Médio: true,
+    Quente: true,
   });
 
   const [filterStatus, setFilterStatus] = useState<{ [key: string]: boolean }>({
-    NOVO: true,
-    CONTATO: true,
-    NEGOCIANDO: true,
-    FINALIZADO: true,
+    Novo: true,
+    Contato: true,
+    Negociando: true,
+    Finalizado: true,
   });
 
   const scorePriority: { [key: string]: number } = {
-    QUENTE: 1,
-    MEDIO: 2,
-    FRIO: 3,
+    Quente: 1,
+    Médio: 2,
+    Frio: 3,
   };
   const statusPriority: { [key: string]: number } = {
-    NOVO: 1,
-    CONTATO: 2,
-    NEGOCIANDO: 3,
-    FINALIZADO: 4,
+    Novo: 1,
+    Contato: 2,
+    Negociando: 3,
+    Finalizado: 4,
   };
 
   const compareContacts = (a: Contato, b: Contato): number => {
@@ -57,11 +58,12 @@ const ModalComponent: React.FC<{ contatos: Contato[] }> = () => {
   };
 
   const contatosOrdenados = contatos
-    .slice()
-    .sort(compareContacts as (a: any, b: any) => number);
+    ? contatos.slice().sort(compareContacts as (a: any, b: any) => number)
+    : [];
 
   const filteredContatos = contatosOrdenados.filter(
-    (contato) => filterScore[contato.score!] && filterStatus[contato.status!],
+    (contato: Contato) =>
+      filterScore[contato.score!] && filterStatus[contato.status!],
   );
 
   const toggleFilterScore = (score: string) => {
