@@ -3,12 +3,33 @@ import { FaUserPlus } from "react-icons/fa6";
 import { BsFire } from "react-icons/bs";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
-import crmData from "../../../../json/crm/data.json";
+import { useGetAcompanhamentoLeads } from "../hooks/useGetAcompanhamentoLeads";
+
+const initialData = [
+  {
+    Novo: "8",
+    Contato: "0",
+    Finalizado: "0",
+    Negociando: "0",
+  },
+];
 
 export default function CardsComponent() {
+  const { data: data_crm } = useGetAcompanhamentoLeads();
+  const crm = data_crm ? data_crm : initialData;
+
+  const leads = crm[0];
+
+  const leadStatuses = [
+    { status: "Novo", quantidade: leads.Novo },
+    { status: "Contato", quantidade: leads.Contato },
+    { status: "Finalizado", quantidade: leads.Finalizado },
+    { status: "Negociando", quantidade: leads.Negociando },
+  ];
+
   return (
     <Flex gap={4} w={"100%"} alignItems={"center"} justifyContent={"center"}>
-      {crmData[0].leads.map((data, index) => (
+      {leadStatuses.map((data, index) => (
         <Box
           key={index}
           color={"white"}
@@ -35,13 +56,13 @@ export default function CardsComponent() {
             justifyContent={"space-between"}
           >
             <Text fontSize={22} fontWeight={"semibold"}>
-              {data.quantidade === 0 ? `0${data.quantidade}` : data.quantidade}
+              {data.quantidade === "0"
+                ? `0${data.quantidade}`
+                : data.quantidade}
             </Text>
             <Flex alignItems={"center"} justifyContent={"center"} gap={2}>
               {data.status === "Novo" ? (
-                <Flex alignItems={"center"} justifyContent={"center"} gap={2}>
-                  <FaUserPlus size={30} />
-                </Flex>
+                <FaUserPlus size={30} />
               ) : data.status === "Contato" ? (
                 <BiSolidPhoneCall size={30} />
               ) : data.status === "Negociando" ? (

@@ -8,7 +8,6 @@ export interface ContactTypes {
   status: "Novo" | "Contato" | "Negociando" | "Finalizado" | null;
   produto: string;
   origem: string;
-  id: number;
 }
 
 export interface FiltrosTypes {
@@ -26,7 +25,7 @@ export interface Log {
 }
 
 export interface Contato {
-  id: number;
+  idLead: number;
   nome: string;
   email: string;
   telefone: string;

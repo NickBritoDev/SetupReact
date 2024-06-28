@@ -83,7 +83,7 @@ export default function SidebarComponent({
 
           return (
             <Box
-              bg={contato.nome === detalhesLeads?.nome ? "gray.100" : ""}
+              bg={contato.idLead === detalhesLeads?.idLead ? "gray.100" : ""}
               onClick={() => {
                 openDetailsLeads(contato);
               }}

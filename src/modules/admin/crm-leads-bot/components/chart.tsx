@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import crmData from "../../../../json/crm/data.json";
+import { useGetAcompanhamentoLeads } from "../hooks/useGetAcompanhamentoLeads";
 
 ChartJS.register(
   CategoryScale,
@@ -20,14 +20,26 @@ ChartJS.register(
   Legend,
 );
 
+const initialData = [
+  {
+    Novo: "0",
+    Contato: "0",
+    Finalizado: "0",
+    Negociando: "0",
+  },
+];
+
 export default function ChartComponent() {
-  const crm = crmData[0];
+  const { data: data_crm } = useGetAcompanhamentoLeads();
+  const crm = data_crm ? data_crm : initialData;
 
-  const labels = crm.leads.map((lead) => lead.status);
-  const totalData = crm.leads.map((lead) => lead.quantidade);
+  const leads = crm[0];
 
-  const backgroundColors = crm.leads.map((lead) => {
-    switch (lead.status) {
+  const labels = Object.keys(leads);
+  const totalData = Object.values(leads).map(Number);
+
+  const backgroundColors = labels.map((label) => {
+    switch (label) {
       case "Novo":
         return "#44B3CF";
       case "Contato":
