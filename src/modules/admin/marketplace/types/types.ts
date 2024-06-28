@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface ModalType {
   descricao: string | null;
   ferramenta?: any;
@@ -8,7 +10,8 @@ export interface FiltrosType {
   filters?: any;
 }
 export interface UsuariosType {
-  id_acesso: number;
+  status: any;
+  idAcesso: number;
   perfil: string;
   nome: string;
   cnpj_matriz: string;
@@ -24,6 +27,7 @@ export interface CardType {
   descricao: string | null;
   foto: string | null;
   grupo: {
+    status: ReactNode;
     idUsuario: string;
     nome: string;
     foto: string;

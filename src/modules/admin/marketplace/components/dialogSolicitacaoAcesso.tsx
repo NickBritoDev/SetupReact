@@ -12,30 +12,21 @@ import {
   Flex,
   Image,
   Checkbox,
-  Input,
-  Spinner,
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { UsuariosType } from "../types/types";
-import { useGetUsuarios } from "../hooks/useGetUsuarios";
-import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
-import { formatCNPJ } from "../../../../utils/mask/mascaras";
 import { usePostSolicitacaoAcesso } from "../hooks/usePostSolicitacaoAcesso";
 
 export default function DialogSolicitacaoAcessoComponent({
   idFerramenta,
   idPromotora,
+  filteredData,
 }: any) {
   const toast = useToast();
   const { UseRequestSolicitacaoAcesso, isSuccess, isError } =
     usePostSolicitacaoAcesso();
-  const { data: minhaConta } = useGetMinhaConta();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cnpj, setCnpj] = useState("");
-  const { data: listaUsuarios } = useGetUsuarios({ cnpjMatriz: cnpj });
-  const [cnpjValido, setCnpjValido] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const payload = selectedIds.map((idAcesso) => ({
@@ -68,33 +59,6 @@ export default function DialogSolicitacaoAcessoComponent({
     }
   }, [isSuccess, isError]);
 
-  useEffect(() => {
-    if (listaUsuarios?.length > 0) {
-      const isCnpjValido = listaUsuarios.some(
-        (user: any) =>
-          user.superintendente === minhaConta.nome ||
-          user.gerente === minhaConta.nome ||
-          user.supervisor === minhaConta.nome,
-      );
-      setCnpjValido(isCnpjValido);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      setCnpjValido(false);
-    }
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000);
-  }, [listaUsuarios, minhaConta]);
-
-  const handleCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formattedCnpj = formatCNPJ(e.target.value);
-    if (formattedCnpj.length > 17) {
-      setCnpj(formattedCnpj);
-    }
-  };
-
   const handleCheckboxChange = (idAcesso: number) => {
     setSelectedIds((prevSelectedIds) =>
       prevSelectedIds.includes(idAcesso)
@@ -104,16 +68,24 @@ export default function DialogSolicitacaoAcessoComponent({
   };
 
   const handleOpen = () => {
-    setCnpj("");
     onOpen();
-    setCnpjValido(true);
   };
 
   const handleClose = () => {
-    setCnpj("");
     onClose();
-    setCnpjValido(true);
   };
+
+  const listaUsuarios = filteredData
+    .filter(
+      (user: UsuariosType) =>
+        !["Pendente", "Liberado", "Bloqueado"].includes(user.status),
+    )
+    .reduce((unique: UsuariosType[], user: UsuariosType) => {
+      if (!unique.some((u) => u.idAcesso === user.idAcesso)) {
+        unique.push(user);
+      }
+      return unique;
+    }, []);
 
   return (
     <>
@@ -125,82 +97,40 @@ export default function DialogSolicitacaoAcessoComponent({
           <ModalHeader>Criar grupos de usuários</ModalHeader>
           <ModalCloseButton />
           <ModalBody maxH={"450px"} overflowY={"scroll"}>
-            <Flex mb={4} gap={2}>
-              <Input
-                maxLength={18}
-                placeholder="Digite o CNPJ"
-                value={cnpj}
-                onChange={handleCnpjChange}
-              />
-              <Button
-                onClick={() => {
-                  setLoading(true);
-                }}
-                colorScheme="green"
-                isDisabled={cnpj.length !== 18}
+            {listaUsuarios.map((user: UsuariosType) => (
+              <Flex
+                boxShadow={"lg"}
+                p={2}
+                rounded={"2xl"}
+                alignItems={"center"}
+                justifyContent={"flex-start"}
+                gap={2}
+                key={user.idAcesso}
               >
-                Pesquisar
-              </Button>
-            </Flex>
-            {!loading &&
-              cnpjValido &&
-              listaUsuarios?.map((user: UsuariosType) => (
+                <Checkbox
+                  rounded={"md"}
+                  border={"solid 0px black"}
+                  colorScheme="green"
+                  onChange={() => handleCheckboxChange(user.idAcesso)}
+                />
+                <Image
+                  ml={2}
+                  w={30}
+                  borderRadius={"50%"}
+                  src={`https://appbancos.s3.amazonaws.com/${user.foto}`}
+                />
                 <Flex
-                  boxShadow={"lg"}
-                  p={2}
-                  rounded={"2xl"}
-                  alignItems={"center"}
-                  justifyContent={"flex-start"}
-                  gap={2}
-                  key={user.id_acesso}
+                  flexDir={"column"}
+                  alignItems={"flex-start"}
+                  justifyContent={"center"}
                 >
-                  <Checkbox
-                    rounded={"md"}
-                    border={"solid 0px black"}
-                    colorScheme="green"
-                    onChange={() => handleCheckboxChange(user.id_acesso)}
-                  />
-                  <Image
-                    ml={2}
-                    w={30}
-                    borderRadius={"50%"}
-                    src={`https://appbancos.s3.amazonaws.com/${user.foto}`}
-                  />
-                  <Flex
-                    flexDir={"column"}
-                    alignItems={"flex-start"}
-                    justifyContent={"center"}
-                  >
-                    <Text fontSize={14} fontWeight={"semibold"}>
-                      <strong>NOME: </strong>
-                      {user.nome}
-                    </Text>
-                    <Text fontSize={14} fontWeight={"semibold"}>
-                      <strong>PERFIL: </strong>
-                      {user.perfil}
-                    </Text>
-                  </Flex>
+                  <Text fontSize={14} fontWeight={"semibold"}>
+                    <strong>NOME: </strong>
+                    {user.nome}
+                  </Text>
                 </Flex>
-              ))}
-
-            {!loading && !cnpjValido && (
-              <Text>
-                O CNPJ digitado não pertence a um usuário abaixo de sua gestão
-                ou está incorreto.
-                <br />
-                Revise o CNPJ digitado e tente novamente.
-              </Text>
-            )}
-
-            {loading && (
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="green.500"
-                size="xl"
-              />
-            )}
+              </Flex>
+            ))}
           </ModalBody>
 
           <ModalFooter>
