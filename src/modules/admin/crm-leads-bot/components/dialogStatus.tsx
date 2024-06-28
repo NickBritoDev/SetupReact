@@ -6,6 +6,7 @@ import {
   ReactNode,
   ReactPortal,
   useRef,
+  useState,
 } from "react";
 import { Badge, Button, Text, Tooltip, useDisclosure } from "@chakra-ui/react";
 import {
@@ -18,13 +19,18 @@ import {
 } from "@chakra-ui/react";
 import Select from "react-select";
 import { PiFlowArrowDuotone } from "react-icons/pi";
-import { useGetStatusLeads } from "../hooks/useGetStatusLeads";
 import { JSX } from "react/jsx-runtime";
+import { useGetStatusLeads } from "../hooks/useGetStatusLeads";
+import { usePutAlterarStatus } from "../hooks/usePutAlterarStatus";
 
 export default function DialogStatusComponent({ detalhesLeads }: any) {
+  const { UseRequestAlterarStatus } = usePutAlterarStatus();
   const { data: statusLeads } = useGetStatusLeads();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
+  const [selectedStatus, setSelectedStatus] = useState<
+    number | null | undefined
+  >(null);
 
   const customOption = (props: {
     innerProps: JSX.IntrinsicAttributes &
@@ -41,6 +47,7 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
         | null
         | undefined;
       isCurrentStatus: any;
+      value: number | null | undefined;
     };
   }) => {
     return (
@@ -103,6 +110,7 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
                 placeholder="Selecione um status..."
                 options={options}
                 components={{ Option: customOption }}
+                onChange={(option) => setSelectedStatus(option?.value)}
               />
             </AlertDialogBody>
 
@@ -110,7 +118,19 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
               <Button colorScheme="red" ref={cancelRef} onClick={onClose}>
                 Cancelar
               </Button>
-              <Button colorScheme="green" onClick={onClose} ml={3}>
+              <Button
+                colorScheme="green"
+                onClick={() => {
+                  if (selectedStatus) {
+                    UseRequestAlterarStatus({
+                      id_leads: detalhesLeads.idLead,
+                      id_status: selectedStatus,
+                    });
+                  }
+                  onClose();
+                }}
+                ml={3}
+              >
                 Sim, alterar
               </Button>
             </AlertDialogFooter>
