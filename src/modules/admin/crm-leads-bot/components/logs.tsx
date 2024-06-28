@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Text, Flex, Badge } from "@chakra-ui/react";
-import formatDataHora from "../../../../utils/mask/mascaras";
+import { formatDataHora } from "../../../../utils/mask/mascaras";
 
 export default function LogsComponent({ detalhesLeads }: any) {
   return (

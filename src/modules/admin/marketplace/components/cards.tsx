@@ -20,7 +20,7 @@ import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import logo from "../images/logo.png";
 import { CardType, FiltrosType } from "../types/types";
 import { useGetProdutos } from "../hooks/useGetProdutos";
-import GrupoConfiancaComponent from "./grupoConfianca";
+import GrupoConfiancaComponent from "./grupoConfiancaComponent";
 
 export default function CardsComponent({ filters }: FiltrosType) {
   const { data, isLoading } = useGetProdutos();
@@ -121,7 +121,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
                   <MenuItem>Solicitar cancelamento</MenuItem>
                   <MenuItem>Solicitar renovação</MenuItem>
                   <MenuItem>
-                    <GrupoConfiancaComponent idFerramenta={card.ferramenta} />
+                    <GrupoConfiancaComponent />
                   </MenuItem>
                   <MenuItem>Editar acessos</MenuItem>
                 </MenuList>

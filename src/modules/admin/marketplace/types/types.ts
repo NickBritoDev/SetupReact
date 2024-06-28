@@ -16,6 +16,7 @@ export interface UsuariosType {
 }
 
 export interface CardType {
+  idFerramenta: number;
   status: string;
   ferramenta: string;
   ativo: boolean;

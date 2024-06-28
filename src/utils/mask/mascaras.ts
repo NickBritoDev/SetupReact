@@ -36,8 +36,16 @@ export const maskOnlyNumbers = (value: string): any => {
   return value.replace(/\D/g, "");
 };
 
-const formatDataHora = (d: any) => {
+export const formatDataHora = (d: any) => {
   return dayjs(d).format(" DD/MM/YYYY HH:mm:ss");
 };
 
-export default formatDataHora;
+export const formatCNPJ = (value: string) => {
+  if (!value) return "";
+  value = value.replace(/\D/g, "");
+  value = value.replace(/^(\d{2})(\d)/, "$1.$2");
+  value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+  value = value.replace(/\.(\d{3})(\d)/, ".$1/$2");
+  value = value.replace(/(\d{4})(\d)/, "$1-$2");
+  return value;
+};
