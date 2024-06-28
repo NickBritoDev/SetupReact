@@ -14,20 +14,59 @@ import {
   Checkbox,
   Input,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { UsuariosType } from "../types/types";
 import { useGetUsuarios } from "../hooks/useGetUsuarios";
 import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 import { formatCNPJ } from "../../../../utils/mask/mascaras";
+import { usePostSolicitacaoAcesso } from "../hooks/usePostSolicitacaoAcesso";
 
-export default function GrupoConfiancaComponent() {
+export default function DialogSolicitacaoAcessoComponent({
+  idFerramenta,
+  idPromotora,
+}: any) {
+  const toast = useToast();
+  const { UseRequestSolicitacaoAcesso, isSuccess, isError } =
+    usePostSolicitacaoAcesso();
   const { data: minhaConta } = useGetMinhaConta();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [cnpj, setCnpj] = useState("");
   const { data: listaUsuarios } = useGetUsuarios({ cnpjMatriz: cnpj });
   const [cnpjValido, setCnpjValido] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
+  const payload = selectedIds.map((idAcesso) => ({
+    idAcesso,
+    idProduto: idFerramenta,
+    idPromotora,
+  }));
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast({
+        title: "Solicitação criada com sucesso",
+        description: "Em breve sua solicitação sera respondida",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+
+    if (isError) {
+      toast({
+        title: "Erro ao criar solicitação",
+        description: "Você pode tentar novamente em breve",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+  }, [isSuccess, isError]);
 
   useEffect(() => {
     if (listaUsuarios?.length > 0) {
@@ -54,6 +93,14 @@ export default function GrupoConfiancaComponent() {
     if (formattedCnpj.length > 17) {
       setCnpj(formattedCnpj);
     }
+  };
+
+  const handleCheckboxChange = (idAcesso: number) => {
+    setSelectedIds((prevSelectedIds) =>
+      prevSelectedIds.includes(idAcesso)
+        ? prevSelectedIds.filter((id) => id !== idAcesso)
+        : [...prevSelectedIds, idAcesso],
+    );
   };
 
   const handleOpen = () => {
@@ -111,6 +158,7 @@ export default function GrupoConfiancaComponent() {
                     rounded={"md"}
                     border={"solid 0px black"}
                     colorScheme="green"
+                    onChange={() => handleCheckboxChange(user.id_acesso)}
                   />
                   <Image
                     ml={2}
@@ -155,11 +203,19 @@ export default function GrupoConfiancaComponent() {
             )}
           </ModalBody>
 
-          <ModalFooter display={"none"}>
+          <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={handleClose}>
               Cancelar
             </Button>
-            <Button colorScheme="green">Finalizar solicitação</Button>
+            <Button
+              onClick={() => {
+                UseRequestSolicitacaoAcesso({ payload });
+                handleClose();
+              }}
+              colorScheme="green"
+            >
+              Finalizar solicitação
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -20,12 +20,14 @@ import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import logo from "../images/logo.png";
 import { CardType, FiltrosType } from "../types/types";
 import { useGetProdutos } from "../hooks/useGetProdutos";
-import GrupoConfiancaComponent from "./grupoConfiancaComponent";
+import DialogSolicitacaoAcessoComponent from "./dialogSolicitacaoAcesso";
+import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 
 export default function CardsComponent({ filters }: FiltrosType) {
   const { data, isLoading } = useGetProdutos();
   const [filteredData, setFilteredData] = useState<CardType[]>([]);
   const isMobile = useMobile();
+  const { data: minhaConta } = useGetMinhaConta();
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -121,7 +123,10 @@ export default function CardsComponent({ filters }: FiltrosType) {
                   <MenuItem>Solicitar cancelamento</MenuItem>
                   <MenuItem>Solicitar renovação</MenuItem>
                   <MenuItem>
-                    <GrupoConfiancaComponent />
+                    <DialogSolicitacaoAcessoComponent
+                      idPromotora={minhaConta.idPromotora}
+                      idFerramenta={card.idFerramenta}
+                    />
                   </MenuItem>
                   <MenuItem>Editar acessos</MenuItem>
                 </MenuList>
