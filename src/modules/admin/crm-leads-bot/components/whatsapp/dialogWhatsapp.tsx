@@ -55,7 +55,7 @@ export default function DialogWhatsappComponent({
     if (isSuccess) {
       setTimeout(() => {
         setIsLoading(false);
-      }, 5000);
+      }, 2500);
     }
   };
 
@@ -72,7 +72,7 @@ export default function DialogWhatsappComponent({
             onOpen();
             setTimeout(() => {
               setCarregamentoMsgs(false);
-            }, 2500);
+            }, 10000);
           }}
           ref={btnRef}
         >
@@ -124,7 +124,7 @@ export default function DialogWhatsappComponent({
                 setCarregamentoMsgs(true);
                 setTimeout(() => {
                   setCarregamentoMsgs(false);
-                }, 5000);
+                }, 10000);
               }}
             >
               {instancias &&
