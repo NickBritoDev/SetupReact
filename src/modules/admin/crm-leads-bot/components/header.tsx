@@ -5,7 +5,7 @@ export default function HeaderComponent() {
   return (
     <Flex alignItems={"center"} justifyContent={"space-between"}>
       <Heading mb={6}>Acompanhamento de leads</Heading>
-      <ModalComponent contatos={[]} />
+      <ModalComponent />
     </Flex>
   );
 }
