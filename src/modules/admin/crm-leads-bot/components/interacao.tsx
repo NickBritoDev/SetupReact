@@ -6,7 +6,7 @@ import InfosComponent from "./infos";
 import LogsComponent from "./logs";
 import AgendaComponent from "./agenda";
 import DialogEmailComponent from "./dialogEmail";
-import DialogWhatsappComponent from "./dialogWhatsapp";
+import DialogWhatsappComponent from "./whatsapp/dialogWhatsapp";
 
 export default function InteracaoComponent({ user, detalhesLeads }: any) {
   const isNovo = detalhesLeads?.status === "Novo";
@@ -73,7 +73,11 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             email={detalhesLeads?.email}
           />
 
-          <DialogWhatsappComponent nome={detalhesLeads?.nome} />
+          <DialogWhatsappComponent
+            telefone={detalhesLeads.telefone}
+            idLead={detalhesLeads.idLead}
+            nome={detalhesLeads?.nome}
+          />
 
           <AgendaComponent detalhesLeads={detalhesLeads} />
         </Flex>

@@ -2,13 +2,13 @@ import { useQuery } from "react-query";
 import { useKey } from "../../../../context/auth/token-login/authContext";
 import { connectCrm } from "../../../../api/crm/connect";
 
-const useGetStatusLeads = () => {
+const useGetInstanciasWhatsApp = () => {
   const { token } = useKey();
 
   return useQuery(
-    "useGetStatusLeads",
+    "useGetInstanciasWhatsApp",
     async () => {
-      const response = await connectCrm.get(`/leads/buscar-status`, {
+      const response = await connectCrm.get(`/whatsapp/obter-instances`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -18,10 +18,10 @@ const useGetStatusLeads = () => {
     {
       enabled: !!token,
       refetchOnWindowFocus: true,
-      staleTime: 30000,
-      refetchInterval: 30000,
+      staleTime: 60000,
+      refetchInterval: 60000,
     },
   );
 };
 
-export { useGetStatusLeads };
+export { useGetInstanciasWhatsApp };

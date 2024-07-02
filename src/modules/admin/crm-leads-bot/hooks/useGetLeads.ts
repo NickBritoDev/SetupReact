@@ -18,8 +18,8 @@ const useGetLeads = () => {
     {
       enabled: !!token,
       refetchOnWindowFocus: true,
-      staleTime: 5000,
-      refetchInterval: 5000,
+      staleTime: 30000,
+      refetchInterval: 30000,
     },
   );
 };
