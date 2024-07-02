@@ -16,6 +16,7 @@ import Login from "./pages/public/login";
 import CrmLeadsBot from "./modules/admin/crm-leads-bot";
 import Marketplace from "./modules/admin/marketplace";
 import { useAuthHelpers } from "./helpers/conta/permissao";
+import AutocontratacaoFgts from "./modules/public/autocontratacao-fgts";
 
 const Routes: React.FC = () => {
   const { keyStatus } = useKey();
@@ -76,6 +77,7 @@ const Routes: React.FC = () => {
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },
+        { path: "autocontratacao-fgts", element: <AutocontratacaoFgts /> },
       ],
     },
     { path: "*", element: <Navigate to="/public/nao-localizado" replace /> },

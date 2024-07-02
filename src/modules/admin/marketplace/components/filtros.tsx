@@ -29,7 +29,7 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
     ferramentasData.map((f) => f.ferramenta),
   );
   const [selectedStatus, setSelectedStatus] = useState([
-    "Inativos",
+    "Pendente",
     "Ativos",
     "Expirados",
   ]);
@@ -54,7 +54,7 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
 
   const handleClearFilters = () => {
     setSelectedFerramentas(ferramentasData.map((f) => f.ferramenta));
-    setSelectedStatus(["Inativos", "Ativos", "Expirados"]);
+    setSelectedStatus(["Pendente", "Ativos", "Expirados"]);
     setSelectedGrupos(["Sem grupo de confiança", "Com grupo de confiança"]);
     setShowLimparFiltros(false);
     onApplyFilters({
@@ -162,7 +162,7 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
                       Selecione Status
                     </MenuButton>
                     <MenuList>
-                      {["Inativos", "Ativos", "Expirados"].map((status) => (
+                      {["Pendente", "Ativos", "Expirados"].map((status) => (
                         <MenuItem key={status}>
                           <Checkbox
                             colorScheme="green"
