@@ -49,3 +49,9 @@ export const formatCNPJ = (value: string) => {
   value = value.replace(/(\d{4})(\d)/, "$1-$2");
   return value;
 };
+
+export const formatCPF = (value: string): string => {
+  value = maskOnlyNumbers(value);
+
+  return value.padStart(11, "0");
+};
