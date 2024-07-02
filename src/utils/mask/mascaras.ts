@@ -29,7 +29,7 @@ export const maskDate = (value: string): any => {
 };
 
 export const maskOnlyLetters = (value: string): any => {
-  return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
+  return value.replace(/\W/g, "");
 };
 
 export const maskOnlyNumbers = (value: string): any => {
