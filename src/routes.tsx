@@ -77,10 +77,16 @@ const Routes: React.FC = () => {
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },
-        { path: "autocontratacao-fgts", element: <AutocontratacaoFgts /> },
+        {
+          path: "autocontratacao-fgts",
+          element: <AutocontratacaoFgts />,
+        },
       ],
     },
-    { path: "*", element: <Navigate to="/public/nao-localizado" replace /> },
+    {
+      path: "*",
+      element: <Navigate to="/public/nao-localizado" replace />,
+    },
     {
       path: "/",
       element: keyStatus ? (
