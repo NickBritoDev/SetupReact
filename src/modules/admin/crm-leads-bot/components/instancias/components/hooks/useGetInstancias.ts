@@ -1,12 +1,12 @@
 import { useQuery } from "react-query";
-import { useKey } from "../../../../context/auth/token-login/authContext";
-import { connectCrm } from "../../../../api/crm/connect";
+import { connectCrm } from "../../../../../../../api/crm/connect";
+import { useKey } from "../../../../../../../context/auth/token-login/authContext";
 
-const useGetInstanciasWhatsApp = () => {
+const useGetInstancias = (payload: any) => {
   const { token } = useKey();
 
   return useQuery(
-    "useGetInstanciasWhatsApp",
+    ["chat_useGetInstancias", { payload }],
     async () => {
       const response = await connectCrm.get(`/whatsapp/obter-instances`, {
         headers: {
@@ -16,12 +16,11 @@ const useGetInstanciasWhatsApp = () => {
       return response.data;
     },
     {
-      enabled: !!token,
       refetchOnWindowFocus: true,
-      staleTime: 60000,
-      refetchInterval: 60000,
+      staleTime: 5000,
+      refetchInterval: 5000,
     },
   );
 };
 
-export { useGetInstanciasWhatsApp };
+export { useGetInstancias };

@@ -14,14 +14,15 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { SiWhatsapp } from "react-icons/si";
-import { useGetMensagensWhatsApp } from "../../hooks/useGetMensagensWhatsApp";
-import { usePostMensagensWhatsApp } from "../../hooks/usePostMensagensWhatsApp";
+import { useGetMensagensWhatsApp } from "../../hooks/whatsapp/useGetMensagensWhatsApp";
+import { usePostMensagensWhatsApp } from "../../hooks/whatsapp/usePostMensagensWhatsApp";
 import MensagensWhatsappComponent from "./mensagensWhatsapp";
 import back from "../../images/back-wpp.jpg";
 import user from "../../images/user.png";
 import InputWhatsappConponent from "./inputWhatsapp";
 import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";
-import { useGetInstanciasWhatsApp } from "../../hooks/useGetInstanciasWhatsApp";
+import { useGetInstanciasWhatsApp } from "../../hooks/whatsapp/useGetInstanciasWhatsApp";
+import DialogInstaciasWhatsappComponent from "./dialogInstaciasWhatsapp";
 
 export default function DialogWhatsappComponent({
   nome,
@@ -129,11 +130,16 @@ export default function DialogWhatsappComponent({
             >
               {instancias &&
                 instancias.map((instances: any, index: any) => (
-                  <option key={index} value={instances.instance}>
+                  <option
+                    style={{ textTransform: "uppercase" }}
+                    key={index}
+                    value={instances.instance}
+                  >
                     {instances.instance.replaceAll("-", " ")}
                   </option>
                 ))}
             </Select>
+            <DialogInstaciasWhatsappComponent />
           </Flex>
 
           <DrawerBody py={20} w={"100%"} pos={"relative"}>
