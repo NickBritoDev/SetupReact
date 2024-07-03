@@ -16,12 +16,12 @@ import { useRef, useState } from "react";
 import { SiWhatsapp } from "react-icons/si";
 import { useGetMensagensWhatsApp } from "../../hooks/whatsapp/useGetMensagensWhatsApp";
 import { usePostMensagensWhatsApp } from "../../hooks/whatsapp/usePostMensagensWhatsApp";
+import { useGetInstanciasWhatsApp } from "../../hooks/whatsapp/useGetInstanciasWhatsApp";
 import MensagensWhatsappComponent from "./mensagensWhatsapp";
 import back from "../../images/back-wpp.jpg";
 import user from "../../images/user.png";
 import InputWhatsappConponent from "./inputWhatsapp";
 import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";
-import { useGetInstanciasWhatsApp } from "../../hooks/whatsapp/useGetInstanciasWhatsApp";
 import DialogInstaciasWhatsappComponent from "./dialogInstaciasWhatsapp";
 
 export default function DialogWhatsappComponent({
