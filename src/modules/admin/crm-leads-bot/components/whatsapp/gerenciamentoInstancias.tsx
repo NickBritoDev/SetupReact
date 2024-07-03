@@ -1,7 +1,7 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import BuscarTodasAsInstancias from "./components/BuscarTodasAsInstancias";
+import BuscarTodasAsInstanciasComponenent from "./buscarInstancias";
 
-export default function Instancias() {
+export default function GerenciamentoInstanciasComponent() {
   return (
     <Box w={"100%"}>
       <Flex
@@ -13,7 +13,7 @@ export default function Instancias() {
       >
         <Heading>Gerenciamento de Instâncias</Heading>
       </Flex>
-      <BuscarTodasAsInstancias />
+      <BuscarTodasAsInstanciasComponenent />
     </Box>
   );
 }

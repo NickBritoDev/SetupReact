@@ -14,9 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { IoQrCode } from "react-icons/io5";
-import { useScannerQrCode } from "./hooks/useScannerQrCode";
+import { useScannerQrCode } from "../../hooks/whatsapp/useScannerQrCode";
 
-export default function ScannerQRCode({
+export default function ScannerQRCodeComponent({
   instancia,
   liberadoBuscarQrCode,
   setLiberadoBuscarQrCode,

@@ -9,10 +9,10 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import Acoes from "./Acoes";
-import { useGetInstancias } from "./hooks/useGetInstancias";
+import { useGetInstancias } from "../../hooks/whatsapp/useGetInstancias";
+import ButtonAcoesComponent from "./buttonAcoes";
 
-export default function BuscarTodasAsInstancias() {
+export default function BuscarTodasAsInstanciasComponenent() {
   const { data } = useGetInstancias("");
 
   return (
@@ -40,7 +40,7 @@ export default function BuscarTodasAsInstancias() {
                     </Flex>
                   </Td>
                   <Td fontWeight={"bold"} textAlign={"center"}>
-                    <Acoes instancia={instancias.instance} />
+                    <ButtonAcoesComponent instancia={instancias.instance} />
                   </Td>
                 </Tr>
               ))}

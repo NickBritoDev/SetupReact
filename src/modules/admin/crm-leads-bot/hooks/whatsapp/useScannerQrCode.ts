@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
 import { useState } from "react";
-import { connectCrm } from "../../../../../../../api/crm/connect";
-import { useKey } from "../../../../../../../context/auth/token-login/authContext";
+import { useKey } from "../../../../../context/auth/token-login/authContext";
+import { connectCrm } from "../../../../../api/crm/connect";
 
 interface QrCodeResponse {
   response: Array<{ qrcode: string }>;

@@ -1,8 +1,10 @@
 import { useMutation } from "react-query";
 import { connectCrm } from "../../../../api/crm/connect";
 import { useKey } from "../../../../context/auth/token-login/authContext";
+import { useToast } from "@chakra-ui/react";
 
 const usePutAlterarStatus = () => {
+  const toast = useToast();
   const { token } = useKey();
 
   const alterarStatus = async (payload: any) => {
@@ -13,7 +15,14 @@ const usePutAlterarStatus = () => {
     });
 
     if (response.status === 200) {
-      alert("alteroou");
+      toast({
+        title: "Status alterado.",
+        description: "O status foi alterado com sucesso",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
     }
   };
 

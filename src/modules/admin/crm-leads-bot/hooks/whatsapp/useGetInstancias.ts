@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
-import { connectCrm } from "../../../../../../../api/crm/connect";
-import { useKey } from "../../../../../../../context/auth/token-login/authContext";
-
+import { useKey } from "../../../../../context/auth/token-login/authContext";
+import { connectCrm } from "../../../../../api/crm/connect";
 const useGetInstancias = (payload: any) => {
   const { token } = useKey();
 

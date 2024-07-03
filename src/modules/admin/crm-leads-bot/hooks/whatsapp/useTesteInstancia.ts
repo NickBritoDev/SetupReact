@@ -1,10 +1,9 @@
 import { useMutation } from "react-query";
 import { useState } from "react";
-import { testInstance } from "../../../../../../../api/crm/connect";
+import { testInstance } from "../../../../../api/crm/connect";
 
 interface InstanceTeste {
   status: boolean;
-  // Adicione outras propriedades conforme necessário
 }
 
 const useTesteInstancia = (instancia: any) => {

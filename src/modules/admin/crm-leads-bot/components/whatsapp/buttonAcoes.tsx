@@ -15,13 +15,13 @@ import {
 import { MdSettings } from "react-icons/md";
 import { VscDebugStart } from "react-icons/vsc";
 import { IoQrCode } from "react-icons/io5";
-import { useStartInstancia } from "./hooks/useStartInstancia";
-import ScannerQRCode from "./ScannerQRCode";
-import TesteConexaoInstancia from "./TesteConexaoInstancia";
 import { TbPlugConnected } from "react-icons/tb";
 import { useState } from "react";
+import { useStartInstancia } from "../../hooks/whatsapp/useStartInstancia";
+import ScannerQRCodeComponent from "./scannerQRCode";
+import TesteConexaoInstanciaComponent from "./testeConexaoInstancia";
 
-export default function Acoes({ instancia }: any) {
+export default function ButtonAcoesComponent({ instancia }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { UseRequestStartInstancia } = useStartInstancia();
   const [liberadoBuscarQrCode, setLiberadoBuscarQrCode] = useState(false);
@@ -90,12 +90,12 @@ export default function Acoes({ instancia }: any) {
                 <VscDebugStart />
               </Button>
             </Tooltip>
-            <ScannerQRCode
+            <ScannerQRCodeComponent
               setLiberadoBuscarQrCode={setLiberadoBuscarQrCode}
               liberadoBuscarQrCode={liberadoBuscarQrCode}
               instancia={instancia}
             />
-            <TesteConexaoInstancia instancia={instancia} />
+            <TesteConexaoInstanciaComponent instancia={instancia} />
           </ModalFooter>
         </ModalContent>
       </Modal>

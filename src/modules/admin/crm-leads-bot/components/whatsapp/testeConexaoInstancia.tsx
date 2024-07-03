@@ -14,9 +14,9 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { TbPlugConnected } from "react-icons/tb";
-import { useTesteInstancia } from "./hooks/useTesteInstancia";
+import { useTesteInstancia } from "../../hooks/whatsapp/useTesteInstancia";
 
-export default function TesteConexaoInstancia({ instancia }: any) {
+export default function TesteConexaoInstanciaComponent({ instancia }: any) {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { UseRequestTesteInstancia, instanceTeste } =

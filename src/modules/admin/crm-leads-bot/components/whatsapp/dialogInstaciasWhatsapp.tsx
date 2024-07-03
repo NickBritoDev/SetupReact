@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { MdOutlineSettingsSuggest } from "react-icons/md";
-import Instancias from "../instancias";
+import GerenciamentoInstanciasComponent from "./gerenciamentoInstancias";
 
 export default function DialogInstaciasWhatsappComponent() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -17,7 +17,7 @@ export default function DialogInstaciasWhatsappComponent() {
   return (
     <>
       <Tooltip hasArrow placement="left" label="Configurar instancias">
-        <Button ml={2} onClick={onOpen}>
+        <Button colorScheme="green" ml={2} onClick={onOpen}>
           <MdOutlineSettingsSuggest size={52} />
         </Button>
       </Tooltip>
@@ -27,7 +27,7 @@ export default function DialogInstaciasWhatsappComponent() {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody py={10}>
-            <Instancias />
+            <GerenciamentoInstanciasComponent />
           </ModalBody>
         </ModalContent>
       </Modal>
