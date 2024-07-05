@@ -55,3 +55,24 @@ export const formatCPF = (value: string): string => {
 
   return value.padStart(11, "0");
 };
+
+export function roundNumber(num: number, scale: number) {
+  if (!("" + num).includes("e")) {
+    return Number(Math.round(Number(num + "e+" + scale)) + "e-" + scale);
+  }
+
+  const arr = ("" + num).split("e");
+  let sig = "";
+
+  if (+arr[1] + scale > 0) {
+    sig = "+";
+  }
+
+  return Number(
+    Math.round(Number(arr[0] + "e" + sig + (+arr[1] + scale))) + "e-" + scale,
+  );
+}
+
+export const formatNumber = (value: number): string => {
+  return roundNumber(value, 2).toString().replace(".", ",");
+};
