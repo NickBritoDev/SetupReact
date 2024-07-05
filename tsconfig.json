@@ -20,34 +20,17 @@
     "baseUrl": ".",
     "rootDir": "./src",
     "paths": {
-      "@api/*": [
-        "./src/api/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@helpers/*": [
-        "./src/helpers/*"
-      ],
-      "@layout/*": [
-        "./src/layout/*"
-      ],
-      "@pages/*": [
-        "./src/pages/*"
-      ],
-      "@themes/*": [
-        "./src/themes/*"
-      ],
-      "@context/*": [
-        "./src/context/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ]
-    },
+      "@api/*": ["./src/api/*"],
+      "@components/*": ["./src/components/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@layout/*": ["./src/layout/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@themes/*": ["./src/themes/*"],
+      "@context/*": ["./src/context/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@hooks": ["./src/hooks/*"]
+    }
   },
-  "include": [
-    "./src/**/*",
-    "vite.config.ts"
-  ],
+  "include": ["./src/**/*", "vite.config.ts"]
 }
