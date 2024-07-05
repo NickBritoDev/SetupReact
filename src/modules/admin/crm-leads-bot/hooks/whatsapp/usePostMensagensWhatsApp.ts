@@ -1,13 +1,14 @@
-import { useMutation } from "react-query";
-import connectApi from "../../../../api/connect";
-import { useKey } from "../../../../context/auth/token-login/authContext";
+import { useMutation, useQueryClient } from "react-query";
+import { useKey } from "../../../../../context/auth/token-login/authContext";
+import { connectCrm } from "../../../../../api/crm/connect";
 
 const usePostMensagensWhatsApp = () => {
   const { token } = useKey();
+  const queryClient = useQueryClient();
 
   const envioMensagem = async (payload: any) => {
-    const response = await connectApi.post(
-      "/v1/produtos/solicitacoes",
+    const response = await connectCrm.post(
+      "/whatsapp/enviar-mensagem",
       payload,
       {
         headers: {
@@ -18,11 +19,16 @@ const usePostMensagensWhatsApp = () => {
     return response.data;
   };
 
-  const mutation = useMutation(envioMensagem);
+  const mutation = useMutation(envioMensagem, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("useGetMensagensWhatsApp");
+    },
+  });
 
   const UseRequestPostMensagensWhatsApp = (payload: any) => {
-    mutation.mutate(payload.payload);
+    mutation.mutate(payload);
   };
+
   return {
     UseRequestPostMensagensWhatsApp,
     isLoading: mutation.isLoading,

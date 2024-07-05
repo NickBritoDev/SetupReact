@@ -1,15 +1,15 @@
 import { useQuery } from "react-query";
-import { useKey } from "../../../../context/auth/token-login/authContext";
-import { connectCrm } from "../../../../api/crm/connect";
+import { connectCrm } from "../../../../../api/crm/connect";
+import { useKey } from "../../../../../context/auth/token-login/authContext";
 
-const useGetMensagensWhatsApp = () => {
+const useGetMensagensWhatsApp = (idLead: number, instanciaOut: string) => {
   const { token } = useKey();
 
   return useQuery(
     "useGetMensagensWhatsApp",
     async () => {
       const response = await connectCrm.get(
-        `/whatsapp/obter-mensagens?instance=GRUPO-MAIS-VALOR-NOTIFICACAO&idLead=13`,
+        `/whatsapp/obter-mensagens?instance=${instanciaOut}&idLead=${idLead}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
