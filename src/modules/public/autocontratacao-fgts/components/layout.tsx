@@ -1,15 +1,32 @@
-import { Box, Flex, Show } from "@chakra-ui/react";
+import { Flex, Show } from "@chakra-ui/react";
+import {
+  desktopBreakpoint,
+  tabletBreakpoint,
+  useTablet,
+} from "@helpers/responsividade/useMediaQuery";
 import { Fragment, PropsWithChildren } from "react";
 
 type Props = {};
 function LayoutFlexComponent({ children }: PropsWithChildren) {
+  const isMobile = useTablet();
   return (
     <Flex
       flexDir={"column"}
-      bg={"gray.100"}
-      border={"solid black"}
-      aspectRatio={14 / 16}
-      h={"80vh"}
+      bg={"whitesmoke"}
+      {...(isMobile
+        ? {
+            w: "100vw",
+            h: "100vh",
+            border: "none",
+          }
+        : {
+            h: "80vh",
+            boxShadow: "0px 0px 56px -18px rgba(0,0,0,0.75)",
+            border: "solid gray",
+            aspectRatio: 14 / 16,
+            rounded: "25px",
+            p: "10px",
+          })}
     >
       {children}
     </Flex>
@@ -21,7 +38,7 @@ export default function LayoutComponent({
 }: PropsWithChildren<Props>) {
   return (
     <Fragment>
-      <Show above="md">
+      <Show breakpoint={desktopBreakpoint}>
         <Flex
           bg={"gray.400"}
           w={"100vw"}
@@ -32,7 +49,7 @@ export default function LayoutComponent({
           <LayoutFlexComponent>{children}</LayoutFlexComponent>
         </Flex>
       </Show>
-      <Show below="md">
+      <Show breakpoint={tabletBreakpoint}>
         <LayoutFlexComponent>{children}</LayoutFlexComponent>
       </Show>
     </Fragment>

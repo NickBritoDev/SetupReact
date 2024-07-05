@@ -1,19 +1,27 @@
 import { useQuery } from "react-query";
-import { CONSULTA_SALDO_CPF, StepsAutocontratacao } from "../helpers/config";
-import { formatCPF } from "../../../../utils/mask/mascaras";
-import { sleep } from "../../../../helpers/api/geral";
+import { StepsAutocontratacao } from "../helpers/config";
+import { maskCPF } from "@utils/mask/mascaras";
+import connectSimulador, { IErroApiSimulador } from "@api/connectSimulador";
+import { IBodyConsultaSaque } from "../types/hooks";
+import { AxiosError } from "axios";
 
 const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
-  cpf = formatCPF(cpf);
-  return useQuery(
-    "useGetConsultarSaldoAutocontratacaoFgts",
-    async () => {
-      await sleep(20000);
-      // const response = await connectApi.get("/")
-      return CONSULTA_SALDO_CPF;
+  const maskedCpf = maskCPF(cpf);
+  return useQuery<IBodyConsultaSaque, AxiosError<IErroApiSimulador>>(
+    ["useGetConsultarSaldoAutocontratacaoFgts", cpf],
+    async ({ signal }) => {
+      const { data } = await connectSimulador.get<IBodyConsultaSaque>(
+        `/v1/autocontratacao/fgts/saque-aniversario/${maskedCpf}`,
+        { signal },
+      );
+      return data;
     },
     {
-      enabled: currentIndex === StepsAutocontratacao.CONSULTA_SALDO,
+      enabled:
+        cpf !== "00000000000" &&
+        currentIndex === StepsAutocontratacao.SELECAO_SAQUE,
+      retry: false,
+      retryDelay: 3000,
     },
   );
 };
