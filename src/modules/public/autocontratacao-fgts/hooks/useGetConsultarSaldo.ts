@@ -20,8 +20,11 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
       enabled:
         cpf !== "00000000000" &&
         currentIndex === StepsAutocontratacao.SELECAO_SAQUE,
-      retry: false,
+      retry: 3,
       retryDelay: 3000,
+      refetchOnMount: false,
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
     },
   );
 };
