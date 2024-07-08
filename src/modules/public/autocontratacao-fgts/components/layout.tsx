@@ -13,19 +13,18 @@ function LayoutFlexComponent({ children }: PropsWithChildren) {
     <Flex
       flexDir={"column"}
       bg={"whitesmoke"}
+      border="none"
       {...(isMobile
         ? {
             w: "100vw",
             h: "100vh",
-            border: "none",
           }
         : {
             h: "80vh",
             boxShadow: "0px 0px 56px -18px rgba(0,0,0,0.75)",
-            border: "solid gray",
             aspectRatio: 14 / 16,
             rounded: "25px",
-            p: "10px",
+            p: "15px",
           })}
     >
       {children}
