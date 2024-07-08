@@ -56,7 +56,12 @@ export default function AutocontracaoBody() {
             (_, index) =>
               isDesktop || [activeStep, activeStep + 1].includes(index),
           ).map((step, index) => (
-            <Step key={index}>
+            <Step
+              flexFlow="column"
+              wordBreak="break-words"
+              h="100%"
+              key={index}
+            >
               <StepIndicator>
                 <StepStatus
                   complete={<StepIcon />}
@@ -66,7 +71,7 @@ export default function AutocontracaoBody() {
               </StepIndicator>
               <Box flexShrink="0">
                 <StepTitle style={{ fontWeight: "bold" }}>
-                  <Text w={"80%"}>{step.title}</Text>
+                  <Text>{step.title}</Text>
                 </StepTitle>
                 {!isDesktop && (
                   <StepDescription>{step.description}</StepDescription>
