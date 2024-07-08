@@ -2,7 +2,6 @@ import {
   Alert,
   Button,
   FormControl,
-  FormLabel,
   HStack,
   Input,
   Skeleton,
@@ -13,14 +12,15 @@ import {
 import { IStepProps } from "../../types/steps";
 import { useGetConsultarSaldo } from "../../hooks/useGetConsultarSaldo";
 import { useAutocontratacao } from "../../context/context";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useFormik } from "formik";
 import { formatNumber } from "@utils/mask/mascaras";
+import { IBodyEnvioSimulacaoParcelas } from "../../types/hooks";
 
 export default function SelecaoSaqueComponent(props: IStepProps) {
   const {
     state: { cpf },
-    dispatch: { definirAppError },
+    dispatch: { definirAppError, atualizarParcelasSelecionadasSaque },
   } = useAutocontratacao();
 
   const { data, isLoading, isError, error } = useGetConsultarSaldo(
@@ -40,10 +40,6 @@ export default function SelecaoSaqueComponent(props: IStepProps) {
         </Alert>
       </Stack>
     );
-  }
-
-  function handleSubmit(values: any) {
-    console.log(values);
   }
 
   const formik = useFormik({
@@ -71,36 +67,63 @@ export default function SelecaoSaqueComponent(props: IStepProps) {
       keepWithinRange: true,
     });
 
-  const values: { valor: string | number; dataRepasse: string }[] = [];
-  let primeiraData = "";
-  let ultimaData = "";
-  let valorSomado = 0;
+  const parcelas = useMemo<{
+    primeiraData: string;
+    ultimaData: string;
+    valorSomado: number;
+    parcelas: IBodyEnvioSimulacaoParcelas;
+  }>(() => {
+    const values: IBodyEnvioSimulacaoParcelas = [] as any;
+    let primeiraData = "";
+    let ultimaData = "";
+    let valorSomado = 0;
 
-  for (let i = START; i <= 10; i++) {
-    const retorno = data?.retorno;
-    if (!retorno || (formik.values.anosSelecionados < i && i !== START)) {
-      continue;
+    for (let i = START; i <= 10; i++) {
+      const retorno = data?.retorno;
+      if (!retorno) {
+        continue;
+      }
+      const valorKey = `valor_${i}` as keyof typeof retorno;
+      const dataRepasseKey = `dataRepasse_${i}` as keyof typeof retorno;
+
+      if (!retorno || !retorno[valorKey] || !retorno[dataRepasseKey]) {
+        continue;
+      }
+      let valor = "0";
+
+      if (formik.values.anosSelecionados >= i) {
+        valor = data.retorno[valorKey];
+      }
+
+      const dataRepasse = data.retorno[dataRepasseKey];
+      valorSomado += Number(valor);
+
+      if (i === START) {
+        primeiraData = dataRepasse;
+      }
+
+      ultimaData = dataRepasse;
+
+      values.push({
+        [valorKey]: valor,
+        [dataRepasseKey]: dataRepasse,
+      } as any);
     }
-    const valorKey = `valor_${i}` as keyof typeof retorno;
-    const dataRepasseKey = `dataRepasse_${i}` as keyof typeof retorno;
 
-    if (!retorno || !retorno[valorKey] || !retorno[dataRepasseKey]) {
-      continue;
-    }
-    const valor = data.retorno[valorKey];
-    const dataRepasse = data.retorno[dataRepasseKey];
-    valorSomado += Number(valor);
+    return {
+      primeiraData,
+      ultimaData,
+      valorSomado,
+      parcelas: values,
+    };
+  }, [data?.retorno, formik.values.anosSelecionados]);
 
-    if (i === START) {
-      primeiraData = dataRepasse;
-    }
-
-    ultimaData = dataRepasse;
-
-    values.push({
-      valor: valor,
-      dataRepasse,
-    });
+  function handleSubmit() {
+    atualizarParcelasSelecionadasSaque(
+      parcelas.parcelas,
+      formik.values.anosSelecionados,
+    );
+    props.goToNext();
   }
 
   const isLoaded = !isLoading && !!data;
@@ -143,10 +166,12 @@ export default function SelecaoSaqueComponent(props: IStepProps) {
             textAlign="center"
             fontSize="x-large"
           >
-            <Text>R$ {formatNumber(valorSomado)}</Text>
+            <Text>R$ {formatNumber(parcelas.valorSomado)}</Text>
             <Text>
-              {primeiraData}{" "}
-              {primeiraData !== ultimaData ? <>à {ultimaData}</> : null}
+              {parcelas.primeiraData}{" "}
+              {parcelas.primeiraData !== parcelas.ultimaData ? (
+                <>à {parcelas.ultimaData}</>
+              ) : null}
             </Text>
           </Stack>
         </Skeleton>
