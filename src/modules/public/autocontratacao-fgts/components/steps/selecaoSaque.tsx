@@ -1,8 +1,6 @@
 import {
   Alert,
-  Box,
   Button,
-  Flex,
   FormControl,
   FormLabel,
   HStack,
@@ -105,30 +103,41 @@ export default function SelecaoSaqueComponent(props: IStepProps) {
     });
   }
 
+  const isLoaded = !isLoading && !!data;
+
   return (
-    <Skeleton isLoaded={!isLoading} w={"100%"}>
-      <form
-        style={{ width: "100%", height: "100%" }}
-        onSubmit={formik.handleSubmit}
-      >
-        <Stack w={"100%"} h="100%" justifyContent="space-between">
-          <FormControl>
-            <FormLabel>Anos Selecionados</FormLabel>
+    <form
+      style={{ width: "100%", height: "100%" }}
+      onSubmit={formik.handleSubmit}
+    >
+      <Stack w={"100%"} h="100%" justifyContent="space-between">
+        <Skeleton isLoaded={isLoaded}>
+          <FormControl mt="20px">
             <HStack
               display={"flex"}
               justifyContent="center"
               w={"100%"}
               px={"30px"}
             >
-              <Button {...getDecrementButtonProps()} size="lg">
+              <Button
+                {...getDecrementButtonProps()}
+                size="lg"
+                colorScheme="green"
+              >
                 -
               </Button>
               <Input {...getInputProps()} w={"80%"} size="lg" readOnly />
-              <Button {...getIncrementButtonProps()} size="lg">
+              <Button
+                {...getIncrementButtonProps()}
+                size="lg"
+                colorScheme="green"
+              >
                 +
               </Button>
             </HStack>
           </FormControl>
+        </Skeleton>
+        <Skeleton isLoaded={isLoaded}>
           <Stack
             justifyContent="space-evenly"
             textAlign="center"
@@ -140,11 +149,13 @@ export default function SelecaoSaqueComponent(props: IStepProps) {
               {primeiraData !== ultimaData ? <>à {ultimaData}</> : null}
             </Text>
           </Stack>
-          <Button type="submit" colorScheme="green">
+        </Skeleton>
+        <Skeleton isLoaded={isLoaded}>
+          <Button w={"100%"} type="submit" colorScheme="green">
             Confirmar
           </Button>
-        </Stack>
-      </form>
-    </Skeleton>
+        </Skeleton>
+      </Stack>
+    </form>
   );
 }
