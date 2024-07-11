@@ -78,3 +78,54 @@ export interface IBodyConsultaSaque {
   msg: "Saldo retornado com sucesso";
   retorno: IRetornoConsultaSaque;
 }
+
+export enum DadosPessoaisSexoV1 {
+  Masculino = "M",
+  Feminino = "F",
+}
+
+export enum DadosPessoaisEstadoCivilV1 {}
+
+export enum DadosPessoaisNacionalidadeV1 {
+  Estrangeiro = "2",
+  Brasileiro = "1",
+}
+
+export interface IBodyEnvioDadosPessoaisV1 {
+  id_simulador: string;
+  cpf: string;
+  nome: string;
+  sexo: DadosPessoaisSexoV1;
+  estado_civil: DadosPessoaisEstadoCivilV1;
+  data_nascimento: string;
+  rg: string;
+  estado_rg: string;
+  orgao_emissor: string;
+  data_expedicao: string;
+  estado_natural: string;
+  cidade_natural: string;
+  nacionalidade: "1";
+  pais_origem: string;
+  celular: string;
+  renda: string;
+  cep: string;
+  endereco: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  nome_mae: string;
+  nome_pai: string;
+  valor_patrimonio: string;
+  cliente_iletrado_impossibilitado: "S";
+  banco: string;
+  agencia: string;
+  conta: string;
+  tipo_conta: "C";
+}
+
+export interface IConsultaOption {
+  value: string;
+  text: string;
+}
