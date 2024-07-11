@@ -13,6 +13,11 @@ import {
   StepTitle,
   Stepper,
   useSteps,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Button,
 } from "@chakra-ui/react";
 import Layout from "./components/layout";
 import { STEPS, StepsAutocontratacao } from "./helpers/config";
@@ -23,6 +28,7 @@ import ConfirmacaoComponent from "./components/steps/confirmacao";
 import { IStepProps } from "./types/steps";
 import { useAutocontratacao } from "./context/context";
 import { useDesktop } from "@helpers/responsividade/useMediaQuery";
+import { BsX } from "react-icons/bs";
 
 export default function AutocontracaoBody() {
   const { activeStep, goToNext, goToPrevious } = useSteps({
@@ -31,7 +37,8 @@ export default function AutocontracaoBody() {
   });
 
   const {
-    state: { isAppError },
+    state: { isAppError, errorMessage, errorPodeRetornar },
+    dispatch: { removerAppError },
   } = useAutocontratacao();
 
   const stepProps: IStepProps = {
@@ -64,7 +71,7 @@ export default function AutocontracaoBody() {
             >
               <StepIndicator>
                 <StepStatus
-                  complete={<StepIcon />}
+                  complete={isAppError ? <BsX /> : <StepIcon />}
                   incomplete={<StepNumber />}
                   active={<StepNumber />}
                 />
@@ -82,17 +89,38 @@ export default function AutocontracaoBody() {
           ))}
         </Stepper>
       </Stack>
-      <Flex flexGrow={"1"}>
-        {activeStep === StepsAutocontratacao.CONSULTA_SALDO && (
+      <Flex flexGrow={"1"} overflow={"hidden"} mx="1rem">
+        {isAppError && (
+          <Stack justifyContent={"space-evenly"}>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle>Um Erro Ocorreu!</AlertTitle>
+              <AlertDescription>
+                {errorMessage === "" ? "Erro desconhecido!" : errorMessage}
+              </AlertDescription>
+            </Alert>
+            {errorPodeRetornar && (
+              <Button
+                colorScheme="red"
+                onClick={() => {
+                  removerAppError();
+                  stepProps.goToPrevious();
+                }}
+              >
+                Voltar
+              </Button>
+            )}
+          </Stack>
+        )}
+        {activeStep === StepsAutocontratacao.CONSULTA_SALDO && !isAppError && (
           <ConsultaSaldoComponent {...stepProps} />
         )}
-        {activeStep === StepsAutocontratacao.SELECAO_SAQUE && (
+        {activeStep === StepsAutocontratacao.SELECAO_SAQUE && !isAppError && (
           <SelecaoSaqueComponent {...stepProps} />
         )}
-        {activeStep === StepsAutocontratacao.CADASTRO_DADOS_PESSOAIS && (
-          <CadastroDadosPessoaisComponent {...stepProps} />
-        )}
-        {activeStep === StepsAutocontratacao.CONFIRMACAO && (
+        {activeStep === StepsAutocontratacao.CADASTRO_DADOS_PESSOAIS &&
+          !isAppError && <CadastroDadosPessoaisComponent {...stepProps} />}
+        {activeStep === StepsAutocontratacao.CONFIRMACAO && !isAppError && (
           <ConfirmacaoComponent {...stepProps} />
         )}
       </Flex>
