@@ -10,7 +10,6 @@ import {
   Flex,
   Image,
   Spinner,
-  Select,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { SiWhatsapp } from "react-icons/si";
@@ -22,7 +21,6 @@ import back from "../../images/back-wpp.jpg";
 import user from "../../images/user.png";
 import InputWhatsappConponent from "./inputWhatsapp";
 import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";
-import DialogInstaciasWhatsappComponent from "./dialogInstaciasWhatsapp";
 
 export default function DialogWhatsappComponent({
   nome,
@@ -31,13 +29,14 @@ export default function DialogWhatsappComponent({
 }: any) {
   const { data: minhaConta } = useGetMinhaConta();
   const [mensagemOut, setMensagemOut] = useState("");
-  const [instanciaOut, setInstanciaOut] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [carregamentoMsgs, setCarregamentoMsgs] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
-  const { data, isSuccess } = useGetMensagensWhatsApp(idLead, instanciaOut);
   const { data: instancias } = useGetInstanciasWhatsApp();
+  const minhaInstancia =
+    instancias && instancias[0] ? instancias[0].instance : null;
+  const { data, isSuccess } = useGetMensagensWhatsApp(idLead, minhaInstancia);
   const blocoDeMensagens = data || [];
   const { UseRequestPostMensagensWhatsApp } = usePostMensagensWhatsApp();
 
@@ -46,7 +45,7 @@ export default function DialogWhatsappComponent({
     const payload = {
       id_acesso: minhaConta?.idAcesso,
       idLead: idLead,
-      instance: instanciaOut,
+      instance: minhaInstancia,
       body: mensagemOut,
       chatId: telefone,
     };
@@ -77,7 +76,6 @@ export default function DialogWhatsappComponent({
           }}
           ref={btnRef}
         >
-          <Text>WhatsApp</Text>
           <SiWhatsapp size={22} />
         </Button>
       </Tooltip>
@@ -116,30 +114,6 @@ export default function DialogWhatsappComponent({
                 {nome}
               </Text>
             </Flex>
-
-            <Select
-              w={"550px"}
-              placeholder="Selecione a instancia a ser trabalhada..."
-              onChange={(e) => {
-                setInstanciaOut(e.target.value);
-                setCarregamentoMsgs(true);
-                setTimeout(() => {
-                  setCarregamentoMsgs(false);
-                }, 10000);
-              }}
-            >
-              {instancias &&
-                instancias.map((instances: any, index: any) => (
-                  <option
-                    style={{ textTransform: "uppercase" }}
-                    key={index}
-                    value={instances.instance}
-                  >
-                    {instances.instance.replaceAll("-", " ")}
-                  </option>
-                ))}
-            </Select>
-            <DialogInstaciasWhatsappComponent />
           </Flex>
 
           <DrawerBody py={20} w={"100%"} pos={"relative"}>

@@ -7,6 +7,7 @@ import LogsComponent from "./logs";
 import AgendaComponent from "./agenda";
 import DialogEmailComponent from "./dialogEmail";
 import DialogWhatsappComponent from "./whatsapp/dialogWhatsapp";
+import { FaQrcode } from "react-icons/fa";
 
 export default function InteracaoComponent({ user, detalhesLeads }: any) {
   const isNovo = detalhesLeads?.status === "Novo";
@@ -41,6 +42,27 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           gap={6}
           mt={4}
         >
+          <Tooltip
+            hasArrow
+            placement="top"
+            label="Baixar gerenciado de instâncias"
+          >
+            <Button
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              gap={2}
+              onClick={() => {
+                window.open(
+                  "https://drive.google.com/file/d/10z9mE3cTBXvjTX6Vz2-Pz8oElJlv8a9g/view?usp=sharing",
+                  "_blank",
+                );
+              }}
+            >
+              <FaQrcode size={22} />
+            </Button>
+          </Tooltip>
+
           <Tooltip hasArrow placement="top" label="Ligar para o cliente">
             <Button
               display={"flex"}
@@ -51,7 +73,6 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
                 window.location.href = `zoiper:${telefoneFormatado}`;
               }}
             >
-              <Text>Ligar</Text>
               <LuPhoneOutgoing size={22} />
             </Button>
           </Tooltip>
@@ -63,7 +84,6 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
               justifyContent={"center"}
               gap={2}
             >
-              <Text>SMS</Text>
               <MdOutlineTextsms size={22} />
             </Button>
           </Tooltip>

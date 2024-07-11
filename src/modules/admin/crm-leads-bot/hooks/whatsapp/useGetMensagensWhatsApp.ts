@@ -6,7 +6,7 @@ const useGetMensagensWhatsApp = (idLead: number, instanciaOut: string) => {
   const { token } = useKey();
 
   return useQuery(
-    "useGetMensagensWhatsApp",
+    ["useGetMensagensWhatsApp", idLead, instanciaOut],
     async () => {
       const response = await connectCrm.get(
         `/whatsapp/obter-mensagens?instance=${instanciaOut}&idLead=${idLead}`,

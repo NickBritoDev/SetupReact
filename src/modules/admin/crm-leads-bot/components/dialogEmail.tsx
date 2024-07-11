@@ -7,7 +7,6 @@ import {
   AlertDialogOverlay,
   Tooltip,
   Button,
-  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
@@ -78,7 +77,6 @@ Bolsa Família Plus - Transformando Vidas, Realizando Sonhos.`,
           gap={2}
           onClick={onOpen}
         >
-          <Text>Email</Text>
           <TfiEmail size={22} />
         </Button>
       </Tooltip>

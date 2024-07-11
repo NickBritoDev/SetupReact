@@ -36,7 +36,6 @@ export default function AgendaComponent({ detalhesLeads }: any) {
           justifyContent={"center"}
           gap={2}
         >
-          <Text>Agenda</Text>
           <LuBookPlus size={22} />
         </Button>
       </Tooltip>
