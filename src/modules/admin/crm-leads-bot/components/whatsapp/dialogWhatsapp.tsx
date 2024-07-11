@@ -76,7 +76,6 @@ export default function DialogWhatsappComponent({
           }}
           ref={btnRef}
         >
-          <Text>WhatsApp</Text>
           <SiWhatsapp size={22} />
         </Button>
       </Tooltip>
