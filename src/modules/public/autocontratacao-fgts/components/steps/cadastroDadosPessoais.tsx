@@ -52,6 +52,7 @@ export default function CadastroDadosPessoaisComponent(props: IStepProps) {
 
   function goToPrevious() {
     if (activeStep === 1) {
+      props.goToPrevious();
       return;
     }
 
