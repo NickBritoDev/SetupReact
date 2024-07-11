@@ -114,7 +114,11 @@ export default function CadastroDadosPessoaisComponent(props: IStepProps) {
         fields.includes(nomeCampo as keyof IDadosCliente),
       );
 
-      isValid = errors.length === 0;
+      const touched = Object.entries(formik.touched).filter(([nomeCampo]) =>
+        fields.includes(nomeCampo as keyof IDadosCliente),
+      );
+
+      isValid = errors.length === 0 && touched.length > 0;
     }
 
     if (isValid) {
