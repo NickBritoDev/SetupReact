@@ -3,10 +3,15 @@ import { StepsAutocontratacao } from "../helpers/config";
 import { maskCPF } from "@utils/mask/mascaras";
 import connectSimulador, { IErroApiSimulador } from "@api/connectSimulador";
 import { IBodyConsultaSaque } from "../types/hooks";
-import { AxiosError } from "axios";
+import { AxiosError, HttpStatusCode } from "axios";
+import { useAutocontratacao } from "../context/context";
 
 const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
   const maskedCpf = maskCPF(cpf);
+  const {
+    state: { isAppError },
+    dispatch: { definirAppError },
+  } = useAutocontratacao();
   return useQuery<IBodyConsultaSaque, AxiosError<IErroApiSimulador>>(
     ["useGetConsultarSaldoAutocontratacaoFgts", cpf],
     async ({ signal }) => {
@@ -17,11 +22,22 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
       return data;
     },
     {
+      onError: (error) => {
+        if (error.status === HttpStatusCode.BadRequest) {
+          return;
+        }
+
+        definirAppError(
+          true,
+          error.data?.message ?? "Ocorreu um erro inesperado",
+          error.status !== HttpStatusCode.Forbidden,
+        );
+      },
       enabled:
         cpf !== "00000000000" &&
-        currentIndex === StepsAutocontratacao.SELECAO_SAQUE,
-      retry: 3,
-      retryDelay: 3000,
+        currentIndex === StepsAutocontratacao.SELECAO_SAQUE &&
+        !isAppError,
+      retry: false,
       refetchOnMount: false,
       staleTime: Infinity,
       refetchOnWindowFocus: false,
