@@ -1,5 +1,4 @@
 import {
-  Alert,
   Button,
   FormControl,
   HStack,
@@ -12,35 +11,18 @@ import {
 import { IStepProps } from "../../types/steps";
 import { useGetConsultarSaldo } from "../../hooks/useGetConsultarSaldo";
 import { useAutocontratacao } from "../../context/context";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useFormik } from "formik";
 import { formatNumber } from "@utils/mask/mascaras";
 import { IBodyEnvioSimulacaoParcelas } from "../../types/hooks";
 
 export default function SelecaoSaqueComponent(props: IStepProps) {
   const {
-    state: { cpf },
-    dispatch: { definirAppError, atualizarParcelasSelecionadasSaque },
+    state: { cpf, isAppError },
+    dispatch: { atualizarParcelasSelecionadasSaque },
   } = useAutocontratacao();
 
-  const { data, isLoading, isError, error } = useGetConsultarSaldo(
-    cpf,
-    props.currentIndex,
-  );
-
-  useEffect(() => {
-    definirAppError(!isLoading && isError);
-  }, [isLoading, isError]);
-
-  if (isError) {
-    return (
-      <Stack w={"100%"} h={"50%"} px={"20px"} alignSelf={"center"}>
-        <Alert h={"100%"} status="error">
-          {error?.data.message}
-        </Alert>
-      </Stack>
-    );
-  }
+  const { data, isLoading } = useGetConsultarSaldo(cpf, props.currentIndex);
 
   const formik = useFormik({
     initialValues: {
@@ -91,18 +73,19 @@ export default function SelecaoSaqueComponent(props: IStepProps) {
       }
       let valor = "0";
 
-      if (formik.values.anosSelecionados >= i) {
-        valor = data.retorno[valorKey];
-      }
-
       const dataRepasse = data.retorno[dataRepasseKey];
-      valorSomado += Number(valor);
 
       if (i === START) {
         primeiraData = dataRepasse;
+        ultimaData = dataRepasse;
       }
 
-      ultimaData = dataRepasse;
+      if (formik.values.anosSelecionados >= i) {
+        valor = data.retorno[valorKey];
+        ultimaData = dataRepasse;
+      }
+
+      valorSomado += Number(valor);
 
       values.push({
         [valorKey]: valor,
@@ -126,14 +109,19 @@ export default function SelecaoSaqueComponent(props: IStepProps) {
     props.goToNext();
   }
 
-  const isLoaded = !isLoading && !!data;
+  const isLoaded = !isLoading;
 
   return (
     <form
       style={{ width: "100%", height: "100%" }}
       onSubmit={formik.handleSubmit}
     >
-      <Stack w={"100%"} h="100%" justifyContent="space-between">
+      <Stack
+        w={"100%"}
+        h="100%"
+        hidden={isAppError}
+        justifyContent="space-between"
+      >
         <Skeleton isLoaded={isLoaded}>
           <FormControl mt="20px">
             <HStack
