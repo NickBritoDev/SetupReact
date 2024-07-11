@@ -6,7 +6,7 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
-import { maskCPF } from "@utils/mask/mascaras";
+import { handleChangeCPF } from "@utils/mask/mascaras";
 import { IStepProps } from "../../types/steps";
 import * as yup from "yup";
 import { useFormik } from "formik";
@@ -50,7 +50,7 @@ export default function ConsultaSaldoComponent(props: IStepProps) {
         gap={"5rem"}
         w={"100%"}
         h={"100%"}
-        paddingX={isDesktop ? "8rem" : "3rem"}
+        paddingX={isDesktop ? "8rem" : "1rem"}
       >
         <FormControl isInvalid={!!formik.errors.cpf}>
           <FormLabel htmlFor="cpf">Digite o CPF</FormLabel>
@@ -59,10 +59,7 @@ export default function ConsultaSaldoComponent(props: IStepProps) {
             value={formik.values.cpf}
             type="text"
             inputMode="numeric"
-            onChange={(e) => {
-              e.target.value = maskCPF(e.target.value);
-              formik.handleChange(e);
-            }}
+            onChange={handleChangeCPF(formik.handleChange)}
             borderColor={formik.errors.cpf ? "red" : "gray.300"}
             size={"lg"}
           />
