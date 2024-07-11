@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
+import { ChangeEventHandler } from "react";
 
-export const maskCPF = (value: string): any => {
+export const maskCPF = (value: string): string => {
   return value
     .replace(/\D/g, "")
     .replace(/(\d{3})(\d)/, "$1.$2")
@@ -9,18 +10,18 @@ export const maskCPF = (value: string): any => {
     .replace(/(-\d{2})\d+?$/, "$1");
 };
 
-export const maskPhone = (value: any): any => {
+export const maskPhone = (value: string): string => {
   return value
     .replace(/\D/g, "")
     .replace(/(\d{2})(\d)/, "($1) $2")
-    .replace(/(\d{5})(\d{4})(\d)/, "$1-$2");
+    .replace(/(\d{4,5})(\d{4})\d*/, "$1-$2");
 };
 
-export const maskCEP = (value: string): any => {
-  return value.replace(/\D/g, "").replace(/^(\d{5})(\d{3})+?$/, "$1-$2");
+export const maskCEP = (value: string): string => {
+  return value.replace(/\D/g, "").replace(/(\d{5})(\d{1,3})\d*/, "$1-$2");
 };
 
-export const maskDate = (value: string): any => {
+export const maskDate = (value: string): string => {
   return value
     .replace(/\D/g, "")
     .replace(/(\d{2})(\d)/, "$1/$2")
@@ -28,12 +29,32 @@ export const maskDate = (value: string): any => {
     .replace(/(\d{4})(\d)/, "$1");
 };
 
-export const maskOnlyLetters = (value: string): any => {
+export const maskOnlyLetters = (value: string): string => {
   return value.replace(/\W/g, "");
 };
 
-export const maskOnlyNumbers = (value: string): any => {
+export const maskOnlyNumbers = (value: string): string => {
   return value.replace(/\D/g, "");
+};
+
+export const maskReal = (value: string): string => {
+  if (!value) {
+    return "";
+  }
+
+  value = value
+    .replace(/\D/g, "")
+    .replace(/(\d)(\d{2})$/, "$1,$2")
+    .replace(/(\d{3}),(\d{2}$)/, "$1,$2")
+    .replace(/(\d{1,3})(\d{3},\d{2}$)/, "$1.$2");
+
+  const reg = /(\d)(\d{3})(\.\d{3})/;
+
+  while (reg.test(value)) {
+    value = value.replace(reg, "$1.$2$3");
+  }
+
+  return value;
 };
 
 export const formatDataHora = (d: any) => {
@@ -74,5 +95,33 @@ export function roundNumber(num: number, scale: number) {
 }
 
 export const formatNumber = (value: number): string => {
-  return roundNumber(value, 2).toString().replace(".", ",");
+  return maskReal(roundNumber(value, 2).toString());
 };
+
+type IHandleChange = (
+  callback?: ChangeEventHandler<HTMLInputElement>,
+) => ChangeEventHandler<HTMLInputElement>;
+
+const generateHandleChangeMask: (mask: (value: any) => any) => IHandleChange = (
+  mask,
+) => {
+  return (callback) => {
+    return (e) => {
+      e.target.value = mask(e.target.value);
+
+      if (callback) {
+        callback(e);
+      }
+    };
+  };
+};
+
+export const handleChangeCEP: IHandleChange = generateHandleChangeMask(maskCEP);
+
+export const handleChangeCPF: IHandleChange = generateHandleChangeMask(maskCPF);
+
+export const handleChangeTelefone: IHandleChange =
+  generateHandleChangeMask(maskPhone);
+
+export const handleChangeReal: IHandleChange =
+  generateHandleChangeMask(maskReal);
