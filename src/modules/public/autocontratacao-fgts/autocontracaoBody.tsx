@@ -31,20 +31,44 @@ import { useDesktop } from "@helpers/responsividade/useMediaQuery";
 import { BsX } from "react-icons/bs";
 
 export default function AutocontracaoBody() {
-  const { activeStep, goToNext, goToPrevious } = useSteps({
+  const {
+    activeStep,
+    goToNext: nextStep,
+    goToPrevious: previousStep,
+    setActiveStep,
+  } = useSteps({
     index: 0,
     count: STEPS.length,
   });
 
   const {
-    state: { isAppError, errorMessage, errorPodeRetornar },
-    dispatch: { removerAppError },
+    state: { isAppError, errorMessage, errorPodeRetornar, isEditar },
+    dispatch: { removerAppError, limparEdicao },
   } = useAutocontratacao();
+
+  function goToNext() {
+    if (isEditar) {
+      limparEdicao();
+      return setActiveStep(StepsAutocontratacao.CONFIRMACAO);
+    }
+
+    nextStep();
+  }
+
+  function goToPrevious() {
+    if (isEditar) {
+      limparEdicao();
+      return setActiveStep(StepsAutocontratacao.CONFIRMACAO);
+    }
+
+    previousStep();
+  }
 
   const stepProps: IStepProps = {
     currentIndex: activeStep,
     goToNext,
     goToPrevious,
+    setActiveStep,
   };
 
   const isDesktop = useDesktop();
@@ -89,7 +113,12 @@ export default function AutocontracaoBody() {
           ))}
         </Stepper>
       </Stack>
-      <Flex flexGrow={"1"} overflow={"hidden"} mx="1rem">
+      <Flex
+        flexGrow={"1"}
+        {...(isAppError && { justifyContent: "center" })}
+        overflow={"hidden"}
+        mx="1rem"
+      >
         {isAppError && (
           <Stack justifyContent={"space-evenly"}>
             <Alert status="error">

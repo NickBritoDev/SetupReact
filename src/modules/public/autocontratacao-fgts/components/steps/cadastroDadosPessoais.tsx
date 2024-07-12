@@ -15,10 +15,13 @@ import DadosBancariosComponent from "./cadastroDadosPessoais/dadosBancarios";
 import { IDadosCliente } from "../../context/state";
 import { useDadosClienteFormik } from "./cadastroDadosPessoais/formik";
 import { useAutocontratacao } from "../../context/context";
+import { useEffect } from "react";
+import { StepsAutocontratacao } from "../../helpers/config";
 
 export default function CadastroDadosPessoaisComponent(props: IStepProps) {
   const {
-    dispatch: { atualizarDadosCliente },
+    state: { isEditar, editarConfig },
+    dispatch: { atualizarDadosCliente, limparEdicao },
   } = useAutocontratacao();
   const steps = [
     {
@@ -44,19 +47,42 @@ export default function CadastroDadosPessoaisComponent(props: IStepProps) {
   const {
     activeStep,
     goToPrevious: goToPrev,
-    goToNext,
+    goToNext: nextStep,
+    setActiveStep,
   } = useSteps({
     index: 1,
     count: steps.length,
   });
 
-  function goToPrevious() {
+  useEffect(() => {
+    if (isEditar && editarConfig.stepDadosPessoais) {
+      setActiveStep(editarConfig.stepDadosPessoais);
+    }
+  }, [isEditar, editarConfig]);
+
+  async function goToPrevious() {
+    if (isEditar) {
+      limparEdicao();
+      await formik.submitForm();
+      return props.setActiveStep(StepsAutocontratacao.CONFIRMACAO);
+    }
+
     if (activeStep === 1) {
       props.goToPrevious();
       return;
     }
 
     goToPrev();
+  }
+
+  async function goToNext() {
+    if (isEditar) {
+      limparEdicao();
+      await formik.submitForm();
+      return props.setActiveStep(StepsAutocontratacao.CONFIRMACAO);
+    }
+
+    nextStep();
   }
 
   async function validateAndGoToNext() {

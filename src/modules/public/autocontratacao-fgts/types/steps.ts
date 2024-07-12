@@ -4,6 +4,7 @@ export interface IStepProps {
   currentIndex: number;
   goToNext: () => void;
   goToPrevious: () => void;
+  setActiveStep: (index: number) => void;
 }
 
 export type IFormikDadosPessoais = ReturnType<typeof useDadosClienteFormik>;
