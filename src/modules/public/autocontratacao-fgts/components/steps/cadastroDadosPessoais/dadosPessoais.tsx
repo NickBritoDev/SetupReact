@@ -9,26 +9,20 @@ import {
 import { useGetOptions } from "@modules/public/autocontratacao-fgts/hooks/useGetOptions";
 import { StepsDadosPessoaisProps } from "@modules/public/autocontratacao-fgts/types/steps";
 import { handleChangeTelefone } from "@utils/mask/mascaras";
-import { useEffect, useRef } from "react";
 
 export default function CadastroDadosPessoaisComponent({
   formik,
 }: StepsDadosPessoaisProps) {
   const estadoCivil = useGetOptions("estados-civis");
-  const firstInputRef = useRef<any>(null);
-  useEffect(() => {
-    firstInputRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [firstInputRef]);
 
   return (
     <Stack overflowY={"auto"} flexGrow={"1"}>
       <FormControl
-        ref={firstInputRef}
         isRequired
         isInvalid={!!formik.errors.nome && formik.touched.nome}
       >
         <FormLabel>Nome</FormLabel>
-        <Input placeholder="Nome" {...formik.getFieldProps("nome")} />
+        <Input autoFocus placeholder="Nome" {...formik.getFieldProps("nome")} />
         <FormErrorMessage>{formik.errors.nome}</FormErrorMessage>
       </FormControl>
       <FormControl

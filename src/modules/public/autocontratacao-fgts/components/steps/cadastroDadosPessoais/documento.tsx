@@ -8,28 +8,25 @@ import {
 } from "@chakra-ui/react";
 import { useGetOptions } from "@modules/public/autocontratacao-fgts/hooks/useGetOptions";
 import { StepsDadosPessoaisProps } from "@modules/public/autocontratacao-fgts/types/steps";
-import { useEffect, useRef } from "react";
 
 export default function CadastroDocumentoComponent({
   formik,
 }: StepsDadosPessoaisProps) {
-  const firstInputRef = useRef<any>(null);
-  useEffect(() => {
-    firstInputRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [firstInputRef]);
-
   const estados = useGetOptions("estados");
   const orgaosEmissores = useGetOptions("orgaos-emissores");
 
   return (
     <Stack flexGrow={"1"}>
       <FormControl
-        ref={firstInputRef}
         isRequired
         isInvalid={!!formik.errors.rg && formik.touched.rg}
       >
         <FormLabel>Documento</FormLabel>
-        <Input placeholder="Documento" {...formik.getFieldProps("rg")} />
+        <Input
+          autoFocus
+          placeholder="Documento"
+          {...formik.getFieldProps("rg")}
+        />
         <FormErrorMessage>{formik.errors.rg}</FormErrorMessage>
       </FormControl>
       <FormControl

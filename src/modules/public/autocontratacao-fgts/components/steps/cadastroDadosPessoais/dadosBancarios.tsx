@@ -9,27 +9,21 @@ import {
 import { useGetOptions } from "@modules/public/autocontratacao-fgts/hooks/useGetOptions";
 import { StepsDadosPessoaisProps } from "@modules/public/autocontratacao-fgts/types/steps";
 import { handleChangeReal } from "@utils/mask/mascaras";
-import { useEffect, useRef } from "react";
 
 export default function CadastroDadosBancariosComponent({
   formik,
 }: StepsDadosPessoaisProps) {
-  const firstInputRef = useRef<any>(null);
-  useEffect(() => {
-    firstInputRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [firstInputRef]);
-
   const valoresPatrimonio = useGetOptions("valores-patrimoniais");
 
   return (
     <Stack flexGrow="1">
       <FormControl
-        ref={firstInputRef}
         isRequired
         isInvalid={!!formik.errors.renda && formik.touched.renda}
       >
         <FormLabel>Renda</FormLabel>
         <Input
+          autoFocus
           placeholder="Renda"
           name="renda"
           inputMode="decimal"

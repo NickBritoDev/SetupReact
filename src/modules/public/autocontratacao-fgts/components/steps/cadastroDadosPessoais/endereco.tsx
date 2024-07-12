@@ -9,26 +9,21 @@ import {
 import { useGetOptions } from "@modules/public/autocontratacao-fgts/hooks/useGetOptions";
 import { StepsDadosPessoaisProps } from "@modules/public/autocontratacao-fgts/types/steps";
 import { handleChangeCEP } from "@utils/mask/mascaras";
-import { useEffect, useRef } from "react";
 
 export default function CadastroEnderecoComponent({
   formik,
 }: StepsDadosPessoaisProps) {
   const estados = useGetOptions("estados");
-  const firstInputRef = useRef<any>(null);
-  useEffect(() => {
-    firstInputRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [firstInputRef]);
 
   return (
     <Stack flexGrow="1">
       <FormControl
-        ref={firstInputRef}
         isRequired
         isInvalid={!!formik.errors.cep && formik.touched.cep}
       >
         <FormLabel>CEP</FormLabel>
         <Input
+          autoFocus
           placeholder="00000-000"
           inputMode="numeric"
           name="cep"
