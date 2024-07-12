@@ -1,16 +1,23 @@
 import { formatCPF } from "@utils/mask/mascaras";
 import { useReducer, Dispatch } from "react";
 import { IBodyEnvioSimulacaoParcelas } from "../types/hooks";
+import { StepsAutocontratacao } from "../helpers/config";
 
 type IAutocontratacaoActionNames =
   | "atualizarCpf"
   | "definirAppError"
   | "atualizarParcelasSelecionadasSaque"
-  | "atualizarDadosCliente";
+  | "atualizarDadosCliente"
+  | "definirEditarCampos"
+  | "limparEdicao";
 
 export interface IAutocontratacaoAction {
   name: IAutocontratacaoActionNames;
   payload: any;
+}
+
+export interface IConfigEditar {
+  stepDadosPessoais?: number;
 }
 
 export interface IDadosCliente {
@@ -53,6 +60,8 @@ export interface IAutocontratacaoState {
   anosSelecionados: number;
   parcelasSelecionadasSaque: IBodyEnvioSimulacaoParcelas | null;
   dadosPessoais: IDadosCliente | null;
+  isEditar: boolean;
+  editarConfig: IConfigEditar;
 }
 
 export type IAutocontratacaoDispatch = Dispatch<IAutocontratacaoAction>;
@@ -89,6 +98,20 @@ function autocontratacaoReducer(
         dadosPessoais: payload,
       };
     }
+    case "definirEditarCampos": {
+      return {
+        ...state,
+        isEditar: true,
+        editarConfig: payload.config,
+      };
+    }
+    case "limparEdicao": {
+      return {
+        ...state,
+        isEditar: false,
+        editarConfig: {},
+      };
+    }
     default: {
       return {
         ...state,
@@ -105,6 +128,8 @@ export const autocontratacaoDefault: IAutocontratacaoState = {
   anosSelecionados: 0,
   parcelasSelecionadasSaque: null,
   dadosPessoais: null,
+  isEditar: false,
+  editarConfig: {},
 };
 
 export function useAutocontratacaoReducer() {
@@ -140,4 +165,7 @@ export const autocontratacaoReducerFunctions = (
     }),
   atualizarDadosCliente: (dados: IDadosCliente) =>
     dispatch({ name: "atualizarDadosCliente", payload: dados }),
+  definirEditarCampos: (config: IConfigEditar) =>
+    dispatch({ name: "definirEditarCampos", payload: { config } }),
+  limparEdicao: () => dispatch({ name: "limparEdicao", payload: null }),
 });
