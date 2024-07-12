@@ -1,13 +1,15 @@
 import { useQuery } from "react-query";
 import { useAutocontratacao } from "../context/context";
-import connectSimulador from "@api/connectSimulador";
+import connectSimulador, { IErroApiSimulador } from "@api/connectSimulador";
 import { ICadastroSimulacao } from "../types/hooks";
+import { AxiosError, HttpStatusCode } from "axios";
 
 const usePostCadastrarProposta = (enabled: boolean) => {
   const {
     state: { cpf, parcelasSelecionadasSaque, dadosPessoais },
+    dispatch: { definirAppError },
   } = useAutocontratacao();
-  return useQuery(
+  return useQuery<any, AxiosError<IErroApiSimulador>>(
     ["usePostCadastrarProposta", cpf],
     async ({ signal }) => {
       const uri = "/v1/autocontratacao/fgts/saque-aniversario";
@@ -42,6 +44,13 @@ const usePostCadastrarProposta = (enabled: boolean) => {
       return true;
     },
     {
+      onError: (error) => {
+        definirAppError(
+          true,
+          error.data?.message ?? "Ocorreu um erro inesperado",
+          error.status !== HttpStatusCode.Forbidden,
+        );
+      },
       enabled,
       retry: false,
       refetchOnMount: false,
