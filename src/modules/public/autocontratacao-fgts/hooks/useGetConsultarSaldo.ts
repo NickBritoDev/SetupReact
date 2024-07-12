@@ -37,7 +37,12 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
         cpf !== "00000000000" &&
         currentIndex === StepsAutocontratacao.SELECAO_SAQUE &&
         !isAppError,
-      retry: false,
+      retry: 4,
+      retryDelay: (attemptIndex, error) => {
+        console.log(error.data?.message);
+
+        return Math.min(5000 * 2 ** attemptIndex, 30000);
+      },
       refetchOnMount: false,
       staleTime: Infinity,
       refetchOnWindowFocus: false,
