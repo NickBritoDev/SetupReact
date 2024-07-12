@@ -27,7 +27,8 @@ import { useGetOptions } from "../../hooks/useGetOptions";
 import { Fragment } from "react/jsx-runtime";
 import { StepsAutocontratacao } from "../../helpers/config";
 import { IConfigEditar } from "../../context/state";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
+import { usePostCadastrarProposta } from "../../hooks/usePostCadastrarProposta";
 
 function HighlightCampo({ children }: PropsWithChildren) {
   return (
@@ -38,6 +39,8 @@ function HighlightCampo({ children }: PropsWithChildren) {
 }
 
 export default function ConfirmacaoComponent(props: IStepProps) {
+  const [canCadastrar, setCanCadastrar] = useState(false);
+
   const {
     state: { dadosPessoais, parcelasSelecionadasSaque },
     dispatch: { definirEditarCampos },
@@ -71,6 +74,7 @@ export default function ConfirmacaoComponent(props: IStepProps) {
     },
   );
 
+  usePostCadastrarProposta(canCadastrar);
   const estadosCivis = useGetOptions("estados-civis");
   const valorPatrimonio = useGetOptions("valores-patrimoniais");
   const bancos = useGetOptions("bancos");
@@ -88,6 +92,10 @@ export default function ConfirmacaoComponent(props: IStepProps) {
     props.setActiveStep(index);
 
     definirEditarCampos(config ?? {});
+  }
+
+  function cadastrarProposta() {
+    setCanCadastrar(true);
   }
 
   return (
@@ -247,7 +255,7 @@ export default function ConfirmacaoComponent(props: IStepProps) {
               <Button w="100%" colorScheme="blue" onClick={onOpen}>
                 Editar
               </Button>
-              <Button w="100%" colorScheme="green">
+              <Button w="100%" colorScheme="green" onClick={cadastrarProposta}>
                 Cadastrar
               </Button>
             </HStack>

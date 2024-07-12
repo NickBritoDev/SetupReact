@@ -129,3 +129,9 @@ export interface IConsultaOption {
   value: string;
   text: string;
 }
+
+export interface ICadastroSimulacao {
+  cpf: string;
+  data_nascimento: string;
+  simulacao_fgts: string;
+}
