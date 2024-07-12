@@ -1,3 +1,4 @@
+import { useAutocontratacao } from "@modules/public/autocontratacao-fgts/context/context";
 import { type IDadosCliente } from "@modules/public/autocontratacao-fgts/context/state";
 import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
@@ -79,9 +80,14 @@ export const useDadosClienteFormik = (
     values: IDadosCliente,
     formikHelpers: FormikHelpers<IDadosCliente>,
   ) => void | Promise<any>,
-): ReturnType<typeof useFormik<IDadosCliente>> =>
-  useFormik<IDadosCliente>({
+): ReturnType<typeof useFormik<IDadosCliente>> => {
+  const {
+    state: { dadosPessoais },
+  } = useAutocontratacao();
+
+  return useFormik<IDadosCliente>({
     onSubmit,
-    initialValues: defaultFormik,
+    initialValues: dadosPessoais ?? defaultFormik,
     validationSchema: schema,
   });
+};
