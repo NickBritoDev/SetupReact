@@ -5,6 +5,7 @@ import { formatDataHora } from "../../../../utils/mask/mascaras";
 export default function LogsComponent({ detalhesLeads }: any) {
   return (
     <Flex
+      display={"none"}
       gap={2}
       rounded={"xl"}
       alignItems={"center"}

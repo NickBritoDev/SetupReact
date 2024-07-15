@@ -1,17 +1,18 @@
+import { useState } from "react";
 import { Key } from "react";
-import { Text, Flex, Box, Badge } from "@chakra-ui/react";
+import { Text, Flex, Box, Badge, Input } from "@chakra-ui/react";
 import { RiUserHeartFill } from "react-icons/ri";
 import {
   FaCartArrowDown,
   FaRoad,
-  FaTemperatureArrowUp,
   FaUserCheck,
   FaUserPlus,
   FaUsers,
-} from "react-icons/fa6";
+} from "react-icons/fa";
 import { SiFireship } from "react-icons/si";
 import { GiIceCube } from "react-icons/gi";
 import { Contato } from "../types/types";
+import { FaTemperatureArrowUp } from "react-icons/fa6";
 
 export default function SidebarComponent({
   detalhesLeads,
@@ -22,6 +23,8 @@ export default function SidebarComponent({
   filteredContatos: Contato[];
   openDetailsLeads: (contato: Contato) => void;
 }) {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   const getElapsedMinutes = (lastUpdateTime: string) => {
     const [hours, minutes] = lastUpdateTime.split(":").map(Number);
     const lastUpdate = new Date();
@@ -40,22 +43,32 @@ export default function SidebarComponent({
     }
   };
 
-  const sortedContatos = filteredContatos.sort((a, b) => {
-    const statusOrder = ["Novo", "Contato", "Negociando", "Finalizado"];
-    const aStatusIndex = statusOrder.indexOf(a.status);
-    const bStatusIndex = statusOrder.indexOf(b.status);
+  const sortedContatos = filteredContatos
+  .filter((contato) =>
+    Object.values(contato).some((value) =>
+      String(value).toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  )  
+    .sort((a, b) => {
+      const statusOrder = ["Novo", "Contato", "Negociando", "Finalizado"];
+      const aStatusIndex = statusOrder.indexOf(a.status);
+      const bStatusIndex = statusOrder.indexOf(b.status);
 
-    if (aStatusIndex !== bStatusIndex) {
-      return aStatusIndex - bStatusIndex;
-    }
+      if (aStatusIndex !== bStatusIndex) {
+        return aStatusIndex - bStatusIndex;
+      }
 
-    const aLastLog = a.logs[a.logs.length - 1];
-    const bLastLog = b.logs[b.logs.length - 1];
-    const aElapsed = getElapsedMinutes(aLastLog.data_atualizacao.slice(11, 16));
-    const bElapsed = getElapsedMinutes(bLastLog.data_atualizacao.slice(11, 16));
+      const aLastLog = a.logs[a.logs.length - 1];
+      const bLastLog = b.logs[b.logs.length - 1];
+      const aElapsed = getElapsedMinutes(aLastLog.data_atualizacao.slice(11, 16));
+      const bElapsed = getElapsedMinutes(bLastLog.data_atualizacao.slice(11, 16));
 
-    return bElapsed - aElapsed;
-  });
+      return bElapsed - aElapsed;
+    });
+
+  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
 
   return (
     <Box
@@ -68,6 +81,13 @@ export default function SidebarComponent({
       w={"25%"}
       boxShadow={"lg"}
     >
+      <Box p={1}>
+        <Input
+          placeholder="Buscar lead..."
+          value={searchTerm}
+          onChange={handleSearchInputChange}
+        />
+      </Box>
       <Flex position={"relative"} h={"100vh"} flexDir={"column"}>
         {sortedContatos.length <= 0 && (
           <Text mx={"auto"} mt={2} fontWeight={"semibold"}>
@@ -151,12 +171,12 @@ export default function SidebarComponent({
                         contato.status === "Novo"
                           ? "#44B3CF"
                           : contato.status === "Contato"
-                            ? "#F4B61D"
-                            : contato.status === "Negociando"
-                              ? "#F44B1D"
-                              : contato.status === "Finalizado"
-                                ? "#229544"
-                                : "black"
+                          ? "#F4B61D"
+                          : contato.status === "Negociando"
+                          ? "#F44B1D"
+                          : contato.status === "Finalizado"
+                          ? "#229544"
+                          : "black"
                       }
                     >
                       {contato.status}

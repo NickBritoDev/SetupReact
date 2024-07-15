@@ -71,7 +71,7 @@ Bolsa Família Plus - Transformando Vidas, Realizando Sonhos.`,
     <>
       <Tooltip hasArrow placement="top" label="Enviar email">
         <Button
-          display={"flex"}
+          display={"none"}
           alignItems={"center"}
           justifyContent={"center"}
           gap={2}

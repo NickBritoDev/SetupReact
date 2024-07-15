@@ -29,7 +29,7 @@ export default function NavbarComponent() {
   const handleLogout = () => {
     deleteCookie("keyStatus");
     deleteCookie("token");
-    window.location.href = "http://localhost:5173/";
+    window.location.href = "https://maisvalorlabs.portalmaisvalor.com/";
   };
 
   return (
