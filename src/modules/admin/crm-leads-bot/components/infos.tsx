@@ -17,6 +17,10 @@ export default function InfosComponent({
         <DialogObservacoesComponent />
       </Flex>
 
+      <Flex flexDir={"column"} mb={2} gap={1} w={"100%"}>
+        <DialogStatusComponent detalhesLeads={detalhesLeads} />
+      </Flex>
+
       <Divider mb={2} />
       <Flex alignItems={"center"} justifyContent={"flex-start"} gap={2}>
         <BsInfoCircleFill color="#44B3CF" size={24} />
