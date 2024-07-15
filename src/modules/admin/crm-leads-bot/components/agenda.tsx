@@ -30,8 +30,9 @@ export default function AgendaComponent({ detalhesLeads }: any) {
     <>
       <Tooltip hasArrow placement="top" label="Marcar retorno">
         <Button
+          display={'none'}
           onClick={onOpen}
-          display={detalhesLeads?.status !== "Finalizado" ? "flex" : "none"}
+          // display={detalhesLeads?.status !== "Finalizado" ? "flex" : "none"}
           alignItems={"center"}
           justifyContent={"center"}
           gap={2}

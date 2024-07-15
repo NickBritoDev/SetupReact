@@ -12,7 +12,7 @@ export default function InfosComponent({
 }: any) {
   return (
     <Flex p={2} flexDir={"column"} w={"40%"} rounded={"2xl"} boxShadow={"lg"}>
-      <Flex flexDir={"column"} mb={2} gap={1} w={"100%"}>
+      <Flex display={"none"} flexDir={"column"} mb={2} gap={1} w={"100%"}>
         <DialogStatusComponent detalhesLeads={detalhesLeads} />
         <DialogObservacoesComponent />
       </Flex>

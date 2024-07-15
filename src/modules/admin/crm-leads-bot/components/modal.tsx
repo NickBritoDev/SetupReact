@@ -103,6 +103,7 @@ const ModalComponent: React.FC = () => {
           <ModalBody pos={"relative"}>
             <Flex>
               <FiltroComponent
+                detalhesLeads={detalhesLeads}
                 filterStatus={filterStatus}
                 toggleFilterStatus={toggleFilterStatus}
                 filterScore={filterScore}

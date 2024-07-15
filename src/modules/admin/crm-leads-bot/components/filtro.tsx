@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Button,
   Text,
@@ -13,8 +14,8 @@ import {
   Tooltip,
   Wrap,
   WrapItem,
+  useDisclosure,
 } from "@chakra-ui/react";
-
 import { FcFilledFilter } from "react-icons/fc";
 import { BsFire } from "react-icons/bs";
 import { BiSolidPhoneCall } from "react-icons/bi";
@@ -35,6 +36,44 @@ export default function FiltroComponent({
   toggleFilterStatus,
 }: FiltrosTypes) {
   const { data } = useGetMinhaConta();
+  const { isOpen, onOpen, onClose: onMenuClose } = useDisclosure();
+  const [selectAllScore, setSelectAllScore] = useState(false);
+  const [selectAllStatus, setSelectAllStatus] = useState(false);
+
+
+  useEffect(() => {
+    const allSelected = Object.values(filterScore).every((value) => value);
+    setSelectAllScore(allSelected);
+  }, [filterScore]);
+
+  useEffect(() => {
+    const allSelected = Object.values(filterStatus).every((value) => value);
+    setSelectAllStatus(allSelected);
+  }, [filterStatus]);
+
+  const handleCheckboxChange = (scoreOrStatus: string, isScore = true) => {
+    if (isScore) {
+      toggleFilterScore(scoreOrStatus);
+    } else {
+      toggleFilterStatus(scoreOrStatus);
+    }
+  };
+
+  const handleSelectAllChange = (isScore = true) => {
+    if (isScore) {
+      const newSelectAll = !selectAllScore;
+      setSelectAllScore(newSelectAll);
+      Object.keys(filterScore).forEach((score) => {
+        toggleFilterScore(score, newSelectAll);
+      });
+    } else {
+      const newSelectAll = !selectAllStatus;
+      setSelectAllStatus(newSelectAll);
+      Object.keys(filterStatus).forEach((status) => {
+        toggleFilterStatus(status, newSelectAll);
+      });
+    }
+  };
 
   return (
     <Flex
@@ -54,9 +93,14 @@ export default function FiltroComponent({
         w={"24.8%"}
         borderRight={"solid 1px gray"}
       >
-        <Menu>
+        <Menu isOpen={isOpen}>
           <Tooltip hasArrow label="Filtros de leads" placement="right">
-            <MenuButton w={"100%"} as={Button} colorScheme="transparent">
+            <MenuButton
+              w={"100%"}
+              as={Button}
+              colorScheme="transparent"
+              onClick={isOpen ? onMenuClose : onOpen}
+            >
               <Flex
                 w={"100%"}
                 alignItems={"center"}
@@ -76,12 +120,21 @@ export default function FiltroComponent({
           </Tooltip>
           <MenuList>
             <MenuGroup w={"280px"} title="SCORE">
+              <MenuItem>
+                <Checkbox
+                  colorScheme="green"
+                  isChecked={selectAllScore}
+                  onChange={() => handleSelectAllChange(true)}
+                >
+                  Selecionar Todos
+                </Checkbox>
+              </MenuItem>
               {["Frio", "Médio", "Quente"].map((score) => (
                 <MenuItem key={score}>
                   <Checkbox
                     colorScheme="green"
                     isChecked={filterScore[score]}
-                    onChange={() => toggleFilterScore(score)}
+                    onChange={() => handleCheckboxChange(score)}
                   >
                     <Flex
                       w={"280px"}
@@ -105,12 +158,21 @@ export default function FiltroComponent({
             </MenuGroup>
             <MenuDivider />
             <MenuGroup title="STATUS">
+              <MenuItem>
+                <Checkbox
+                  colorScheme="green"
+                  isChecked={selectAllStatus}
+                  onChange={() => handleSelectAllChange(false)}
+                >
+                  Selecionar Todos
+                </Checkbox>
+              </MenuItem>
               {["Novo", "Contato", "Negociando", "Finalizado"].map((status) => (
                 <MenuItem key={status}>
                   <Checkbox
                     colorScheme="green"
                     isChecked={filterStatus[status]}
-                    onChange={() => toggleFilterStatus(status)}
+                    onChange={() => handleCheckboxChange(status, false)}
                   >
                     <Flex
                       w={"280px"}

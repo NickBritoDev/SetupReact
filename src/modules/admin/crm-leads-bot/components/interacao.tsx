@@ -35,11 +35,12 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
         </Text>
 
         <Flex
+          flexDir={'column'}
           w={"100%"}
           alignItems={"center"}
           justifyContent={"center"}
           ml={8}
-          gap={6}
+          gap={2}
           mt={4}
         >
           <Tooltip
@@ -48,7 +49,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             label="Baixar gerenciado de instâncias"
           >
             <Button
-              display={"flex"}
+              display={"none"}
               alignItems={"center"}
               justifyContent={"center"}
               gap={2}
@@ -65,21 +66,24 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
 
           <Tooltip hasArrow placement="top" label="Ligar para o cliente">
             <Button
+              w={'100%'}
+              colorScheme="orange"
               display={"flex"}
               alignItems={"center"}
-              justifyContent={"center"}
+              justifyContent={"space-between"}
               gap={2}
               onClick={() => {
                 window.location.href = `zoiper:${telefoneFormatado}`;
               }}
             >
+              <Text>Abir Discadora</Text>
               <LuPhoneOutgoing size={22} />
             </Button>
           </Tooltip>
 
           <Tooltip hasArrow placement="top" label="Enviar SMS">
             <Button
-              display={"flex"}
+              display={"none"}
               alignItems={"center"}
               justifyContent={"center"}
               gap={2}
@@ -94,6 +98,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           />
 
           <DialogWhatsappComponent
+              produto={detalhesLeads?.produto}
             telefone={detalhesLeads.telefone}
             idLead={detalhesLeads.idLead}
             nome={detalhesLeads?.nome}
