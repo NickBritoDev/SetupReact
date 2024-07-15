@@ -41,13 +41,15 @@ const usePostCadastrarProposta = (enabled: boolean) => {
         { signal },
       );
 
+      console.log(envioFormalizacao);
+
       return true;
     },
     {
       onError: (error) => {
         definirAppError(
           true,
-          error.data?.message ?? "Ocorreu um erro inesperado",
+          error.response?.data?.message ?? "Ocorreu um erro inesperado",
           error.status !== HttpStatusCode.Forbidden,
         );
       },

@@ -29,7 +29,7 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
 
         definirAppError(
           true,
-          error.data?.message ?? "Ocorreu um erro inesperado",
+          error.response?.data?.message ?? "Ocorreu um erro inesperado",
           error.status !== HttpStatusCode.Forbidden,
         );
       },
@@ -39,7 +39,7 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
         !isAppError,
       retry: 4,
       retryDelay: (attemptIndex, error) => {
-        console.log(error.data?.message);
+        console.log(error.response?.data?.message);
 
         return Math.min(5000 * 2 ** attemptIndex, 30000);
       },

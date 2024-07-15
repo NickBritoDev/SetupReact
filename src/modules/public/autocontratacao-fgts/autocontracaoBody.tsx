@@ -93,9 +93,7 @@ export default function AutocontracaoBody() {
               isDesktop || [activeStep, activeStep + 1].includes(index),
           ).map((step, index) => (
             <Step
-              flexFlow="column"
-              wordBreak="break-words"
-              h="100%"
+              {...{ flexFlow: "column", wordBreak: "break-words", h: "100%" }}
               key={index}
             >
               <StepIndicator>
@@ -113,7 +111,7 @@ export default function AutocontracaoBody() {
                   <StepDescription>{step.description}</StepDescription>
                 )}
               </Box>
-              <StepSeparator _horizontal={{ ml: "0" }} />
+              <StepSeparator {...({ _horizontal: { ml: "0" } } as any)} />
             </Step>
           ))}
         </Stepper>

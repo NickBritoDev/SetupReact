@@ -1,7 +1,6 @@
 import { formatCPF } from "@utils/mask/mascaras";
 import { useReducer, Dispatch } from "react";
 import { IBodyEnvioSimulacaoParcelas } from "../types/hooks";
-import { StepsAutocontratacao } from "../helpers/config";
 
 type IAutocontratacaoActionNames =
   | "atualizarCpf"
