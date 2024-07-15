@@ -273,7 +273,13 @@ export default function ConfirmacaoComponent(props: IStepProps) {
         <ModalContent>
           <ModalHeader>Editar Campos</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            gap="1rem"
+            alignContent="space-around"
+            flexWrap="wrap"
+          >
             <Button
               onClick={() => redirectEdicao(StepsAutocontratacao.SELECAO_SAQUE)}
             >
