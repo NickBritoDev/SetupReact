@@ -80,8 +80,13 @@ export default function AutocontracaoBody() {
           size={isDesktop ? "lg" : "sm"}
           index={activeStep}
           marginX={"10px"}
-          marginTop={"5px"}
+          margin="5px 0 0 0"
           colorScheme={isAppError ? "red" : "green"}
+          w="100%"
+          gap="0"
+          display="grid"
+          gridAutoFlow="column"
+          justifyContent="space-evenly"
         >
           {STEPS.filter(
             (_, index) =>
