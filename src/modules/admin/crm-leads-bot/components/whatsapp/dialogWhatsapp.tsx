@@ -23,7 +23,7 @@ import InputWhatsappConponent from "./inputWhatsapp";
 import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";
 
 export default function DialogWhatsappComponent({
-  produto,
+  // produto,
   nome,
   idLead,
   telefone,
@@ -41,8 +41,8 @@ export default function DialogWhatsappComponent({
   const blocoDeMensagens = data || [];
   const { UseRequestPostMensagensWhatsApp } = usePostMensagensWhatsApp();
 
-  let nomeFormatado = minhaConta?.nome?.toLowerCase()
-    .replace(/(?:^|\s)\S/g, function(a: string) { return a.toUpperCase(); });
+  // let nomeFormatado = minhaConta?.nome?.toLowerCase()
+  //   .replace(/(?:^|\s)\S/g, function(a: string) { return a.toUpperCase(); });
 
   const enviarMensagem = () => {
     setIsLoading(true);
@@ -86,24 +86,7 @@ export default function DialogWhatsappComponent({
           <SiWhatsapp size={22} />
         </Button>
       </Tooltip>
-      <Tooltip hasArrow placement="top" label="Enviar whatsapp">
-        <Button
-         as="a"
-         href={`https://api.whatsapp.com/send?phone=+55${telefone}&text=Olá, ${nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
-         target="_blank"
-         rel="noopener noreferrer"
-          w={'100%'}
-          colorScheme="green"
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          gap={2}
-          ref={btnRef}
-        >
-          <Text>Abrir WhatsApp</Text>
-          <SiWhatsapp size={22} />
-        </Button>
-      </Tooltip>
+      
       <Drawer
         size={"xl"}
         isOpen={isOpen}

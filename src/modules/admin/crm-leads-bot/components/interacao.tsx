@@ -6,26 +6,32 @@ import InfosComponent from "./infos";
 import LogsComponent from "./logs";
 import AgendaComponent from "./agenda";
 import DialogEmailComponent from "./dialogEmail";
-import DialogWhatsappComponent from "./whatsapp/dialogWhatsapp";
+// import DialogWhatsappComponent from "./whatsapp/dialogWhatsapp";
 import { FaQrcode } from "react-icons/fa";
+import { SiWhatsapp } from "react-icons/si";
+import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 
 export default function InteracaoComponent({ user, detalhesLeads }: any) {
+  const { data: minhaConta } = useGetMinhaConta();
   const isNovo = detalhesLeads?.status === "Novo";
   const telefone = isNovo
     ? "(**) *********"
     : maskPhone(detalhesLeads?.telefone);
   const email = isNovo ? "email@exemple.com" : detalhesLeads?.email;
   const telefoneFormatado = "380" + detalhesLeads?.telefone;
+  let nomeFormatado = minhaConta?.nome?.toLowerCase()
+    .replace(/(?:^|\s)\S/g, function (a: string) { return a.toUpperCase(); });
 
   return (
     <Flex gap={10} w={"100%"}>
       <Flex
+        mt={-6}
         w={"60%"}
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Image w={"150px"} src={user} alt="foto do usuario card" />
+        <Image w={"130px"} src={user} alt="foto do usuario card" />
         <Heading mt={-4}>{detalhesLeads?.nome}</Heading>
         <Text
           sx={isNovo ? { filter: "blur(5px)" } : {}}
@@ -35,7 +41,6 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
         </Text>
 
         <Flex
-          flexDir={'column'}
           w={"100%"}
           alignItems={"center"}
           justifyContent={"center"}
@@ -97,13 +102,29 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             email={detalhesLeads?.email}
           />
 
-          <DialogWhatsappComponent
+          {/* <DialogWhatsappComponent
               produto={detalhesLeads?.produto}
             telefone={detalhesLeads.telefone}
             idLead={detalhesLeads.idLead}
             nome={detalhesLeads?.nome}
-          />
-
+          /> */}
+          <Tooltip hasArrow placement="top" label="Enviar whatsapp">
+            <Button
+              as="a"
+              href={`https://api.whatsapp.com/send?phone=+55${detalhesLeads.telefone}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
+              target="_blank"
+              rel="noopener noreferrer"
+              w={'100%'}
+              colorScheme="green"
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+              gap={2}
+            >
+              <Text>Abrir WhatsApp</Text>
+              <SiWhatsapp size={22} />
+            </Button>
+          </Tooltip>
           <AgendaComponent detalhesLeads={detalhesLeads} />
         </Flex>
 

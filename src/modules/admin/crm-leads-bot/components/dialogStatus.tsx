@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Badge, Button, Text, Tooltip, useDisclosure } from "@chakra-ui/react";
+import { Badge, Button, Text, Textarea, Tooltip, useDisclosure } from "@chakra-ui/react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -28,24 +28,25 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
   const { data: statusLeads } = useGetStatusLeads();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
+  const [justificativa, setJustificativa] = useState('')
   const [selectedStatus, setSelectedStatus] = useState<
     number | null | undefined
   >(null);
 
   const customOption = (props: {
     innerProps: JSX.IntrinsicAttributes &
-      ClassAttributes<HTMLDivElement> &
-      HTMLAttributes<HTMLDivElement>;
+    ClassAttributes<HTMLDivElement> &
+    HTMLAttributes<HTMLDivElement>;
     data: {
       label:
-        | string
-        | number
-        | boolean
-        | ReactElement<any, string | JSXElementConstructor<any>>
-        | Iterable<ReactNode>
-        | ReactPortal
-        | null
-        | undefined;
+      | string
+      | number
+      | boolean
+      | ReactElement<any, string | JSXElementConstructor<any>>
+      | Iterable<ReactNode>
+      | ReactPortal
+      | null
+      | undefined;
       isCurrentStatus: any;
       value: number | null | undefined;
     };
@@ -112,6 +113,17 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
                 components={{ Option: customOption }}
                 onChange={(option) => setSelectedStatus(option?.value)}
               />
+
+              <Text mt={4}>Justifique o motivo da alteração</Text>
+              <Textarea
+                value={justificativa}
+                onChange={(e) => { setJustificativa(e.target.value) }}
+                placeholder="Justifique a mudança..."
+                _placeholder={{
+                  fontSize: 18,
+                  fontWeight: 'semibold',
+                  color: 'gray'
+                }} />
             </AlertDialogBody>
 
             <AlertDialogFooter>
@@ -125,6 +137,7 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
                     UseRequestAlterarStatus({
                       id_leads: detalhesLeads.idLead,
                       id_status: selectedStatus,
+                      justificativa: justificativa
                     });
                   }
                   onClose();
