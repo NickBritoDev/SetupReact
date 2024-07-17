@@ -40,7 +40,6 @@ export default function FiltroComponent({
   const [selectAllScore, setSelectAllScore] = useState(false);
   const [selectAllStatus, setSelectAllStatus] = useState(false);
 
-
   useEffect(() => {
     const allSelected = Object.values(filterScore).every((value) => value);
     setSelectAllScore(allSelected);

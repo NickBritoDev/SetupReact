@@ -10,6 +10,7 @@ import DialogEmailComponent from "./dialogEmail";
 import { FaQrcode } from "react-icons/fa";
 import { SiWhatsapp } from "react-icons/si";
 import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
+import DialogWhatsappComponent from "./whatsapp/dialogWhatsapp";
 
 export default function InteracaoComponent({ user, detalhesLeads }: any) {
   const { data: minhaConta } = useGetMinhaConta();
@@ -19,8 +20,11 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
     : maskPhone(detalhesLeads?.telefone);
   const email = isNovo ? "email@exemple.com" : detalhesLeads?.email;
   const telefoneFormatado = "380" + detalhesLeads?.telefone;
-  let nomeFormatado = minhaConta?.nome?.toLowerCase()
-    .replace(/(?:^|\s)\S/g, function (a: string) { return a.toUpperCase(); });
+  let nomeFormatado = minhaConta?.nome
+    ?.toLowerCase()
+    .replace(/(?:^|\s)\S/g, function (a: string) {
+      return a.toUpperCase();
+    });
 
   return (
     <Flex gap={10} w={"100%"}>
@@ -71,7 +75,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
 
           <Tooltip hasArrow placement="top" label="Ligar para o cliente">
             <Button
-              w={'100%'}
+              w={"100%"}
               colorScheme="orange"
               display={"flex"}
               alignItems={"center"}
@@ -102,29 +106,13 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             email={detalhesLeads?.email}
           />
 
-          {/* <DialogWhatsappComponent
-              produto={detalhesLeads?.produto}
+          <DialogWhatsappComponent
+            produto={detalhesLeads?.produto}
             telefone={detalhesLeads.telefone}
             idLead={detalhesLeads.idLead}
             nome={detalhesLeads?.nome}
-          /> */}
-          <Tooltip hasArrow placement="top" label="Enviar whatsapp">
-            <Button
-              as="a"
-              href={`https://api.whatsapp.com/send?phone=+55${detalhesLeads.telefone}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
-              target="_blank"
-              rel="noopener noreferrer"
-              w={'100%'}
-              colorScheme="green"
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-              gap={2}
-            >
-              <Text>Abrir WhatsApp</Text>
-              <SiWhatsapp size={22} />
-            </Button>
-          </Tooltip>
+          />
+
           <AgendaComponent detalhesLeads={detalhesLeads} />
         </Flex>
 

@@ -44,11 +44,11 @@ export default function SidebarComponent({
   };
 
   const sortedContatos = filteredContatos
-  .filter((contato) =>
-    Object.values(contato).some((value) =>
-      String(value).toLowerCase().includes(searchTerm.toLowerCase())
+    .filter((contato) =>
+      Object.values(contato).some((value) =>
+        String(value).toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
     )
-  )  
     .sort((a, b) => {
       const statusOrder = ["Novo", "Contato", "Negociando", "Finalizado"];
       const aStatusIndex = statusOrder.indexOf(a.status);
@@ -60,13 +60,19 @@ export default function SidebarComponent({
 
       const aLastLog = a.logs[a.logs.length - 1];
       const bLastLog = b.logs[b.logs.length - 1];
-      const aElapsed = getElapsedMinutes(aLastLog.data_atualizacao.slice(11, 16));
-      const bElapsed = getElapsedMinutes(bLastLog.data_atualizacao.slice(11, 16));
+      const aElapsed = getElapsedMinutes(
+        aLastLog.data_atualizacao.slice(11, 16),
+      );
+      const bElapsed = getElapsedMinutes(
+        bLastLog.data_atualizacao.slice(11, 16),
+      );
 
       return bElapsed - aElapsed;
     });
 
-  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setSearchTerm(event.target.value);
   };
 
@@ -171,12 +177,12 @@ export default function SidebarComponent({
                         contato.status === "Novo"
                           ? "#44B3CF"
                           : contato.status === "Contato"
-                          ? "#F4B61D"
-                          : contato.status === "Negociando"
-                          ? "#F44B1D"
-                          : contato.status === "Finalizado"
-                          ? "#229544"
-                          : "black"
+                            ? "#F4B61D"
+                            : contato.status === "Negociando"
+                              ? "#F44B1D"
+                              : contato.status === "Finalizado"
+                                ? "#229544"
+                                : "black"
                       }
                     >
                       {contato.status}

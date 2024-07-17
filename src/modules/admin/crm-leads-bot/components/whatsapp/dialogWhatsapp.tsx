@@ -11,7 +11,7 @@ import {
   Image,
   Spinner,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SiWhatsapp } from "react-icons/si";
 import { useGetMensagensWhatsApp } from "../../hooks/whatsapp/useGetMensagensWhatsApp";
 import { usePostMensagensWhatsApp } from "../../hooks/whatsapp/usePostMensagensWhatsApp";
@@ -37,6 +37,10 @@ export default function DialogWhatsappComponent({
   const { data: instancias } = useGetInstanciasWhatsApp();
   const minhaInstancia =
     instancias && instancias[0] ? instancias[0].instance : null;
+
+  const instanceOnline =
+    instancias && instancias[0] ? !!instancias[0].online : false;
+
   const { data, isSuccess } = useGetMensagensWhatsApp(idLead, minhaInstancia);
   const blocoDeMensagens = data || [];
   const { UseRequestPostMensagensWhatsApp } = usePostMensagensWhatsApp();
@@ -52,6 +56,7 @@ export default function DialogWhatsappComponent({
       instance: minhaInstancia,
       body: mensagemOut,
       chatId: telefone,
+      type: "text",
     };
     UseRequestPostMensagensWhatsApp(payload);
     setMensagemOut("");
@@ -63,30 +68,56 @@ export default function DialogWhatsappComponent({
     }
   };
 
+  const carregarMenagens = () => {
+    if (!instanceOnline) {
+      onClose();
+      return;
+    }
+
+    setCarregamentoMsgs(true);
+    onOpen();
+    setTimeout(() => {
+      setCarregamentoMsgs(false);
+    }, 10000);
+  };
+
+  useEffect(() => {
+    if (!instanceOnline) {
+      carregarMenagens();
+    }
+  }, [instanceOnline]);
+
   return (
     <>
-      <Tooltip hasArrow placement="top" label="Enviar whatsapp">
+      <Tooltip
+        hasArrow
+        placement="top"
+        label={
+          instanceOnline
+            ? "Abrir Mensagem"
+            : "Tente Conectar o WhatsApp Desktop"
+        }
+      >
         <Button
-          w={'100%'}
-          colorScheme="green"
-          display={"none"}
+          w={"100%"}
+          colorScheme={instanceOnline ? "whatsapp" : "red"}
           alignItems={"center"}
           justifyContent={"space-between"}
           gap={2}
           onClick={() => {
-            setCarregamentoMsgs(true);
-            onOpen();
-            setTimeout(() => {
-              setCarregamentoMsgs(false);
-            }, 10000);
+            carregarMenagens();
           }}
           ref={btnRef}
         >
-          <Text>Abrir WhatsApp</Text>
+          {instanceOnline ? (
+            <Text>Abrir WhatsApp</Text>
+          ) : (
+            <Text>Seu Whatsapp está Offline</Text>
+          )}
           <SiWhatsapp size={22} />
         </Button>
       </Tooltip>
-      
+
       <Drawer
         size={"xl"}
         isOpen={isOpen}
