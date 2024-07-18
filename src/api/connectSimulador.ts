@@ -9,7 +9,7 @@ export interface IErroApiSimulador {
 }
 
 const connectSimulador = axios.create({
-  baseURL: "http://localhost:5003",
+  baseURL: "https://apisimulador.portalmaisvalor.com",
 });
 
 const { dispatch } = store;
