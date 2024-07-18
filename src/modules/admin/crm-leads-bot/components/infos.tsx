@@ -3,6 +3,7 @@ import { BsInfoCircleFill } from "react-icons/bs";
 import { maskCPF } from "../../../../utils/mask/mascaras";
 import DialogStatusComponent from "./dialogStatus";
 import DialogObservacoesComponent from "./dialogObservacoes";
+import OraculoComponent from "./oraculo/oraculo";
 
 export default function InfosComponent({
   detalhesLeads,
@@ -15,10 +16,12 @@ export default function InfosComponent({
       <Flex display={"none"} flexDir={"column"} mb={2} gap={1} w={"100%"}>
         <DialogStatusComponent detalhesLeads={detalhesLeads} />
         <DialogObservacoesComponent />
+        <OraculoComponent />
       </Flex>
 
-      <Flex flexDir={"column"} mb={2} gap={1} w={"100%"}>
+      <Flex mb={2} gap={1} w={"100%"}>
         <DialogStatusComponent detalhesLeads={detalhesLeads} />
+        <OraculoComponent detalhesLeads={detalhesLeads} />
       </Flex>
 
       <Divider mb={2} />
