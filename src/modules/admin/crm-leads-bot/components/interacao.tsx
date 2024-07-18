@@ -32,7 +32,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
         justifyContent={"center"}
       >
         <Image w={"130px"} src={user} alt="foto do usuario card" />
-        <Heading mt={-4}>{detalhesLeads?.nome}</Heading>
+        <Heading textAlign={"center"} mt={-4}>{detalhesLeads?.nome}</Heading>
         <Text
           sx={isNovo ? { filter: "blur(5px)" } : {}}
           fontWeight={"semibold"}

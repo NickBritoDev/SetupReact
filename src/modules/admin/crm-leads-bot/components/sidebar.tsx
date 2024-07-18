@@ -44,11 +44,11 @@ export default function SidebarComponent({
   };
 
   const sortedContatos = filteredContatos
-  .filter((contato) =>
-    Object.values(contato).some((value) =>
-      String(value).toLowerCase().includes(searchTerm.toLowerCase())
+    .filter((contato) =>
+      Object.values(contato).some((value) =>
+        String(value).toLowerCase().includes(searchTerm.toLowerCase())
+      )
     )
-  )  
     .sort((a, b) => {
       const statusOrder = ["Novo", "Contato", "Negociando", "Finalizado"];
       const aStatusIndex = statusOrder.indexOf(a.status);
@@ -72,6 +72,7 @@ export default function SidebarComponent({
 
   return (
     <Box
+      overflowX={'hidden'}
       pos={"absolute"}
       left={0}
       bottom={0}
@@ -171,12 +172,12 @@ export default function SidebarComponent({
                         contato.status === "Novo"
                           ? "#44B3CF"
                           : contato.status === "Contato"
-                          ? "#F4B61D"
-                          : contato.status === "Negociando"
-                          ? "#F44B1D"
-                          : contato.status === "Finalizado"
-                          ? "#229544"
-                          : "black"
+                            ? "#F4B61D"
+                            : contato.status === "Negociando"
+                              ? "#F44B1D"
+                              : contato.status === "Finalizado"
+                                ? "#229544"
+                                : "black"
                       }
                     >
                       {contato.status}
