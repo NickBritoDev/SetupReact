@@ -121,6 +121,7 @@ export default function AutocontracaoBody() {
         {...(isAppError && { justifyContent: "center" })}
         overflow={"hidden"}
         mx="1rem"
+        paddingBottom={isDesktop ? "0" : "4rem"}
       >
         {isAppError && (
           <Stack justifyContent={"space-evenly"}>
