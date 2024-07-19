@@ -6,21 +6,42 @@ import {
   Select,
   Stack,
 } from "@chakra-ui/react";
+import { useGetConsultaCep } from "@hooks/useGetConsultaCep";
 import { useGetOptions } from "@modules/public/autocontratacao-fgts/hooks/useGetOptions";
 import { StepsDadosPessoaisProps } from "@modules/public/autocontratacao-fgts/types/steps";
 import { handleChangeCEP } from "@utils/mask/mascaras";
+import { useEffect, useState } from "react";
 
 export default function CadastroEnderecoComponent({
   formik,
 }: StepsDadosPessoaisProps) {
   const estados = useGetOptions("estados");
+  const [cepError, setCepError] = useState(false);
+
+  const cep = useGetConsultaCep(formik.values.cep);
+
+  useEffect(() => {
+    const body = cep.data;
+    formik.setFieldValue("endereco", "");
+    formik.setFieldValue("complemento", "");
+    formik.setFieldValue("bairro", "");
+    formik.setFieldValue("cidade", "");
+    formik.setFieldValue("estado", "");
+    if (cep.isSuccess) {
+      setCepError(!!body.erro);
+      if (!body.erro) {
+        formik.setFieldValue("endereco", body.logradouro, true);
+        formik.setFieldValue("complemento", body.complemento, true);
+        formik.setFieldValue("bairro", body.bairro, true);
+        formik.setFieldValue("cidade", body.localidade, true);
+        formik.setFieldValue("estado", body.uf, true);
+      }
+    }
+  }, [cep.data]);
 
   return (
     <Stack flexGrow="1">
-      <FormControl
-        isRequired
-        isInvalid={!!formik.errors.cep && formik.touched.cep}
-      >
+      <FormControl isRequired isInvalid={!!formik.errors.cep || cepError}>
         <FormLabel>CEP</FormLabel>
         <Input
           autoFocus
@@ -29,12 +50,11 @@ export default function CadastroEnderecoComponent({
           name="cep"
           onChange={handleChangeCEP(formik.handleChange)}
         />
-        <FormErrorMessage>{formik.errors.cep}</FormErrorMessage>
+        <FormErrorMessage>
+          {formik.errors.cep ?? "Cep Inválido"}
+        </FormErrorMessage>
       </FormControl>
-      <FormControl
-        isRequired
-        isInvalid={!!formik.errors.endereco && formik.touched.endereco}
-      >
+      <FormControl isRequired isReadOnly>
         <FormLabel>Endereço</FormLabel>
         <Input placeholder="Endereço" {...formik.getFieldProps("endereco")} />
       </FormControl>
@@ -60,33 +80,26 @@ export default function CadastroEnderecoComponent({
         />
         <FormErrorMessage>{formik.errors.complemento}</FormErrorMessage>
       </FormControl>
-      <FormControl
-        isRequired
-        isInvalid={!!formik.errors.estado && formik.touched.estado}
-      >
+      <FormControl isRequired isReadOnly>
         <FormLabel>Estado</FormLabel>
-        <Select placeholder="Selecione" {...formik.getFieldProps("estado")}>
+        <Select isReadOnly {...formik.getFieldProps("estado")}>
           {estados.data &&
-            estados.data.map((estado) => (
-              <option key={estado.value} value={estado.value}>
-                {estado.text}
-              </option>
-            ))}
+            estados.data
+              .filter((estado) => estado.value === formik.values.estado)
+              .map((estado) => (
+                <option key={estado.value} value={estado.value}>
+                  {estado.text}
+                </option>
+              ))}
         </Select>
         <FormErrorMessage>{formik.errors.estado}</FormErrorMessage>
       </FormControl>
-      <FormControl
-        isRequired
-        isInvalid={!!formik.errors.cidade && formik.touched.cidade}
-      >
+      <FormControl isRequired isReadOnly>
         <FormLabel>Cidade</FormLabel>
         <Input placeholder="Cidade" {...formik.getFieldProps("cidade")} />
         <FormErrorMessage>{formik.errors.cidade}</FormErrorMessage>
       </FormControl>
-      <FormControl
-        isRequired
-        isInvalid={!!formik.errors.bairro && formik.touched.bairro}
-      >
+      <FormControl isRequired isReadOnly>
         <FormLabel>Bairro</FormLabel>
         <Input placeholder="Bairro" {...formik.getFieldProps("bairro")} />
         <FormErrorMessage>{formik.errors.bairro}</FormErrorMessage>
