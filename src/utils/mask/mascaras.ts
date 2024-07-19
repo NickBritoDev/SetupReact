@@ -98,6 +98,10 @@ export const formatNumber = (value: number): string => {
   return maskReal(roundNumber(value, 2).toString());
 };
 
+export const formatCEP = (cep: string | number): string => {
+  return maskOnlyNumbers(`${cep}`).padStart(8, "0");
+};
+
 type IHandleChange = (
   callback?: ChangeEventHandler<HTMLInputElement>,
 ) => ChangeEventHandler<HTMLInputElement>;
