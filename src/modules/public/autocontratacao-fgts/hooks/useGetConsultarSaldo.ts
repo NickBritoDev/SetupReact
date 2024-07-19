@@ -12,7 +12,10 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
     state: { isAppError },
     dispatch: { definirAppError },
   } = useAutocontratacao();
-  return useQuery<IBodyConsultaSaque, AxiosError<IErroApiSimulador>>(
+  return useQuery<
+    IBodyConsultaSaque,
+    AxiosError<IErroApiSimulador> & { data?: IErroApiSimulador }
+  >(
     ["useGetConsultarSaldoAutocontratacaoFgts", cpf],
     async ({ signal }) => {
       const { data } = await connectSimulador.get<IBodyConsultaSaque>(
@@ -29,7 +32,7 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
 
         definirAppError(
           true,
-          error.response?.data?.message ?? "Ocorreu um erro inesperado",
+          error.data?.message ?? "Ocorreu um erro inesperado",
           error.status !== HttpStatusCode.Forbidden,
         );
       },
@@ -39,8 +42,6 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
         !isAppError,
       retry: 4,
       retryDelay: (attemptIndex, error) => {
-        console.log(error.response?.data?.message);
-
         return Math.min(5000 * 2 ** attemptIndex, 30000);
       },
       refetchOnMount: false,
