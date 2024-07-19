@@ -72,6 +72,7 @@ export default function SidebarComponent({
 
   return (
     <Box
+      bg={'white'}
       overflowX={'hidden'}
       pos={"absolute"}
       left={0}
@@ -82,14 +83,14 @@ export default function SidebarComponent({
       w={"25%"}
       boxShadow={"lg"}
     >
-      <Box p={1}>
-        <Input
-          placeholder="Buscar lead..."
-          value={searchTerm}
-          onChange={handleSearchInputChange}
-        />
-      </Box>
-      <Flex position={"relative"} h={"100vh"} flexDir={"column"}>
+      <Flex pt={10} position={"relative"} h={"100vh"} flexDir={"column"}>
+        <Box rounded={'lg'} boxShadow={"lg"} top={12} bg={'white'} w={"24.8%"} p={1} pos={"fixed"}>
+          <Input
+            placeholder="Buscar lead..."
+            value={searchTerm}
+            onChange={handleSearchInputChange}
+          />
+        </Box>
         {sortedContatos.length <= 0 && (
           <Text mx={"auto"} mt={2} fontWeight={"semibold"}>
             😅 Nenhum lead até o momento...
