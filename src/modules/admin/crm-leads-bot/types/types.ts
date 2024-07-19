@@ -16,9 +16,9 @@ export interface FiltrosTypes {
   toggleFilterScore: any;
   onClose: any;
   toggleFilterStatus: any;
-  detalhesLeads?: any
-  filterProducts?:any
-  toggleFilterProducts?:any
+  detalhesLeads?: any;
+  filterProducts?: any;
+  toggleFilterProducts?: any;
 }
 
 export interface Log {

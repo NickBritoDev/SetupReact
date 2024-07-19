@@ -19,8 +19,11 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
     : maskPhone(detalhesLeads?.telefone);
   const email = isNovo ? "email@exemple.com" : detalhesLeads?.email;
   const telefoneFormatado = "380" + detalhesLeads?.telefone;
-  let nomeFormatado = minhaConta?.nome?.toLowerCase()
-    .replace(/(?:^|\s)\S/g, function (a: string) { return a.toUpperCase(); });
+  let nomeFormatado = minhaConta?.nome
+    ?.toLowerCase()
+    .replace(/(?:^|\s)\S/g, function (a: string) {
+      return a.toUpperCase();
+    });
 
   return (
     <Flex gap={10} w={"100%"}>
@@ -32,7 +35,9 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
         justifyContent={"center"}
       >
         <Image w={"130px"} src={user} alt="foto do usuario card" />
-        <Heading textAlign={"center"} mt={-4}>{detalhesLeads?.nome}</Heading>
+        <Heading textAlign={"center"} mt={-4}>
+          {detalhesLeads?.nome}
+        </Heading>
         <Text
           sx={isNovo ? { filter: "blur(5px)" } : {}}
           fontWeight={"semibold"}
@@ -71,7 +76,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
 
           <Tooltip hasArrow placement="top" label="Ligar para o cliente">
             <Button
-              w={'100%'}
+              w={"100%"}
               colorScheme="orange"
               display={"flex"}
               alignItems={"center"}
@@ -114,7 +119,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
               href={`https://api.whatsapp.com/send?phone=+55${detalhesLeads.telefone}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
               target="_blank"
               rel="noopener noreferrer"
-              w={'100%'}
+              w={"100%"}
               colorScheme="green"
               display={"flex"}
               alignItems={"center"}

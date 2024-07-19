@@ -6,7 +6,7 @@ export default function LogsComponent({ detalhesLeads }: any) {
   return (
     <Flex
       gap={2}
-      borderRadius={'20px 20px 0 0'}
+      borderRadius={"20px 20px 0 0"}
       alignItems={"center"}
       justifyContent={"flex-start"}
       flexDir={"column"}
@@ -26,10 +26,15 @@ export default function LogsComponent({ detalhesLeads }: any) {
           status: ReactNode;
           responsavel: string;
         }) => (
-          <Flex key={log?.data_atualizacao} p={2}
+          <Flex
+            key={log?.data_atualizacao}
+            p={2}
             rounded={"xl"}
-            boxShadow={"lg"} bg={"white"} w={"100%"}
-            flexDir={"column"}>
+            boxShadow={"lg"}
+            bg={"white"}
+            w={"100%"}
+            flexDir={"column"}
+          >
             <Flex
               alignItems={"center"}
               justifyContent={"space-between"}
@@ -38,7 +43,7 @@ export default function LogsComponent({ detalhesLeads }: any) {
             >
               <Text w={"100%"}>
                 <strong>Responsavel</strong> <br />
-                {log?.responsavel?.split(' ')[0]}
+                {log?.responsavel?.split(" ")[0]}
               </Text>
               <Text w={"100%"} textAlign={"center"}>
                 <strong>Data</strong> <br />
@@ -69,14 +74,13 @@ export default function LogsComponent({ detalhesLeads }: any) {
               <strong>Ação</strong> <br />
               {log?.acao}
             </Text>
-            {log?.justificativa &&
+            {log?.justificativa && (
               <Text w={"100%"} textAlign={"left"}>
                 <strong>Justificativa</strong> <br />
                 {log?.justificativa}
               </Text>
-            }
+            )}
           </Flex>
-
         ),
       )}
     </Flex>

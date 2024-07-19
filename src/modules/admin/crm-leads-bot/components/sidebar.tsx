@@ -46,8 +46,8 @@ export default function SidebarComponent({
   const sortedContatos = filteredContatos
     .filter((contato) =>
       Object.values(contato).some((value) =>
-        String(value).toLowerCase().includes(searchTerm.toLowerCase())
-      )
+        String(value).toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
     )
     .sort((a, b) => {
       const statusOrder = ["Novo", "Contato", "Negociando", "Finalizado"];
@@ -60,20 +60,26 @@ export default function SidebarComponent({
 
       const aLastLog = a.logs[a.logs.length - 1];
       const bLastLog = b.logs[b.logs.length - 1];
-      const aElapsed = getElapsedMinutes(aLastLog.data_atualizacao.slice(11, 16));
-      const bElapsed = getElapsedMinutes(bLastLog.data_atualizacao.slice(11, 16));
+      const aElapsed = getElapsedMinutes(
+        aLastLog.data_atualizacao.slice(11, 16),
+      );
+      const bElapsed = getElapsedMinutes(
+        bLastLog.data_atualizacao.slice(11, 16),
+      );
 
       return bElapsed - aElapsed;
     });
 
-  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setSearchTerm(event.target.value);
   };
 
   return (
     <Box
-      bg={'white'}
-      overflowX={'hidden'}
+      bg={"white"}
+      overflowX={"hidden"}
       pos={"absolute"}
       left={0}
       bottom={0}
@@ -84,7 +90,15 @@ export default function SidebarComponent({
       boxShadow={"lg"}
     >
       <Flex pt={10} position={"relative"} h={"100vh"} flexDir={"column"}>
-        <Box rounded={'lg'} boxShadow={"lg"} top={12} bg={'white'} w={"24.8%"} p={1} pos={"fixed"}>
+        <Box
+          rounded={"lg"}
+          boxShadow={"lg"}
+          top={12}
+          bg={"white"}
+          w={"24.8%"}
+          p={1}
+          pos={"fixed"}
+        >
           <Input
             placeholder="Buscar lead..."
             value={searchTerm}

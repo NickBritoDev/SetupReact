@@ -67,7 +67,7 @@ export default function DialogWhatsappComponent({
     <>
       <Tooltip hasArrow placement="top" label="Enviar whatsapp">
         <Button
-          w={'100%'}
+          w={"100%"}
           colorScheme="green"
           display={"none"}
           alignItems={"center"}
@@ -86,7 +86,7 @@ export default function DialogWhatsappComponent({
           <SiWhatsapp size={22} />
         </Button>
       </Tooltip>
-      
+
       <Drawer
         size={"xl"}
         isOpen={isOpen}
