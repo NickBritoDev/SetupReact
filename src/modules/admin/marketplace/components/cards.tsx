@@ -334,6 +334,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
         pos={"absolute"}
         bottom={20}
         w={"100%"}
+        zIndex={"-1"}
       >
         <Image src={solicitacaoAcesso} w={"750px"} />
         <Heading size={"md"}>
