@@ -173,26 +173,26 @@ export default function CardsComponent({ filters }: FiltrosType) {
                       />
                     </Tooltip>
                     <MenuList mt={-4}>
-                      <MenuItem>
+                      <MenuItem p={0}>
                         <DialogSolicitacaoBloqueioComponent
                           filteredData={card.grupo}
                           idFerramenta={card.idFerramenta}
                         />
                       </MenuItem>
-                      <MenuItem>
+                      <MenuItem p={0}>
                         <DialogSolicitacaoRenovacaoComponent
                           filteredData={card.grupo}
                           idFerramenta={card.idFerramenta}
                         />
                       </MenuItem>
-                      <MenuItem>
+                      <MenuItem p={0}>
                         <DialogSolicitacaoAcessoComponent
                           filteredData={card.grupo}
                           idPromotora={minhaConta.idPromotora}
                           idFerramenta={card.idFerramenta}
                         />
                       </MenuItem>
-                      <MenuItem>
+                      <MenuItem p={0}>
                         <DialogEdicaoAcessosComponent
                           filteredData={card.grupo}
                           idFerramenta={card.idFerramenta}

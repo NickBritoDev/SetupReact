@@ -91,7 +91,9 @@ function DialogEdicaoUsuarioComponent({
 
   return (
     <>
-      <Button onClick={handleOpen}>Editar</Button>
+      <Button colorScheme="green" onClick={handleOpen}>
+        Editar
+      </Button>
       <Modal size={"2xl"} isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
         <ModalContent>
@@ -149,7 +151,9 @@ export default function DialogEdicaoAcessosComponent({
 
   return (
     <>
-      <Text onClick={handleOpen}>Editar Acessos</Text>
+      <Text flexGrow={"1"} p="6px 12px" onClick={handleOpen}>
+        Editar Acessos
+      </Text>
 
       <Modal size={"2xl"} isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
@@ -196,8 +200,8 @@ export default function DialogEdicaoAcessosComponent({
             </>
           )}
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={handleClose}>
-              Cancelar
+            <Button mr={3} onClick={handleClose}>
+              Fechar
             </Button>
           </ModalFooter>
         </ModalContent>

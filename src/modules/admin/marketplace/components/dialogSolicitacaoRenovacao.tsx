@@ -98,7 +98,9 @@ export default function DialogSolicitacaoRenovacaoComponent({
 
   return (
     <>
-      <Text onClick={handleOpen}>Solicitar Renovação</Text>
+      <Text flexGrow={"1"} p="6px 12px" onClick={handleOpen}>
+        Solicitar Renovação
+      </Text>
 
       <Modal size={"2xl"} isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />

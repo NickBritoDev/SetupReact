@@ -94,7 +94,9 @@ export default function DialogSolicitacaoBloqueioComponent({
 
   return (
     <>
-      <Text onClick={handleOpen}>Solicitar Bloqueio</Text>
+      <Text flexGrow={"1"} p="6px 12px" onClick={handleOpen}>
+        Solicitar Bloqueio
+      </Text>
 
       <Modal size={"2xl"} isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />

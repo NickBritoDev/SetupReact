@@ -89,7 +89,9 @@ export default function DialogSolicitacaoAcessoComponent({
 
   return (
     <>
-      <Text onClick={handleOpen}>Solicitar acessos</Text>
+      <Text flexGrow={"1"} p="6px 12px" onClick={handleOpen}>
+        Solicitar acessos
+      </Text>
 
       <Modal size={"2xl"} isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
