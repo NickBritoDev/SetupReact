@@ -32,7 +32,9 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
 
         definirAppError(
           true,
-          error.data?.message ?? "Ocorreu um erro inesperado",
+          error.data?.message ??
+            error.response?.data?.message ??
+            "Ocorreu um erro inesperado",
           error.status !== HttpStatusCode.Forbidden,
         );
       },
@@ -40,7 +42,7 @@ const useGetConsultarSaldo = (cpf: string, currentIndex: number) => {
         cpf !== "00000000000" &&
         currentIndex === StepsAutocontratacao.SELECAO_SAQUE &&
         !isAppError,
-      retry: 4,
+      retry: 1,
       retryDelay: (attemptIndex, error) => {
         return Math.min(5000 * 2 ** attemptIndex, 30000);
       },
