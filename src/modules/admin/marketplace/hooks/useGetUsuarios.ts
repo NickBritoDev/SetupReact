@@ -6,7 +6,7 @@ const useGetUsuarios = ({ cnpjMatriz }: any) => {
   const { token } = useKey();
 
   return useQuery(
-    "useGetUsuarios",
+    ["useGetUsuarios", cnpjMatriz],
     async () => {
       const response = await connectApi.get(
         `/v1/usuarios?where={"cnpj_matriz": "${cnpjMatriz}"}&select=["id_acesso", "perfil", "nome", "cnpj_matriz", "foto", "supervisor", "gerente", "superintendente" ]`,
