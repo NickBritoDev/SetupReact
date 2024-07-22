@@ -37,21 +37,25 @@ export const maskOnlyNumbers = (value: string): string => {
   return value.replace(/\D/g, "");
 };
 
-export const maskReal = (value: string): string => {
-  if (!value) {
-    return "";
+export const toNumber = (value: string | number): number => {
+  if (typeof value === "number") {
+    return value;
   }
 
-  value = value
-    .replace(/\D/g, "")
-    .replace(/(\d)(\d{2})$/, "$1,$2")
-    .replace(/(\d{3}),(\d{2}$)/, "$1,$2")
-    .replace(/(\d{1,3})(\d{3},\d{2}$)/, "$1.$2");
+  if (/,\d{1,2}$/.test(value)) {
+    return Number(value.replace(/\./g, "").replace(",", "."));
+  }
 
-  const reg = /(\d)(\d{3})(\.\d{3})/;
+  return Number(value);
+};
 
-  while (reg.test(value)) {
-    value = value.replace(reg, "$1.$2$3");
+export const maskReal = (value: number | string): string => {
+  value = toNumber(value).toLocaleString("PT-br");
+
+  const index = value.indexOf(",");
+
+  if (value.substring(index + 1).length == 1) {
+    value = value + "0";
   }
 
   return value;
@@ -95,7 +99,7 @@ export function roundNumber(num: number, scale: number) {
 }
 
 export const formatNumber = (value: number): string => {
-  return maskReal(roundNumber(value, 2).toString());
+  return maskReal(roundNumber(value, 2));
 };
 
 export const formatCEP = (cep: string | number): string => {
