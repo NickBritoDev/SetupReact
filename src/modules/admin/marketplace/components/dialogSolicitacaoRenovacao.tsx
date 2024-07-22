@@ -15,31 +15,46 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { UsuariosType } from "../types/types";
-import { usePostSolicitacaoAcesso } from "../hooks/usePostSolicitacaoAcesso";
+import {
+  BodyPutSolicitacaoAcesso,
+  CardTypeGrupo,
+  UsuariosTypeStatus,
+} from "../types/types";
+import { usePutSolicitacaoAcesso } from "../hooks/usePutSolicitacaoAcesso";
 
-export default function DialogSolicitacaoAcessoComponent({
+interface Props {
+  idFerramenta: number;
+  filteredData: CardTypeGrupo[];
+}
+export default function DialogSolicitacaoRenovacaoComponent({
   idFerramenta,
-  idPromotora,
   filteredData,
-}: any) {
+}: Props) {
   const toast = useToast();
   const { UseRequestSolicitacaoAcesso, isSuccess, isError } =
-    usePostSolicitacaoAcesso();
+    usePutSolicitacaoAcesso();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const handleCheckboxChange = (idAcesso: number) => {
+    setSelectedIds((prevSelectedIds) =>
+      prevSelectedIds.includes(idAcesso)
+        ? prevSelectedIds.filter((id) => id !== idAcesso)
+        : [...prevSelectedIds, idAcesso],
+    );
+  };
 
-  const payload = selectedIds.map((idAcesso) => ({
-    idAcesso,
-    idProduto: idFerramenta,
-    idPromotora,
+  const payload: BodyPutSolicitacaoAcesso[] = selectedIds.map((idAcesso) => ({
+    id_acesso: idAcesso,
+    id_produto: idFerramenta,
+    status: "Pendente",
   }));
 
   useEffect(() => {
     if (isSuccess) {
       toast({
-        title: "Solicitação criada com sucesso",
-        description: "Em breve sua solicitação sera respondida",
+        title: "Renovação solicitada com sucesso!",
+        description: "Em breve sua solicitação será respondida",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -49,7 +64,7 @@ export default function DialogSolicitacaoAcessoComponent({
 
     if (isError) {
       toast({
-        title: "Erro ao criar solicitação",
+        title: "Erro ao criar solicitação de renovação",
         description: "Você pode tentar novamente em breve",
         status: "info",
         duration: 5000,
@@ -59,14 +74,6 @@ export default function DialogSolicitacaoAcessoComponent({
     }
   }, [isSuccess, isError]);
 
-  const handleCheckboxChange = (idAcesso: number) => {
-    setSelectedIds((prevSelectedIds) =>
-      prevSelectedIds.includes(idAcesso)
-        ? prevSelectedIds.filter((id) => id !== idAcesso)
-        : [...prevSelectedIds, idAcesso],
-    );
-  };
-
   const handleOpen = () => {
     onOpen();
   };
@@ -75,12 +82,14 @@ export default function DialogSolicitacaoAcessoComponent({
     onClose();
   };
 
+  const statusLiberacao = [
+    UsuariosTypeStatus.Expirado,
+    UsuariosTypeStatus.Bloqueado,
+  ];
+
   const listaUsuarios = filteredData
-    .filter(
-      (user: UsuariosType) =>
-        !["Pendente", "Liberado", "Bloqueado"].includes(user.status),
-    )
-    .reduce((unique: UsuariosType[], user: UsuariosType) => {
+    .filter((user) => statusLiberacao.includes(user.status))
+    .reduce((unique: CardTypeGrupo[], user) => {
       if (!unique.some((u) => u.idAcesso === user.idAcesso)) {
         unique.push(user);
       }
@@ -90,16 +99,16 @@ export default function DialogSolicitacaoAcessoComponent({
   return (
     <>
       <Text flexGrow={"1"} p="6px 12px" onClick={handleOpen}>
-        Solicitar acessos
+        Solicitar Renovação
       </Text>
 
       <Modal size={"2xl"} isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Solicitar Acessos</ModalHeader>
+          <ModalHeader>Selecionar Usuários</ModalHeader>
           <ModalCloseButton />
           <ModalBody maxH={"450px"} overflowY={"scroll"}>
-            {listaUsuarios.map((user: UsuariosType) => (
+            {listaUsuarios.map((user) => (
               <Flex
                 boxShadow={"lg"}
                 p={2}
@@ -136,7 +145,7 @@ export default function DialogSolicitacaoAcessoComponent({
 
             {listaUsuarios.length === 0 && (
               <>
-                <Text>Sem usuários para Solicitação</Text>
+                <Text>Sem usuários para Renovação</Text>
               </>
             )}
           </ModalBody>
@@ -148,12 +157,12 @@ export default function DialogSolicitacaoAcessoComponent({
             {listaUsuarios.length > 0 && (
               <Button
                 onClick={() => {
-                  UseRequestSolicitacaoAcesso({ payload });
+                  UseRequestSolicitacaoAcesso(payload);
                   handleClose();
                 }}
                 colorScheme="green"
               >
-                Finalizar solicitação
+                Enviar solicitação
               </Button>
             )}
           </ModalFooter>
