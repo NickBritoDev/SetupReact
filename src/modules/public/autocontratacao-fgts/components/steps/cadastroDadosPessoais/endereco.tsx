@@ -6,7 +6,11 @@ import {
   Select,
   Stack,
 } from "@chakra-ui/react";
-import { useGetConsultaCep } from "@hooks/useGetConsultaCep";
+import {
+  IConsultaCep,
+  IConsultaCepErro,
+  useGetConsultaCep,
+} from "../../../../../../hooks/useGetConsultaCep";
 import { useGetOptions } from "@modules/public/autocontratacao-fgts/hooks/useGetOptions";
 import { StepsDadosPessoaisProps } from "@modules/public/autocontratacao-fgts/types/steps";
 import { handleChangeCEP } from "@utils/mask/mascaras";
@@ -21,20 +25,20 @@ export default function CadastroEnderecoComponent({
   const cep = useGetConsultaCep(formik.values.cep);
 
   useEffect(() => {
-    const body = cep.data;
+    const body = cep.data as IConsultaCep | IConsultaCepErro;
     formik.setFieldValue("endereco", "");
     formik.setFieldValue("complemento", "");
     formik.setFieldValue("bairro", "");
     formik.setFieldValue("cidade", "");
     formik.setFieldValue("estado", "");
     if (cep.isSuccess) {
-      setCepError(!!body.erro);
-      if (!body.erro) {
-        formik.setFieldValue("endereco", body.logradouro, true);
-        formik.setFieldValue("complemento", body.complemento, true);
-        formik.setFieldValue("bairro", body.bairro, true);
-        formik.setFieldValue("cidade", body.localidade, true);
-        formik.setFieldValue("estado", body.uf, true);
+      setCepError("erro" in body);
+      if (!("erro" in body)) {
+        formik.setFieldValue("endereco", body?.logradouro, true);
+        formik.setFieldValue("complemento", body?.complemento, true);
+        formik.setFieldValue("bairro", body?.bairro, true);
+        formik.setFieldValue("cidade", body?.localidade, true);
+        formik.setFieldValue("estado", body?.uf, true);
       }
     }
   }, [cep.data]);

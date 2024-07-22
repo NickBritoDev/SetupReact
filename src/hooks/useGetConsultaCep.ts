@@ -15,7 +15,7 @@ export interface IConsultaCep {
   unidade: string;
 }
 
-interface IConsultaCepErro {
+export interface IConsultaCepErro {
   erro: "true";
 }
 
