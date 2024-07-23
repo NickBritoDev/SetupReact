@@ -17,7 +17,7 @@ import { useGetMensagensWhatsApp } from "../../hooks/whatsapp/useGetMensagensWha
 import { usePostMensagensWhatsApp } from "../../hooks/whatsapp/usePostMensagensWhatsApp";
 import { useGetInstanciasWhatsApp } from "../../hooks/whatsapp/useGetInstanciasWhatsApp";
 import MensagensWhatsappComponent from "./mensagensWhatsapp";
-import back from "../../images/back-wpp.jpg";
+import back from "../../images/wpp.jpg";
 import user from "../../images/user.png";
 import InputWhatsappConponent from "./inputWhatsapp";
 import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";

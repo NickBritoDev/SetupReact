@@ -48,8 +48,8 @@ export default function MensagensWhatsappComponent({ dataMsg }: any) {
         }
         p={2}
         maxW={"450px"}
-        color={dataMsg?.direction === "in" ? "white" : "black"}
-        bg={dataMsg?.direction === "in" ? "#229544" : "gray.200"}
+        color={dataMsg?.direction === "in" ? "black" : "black"}
+        bg={dataMsg?.direction === "in" ? "#C5F1AE" : "whitesmoke"}
       >
         {/* respondeu em cima de texto */}
         <Text
@@ -80,7 +80,7 @@ export default function MensagensWhatsappComponent({ dataMsg }: any) {
           maxW={"350px"}
           maxH={"400px"}
           src={dataMsg?.mensagem}
-          display={dataMsg?.mensagem.includes('image') || dataMsg?.mensagem.includes('webp') || dataMsg?.mensagem.includes('jpeg') || dataMsg?.mensagem.includes('png') || dataMsg?.mensagem.includes('JPG ') ? "flex" : "none"}
+          display={dataMsg?.type === 'image' || dataMsg?.mensagem.includes('image') || dataMsg?.mensagem.includes('webp') || dataMsg?.mensagem.includes('jpeg') || dataMsg?.mensagem.includes('png') || dataMsg?.mensagem.includes('jpg ') ? "flex" : "none"}
         />
         {/* video  */}
         <Box display={dataMsg?.mensagem.includes('video') || dataMsg?.mensagem.includes('mp4') ? "" : "none"}
@@ -91,7 +91,7 @@ export default function MensagensWhatsappComponent({ dataMsg }: any) {
           </video>
         </Box>
         {/* audio */}
-        <Box w={'100%'} display={dataMsg?.mensagem?.includes("audio") || dataMsg?.mensagem?.includes("oga") || dataMsg?.mensagem?.includes("mp3") || dataMsg?.mensagem?.includes("wav") ? "flex" : "none"}>
+        <Box w={'100%'} display={dataMsg?.mensagem?.includes("audio") || dataMsg?.mensagem?.includes("oga") || dataMsg?.mensagem?.includes("mp3") || dataMsg?.mensagem?.includes("wav") || dataMsg?.mensagem?.includes("webm") ? "flex" : "none"}>
           <audio controls>
             <source src={dataMsg?.mensagem} type={dataMsg?.mimetype} />
           </audio>

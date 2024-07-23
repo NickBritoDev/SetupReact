@@ -22,7 +22,7 @@ import { useGetLeads } from "../hooks/useGetLeads";
 const ModalComponent: React.FC = () => {
   const { data: contatos } = useGetLeads();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [detalhesLeads, setDetalhesLeads] = useState(contatos as Contato);
+  const [detalhesLeads, setDetalhesLeads] = useState<Contato | null>(null);
   const [hideRecepcao, setHideRecepcao] = useState(false);
 
   const [filterScore, setFilterScore] = useState<{ [key: string]: boolean }>({
@@ -51,14 +51,31 @@ const ModalComponent: React.FC = () => {
   };
 
   const compareContacts = (a: Contato, b: Contato): number => {
+    const aDate = new Date(a.logs[0]?.data_atualizacao || 0);
+    const bDate = new Date(b.logs[0]?.data_atualizacao || 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
+    if (aDate >= today && bDate < today) {
+      return -1;
+    } else if (aDate < today && bDate >= today) {
+      return 1;
+    }
+  
+    if (aDate.getTime() !== bDate.getTime()) {
+      return bDate.getTime() - aDate.getTime(); 
+    }
+  
     if (statusPriority[a.status!] !== statusPriority[b.status!]) {
       return statusPriority[a.status!] - statusPriority[b.status!];
     }
+
     return scorePriority[a.score!] - scorePriority[b.score!];
   };
+  
 
   const contatosOrdenados = contatos
-    ? contatos.slice().sort(compareContacts as (a: any, b: any) => number)
+    ? contatos.slice().sort(compareContacts)
     : [];
 
   const filteredContatos = contatosOrdenados.filter(
@@ -74,7 +91,7 @@ const ModalComponent: React.FC = () => {
     setFilterStatus((prev) => ({ ...prev, [status]: !prev[status] }));
   };
 
-  const openDetailsLeads = (contato: any) => {
+  const openDetailsLeads = (contato: Contato) => {
     setDetalhesLeads(contato);
     setHideRecepcao(true);
   };
