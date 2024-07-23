@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { useKey } from "./context/auth/token-login/authContext";
 
@@ -17,10 +17,33 @@ import CrmLeadsBot from "./modules/admin/crm-leads-bot";
 import Marketplace from "./modules/admin/marketplace";
 import { useAuthHelpers } from "./helpers/conta/permissao";
 import AutocontratacaoFgts from "./modules/public/autocontratacao-fgts";
+import { useToast } from "@chakra-ui/react";
 
 const Routes: React.FC = () => {
+  const toast = useToast()
   const { keyStatus } = useKey();
   const { isAdmin, temPermissao, isMatriz, isLoading } = useAuthHelpers();
+
+  useEffect(() => {
+    if(keyStatus) return
+
+    const intervalId = setInterval(() => {
+      if (!keyStatus) {
+        toast({
+          title: 'INFORMAÇÃO.',
+          description: "Sua sessão expirou, faça login novamente.",
+          status: 'info',
+          duration: 9000,
+          isClosable: true,
+        })
+        setTimeout(() => {
+          window.location.href = '/public/login';
+        }, 1500);
+      }
+    }, 60000);
+    
+    return () => clearInterval(intervalId);
+  }, [keyStatus]);
 
   const routing = useRoutes([
     {

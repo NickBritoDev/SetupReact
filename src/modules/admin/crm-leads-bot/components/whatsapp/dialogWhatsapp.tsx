@@ -100,7 +100,7 @@ export default function DialogWhatsappComponent({
       >
         <Button
           w={"100%"}
-          colorScheme={instanceOnline ? "whatsapp" : "red"}
+          colorScheme={instanceOnline ? "green" : "red"}
           alignItems={"center"}
           justifyContent={"space-between"}
           gap={2}
@@ -170,6 +170,8 @@ export default function DialogWhatsappComponent({
             )}
 
             <InputWhatsappConponent
+              telefone={telefone}
+              idLead={idLead}
               enviarMensagem={enviarMensagem}
               isLoading={isLoading}
               mensagemOut={mensagemOut}

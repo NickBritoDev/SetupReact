@@ -1,7 +1,11 @@
 import { Button, Flex, Input, Spinner } from "@chakra-ui/react";
 import { LuSendHorizonal } from "react-icons/lu";
+import GravarAudioComponent from "./gravarAudio";
+import EnviarArquivosComponents from "./enviarArquivos";
 
 export default function InputWhatsappConponent({
+  telefone,
+  idLead,
   mensagemOut,
   setMensagemOut,
   isLoading,
@@ -21,6 +25,9 @@ export default function InputWhatsappConponent({
       zIndex={99}
       bg={"white"}
     >
+      <EnviarArquivosComponents
+        telefone={telefone}
+        idLead={idLead} />
       <Input
         value={mensagemOut}
         onChange={(e) => {
@@ -46,6 +53,9 @@ export default function InputWhatsappConponent({
           <LuSendHorizonal color="gray" size={32} />
         )}
       </Button>
+      <GravarAudioComponent
+        telefone={telefone}
+        idLead={idLead} />
     </Flex>
   );
 }
