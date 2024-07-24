@@ -118,8 +118,8 @@ const ModalComponent: React.FC = () => {
             gap={2}
             onClick={() => {
               const link = document.createElement('a');
-              link.href = "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-2.0.0-setup.exe";
-              link.download = "whadesk-2.0.0-64xsetup.exe";
+              link.href = "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-3.0.0-setup+(1).exe";
+              link.download = "whadesk-3.0.0-64xsetup.exe";
               document.body.appendChild(link);
               link.click();
               document.body.removeChild(link);
