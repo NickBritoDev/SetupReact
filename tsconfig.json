@@ -20,47 +20,44 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-    // "paths": {
-    //   "@/*": [
-    //     "./src/*"
-    //   ],
-    //   "@/api/*": [
-    //     "./src/api/*"
-    //   ],
-    //   "@/components/*": [
-    //     "./src/components/*"
-    //   ],
-    //   "@/helpers/*": [
-    //     "./src/helpers/*"
-    //   ],
-    //   "@/layout/admin/*": [
-    //     "./src/layout/admin/*"
-    //   ],
-    //   "@/layout/public/*": [
-    //     "./src/layout/public/*"
-    //   ],
-    //   "@/pages/*": [
-    //     "./src/pages/*"
-    //   ],
-    //   "@/themes/*": [
-    //     "./src/themes/*"
-    //   ],
-    //   "@/context/*": [
-    //     "./src/context/*"
-    //   ],
-    //   "@/utils/*": [
-    //     "./src/utils/*"
-    //   ]
-    // },
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@api/*": [
+        "./src/api/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@helpers/*": [
+        "./src/helpers/*"
+      ],
+      "@layout/*": [
+        "./src/layout/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
+      ],
+      "@themes/*": [
+        "./src/themes/*"
+      ],
+      "@context/*": [
+        "./src/context/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@hooks": [
+        "./src/hooks/*"
+      ]
+    }
   },
   "include": [
-    "src",
-    "src/modules/admin/crm-leads-bot/components/whatsapp/.tsx"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
+    "./src/**/*",
+    "vite.config.ts"
   ]
 }

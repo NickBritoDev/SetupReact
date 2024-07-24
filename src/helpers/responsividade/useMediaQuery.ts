@@ -1,16 +1,19 @@
 import { useMediaQuery } from "@chakra-ui/react";
 
-export const useMobile = (): any => {
-  const [isMobile] = useMediaQuery("(max-width: 750px)");
+export const mobileBreakpoint = "(max-width: 750px)";
+export const useMobile = (): boolean => {
+  const [isMobile] = useMediaQuery(mobileBreakpoint);
   return isMobile;
 };
 
-export const useTablet = (): any => {
-  const [isTablet] = useMediaQuery("(max-width: 950px)");
+export const tabletBreakpoint = "(max-width: 950px)";
+export const useTablet = (): boolean => {
+  const [isTablet] = useMediaQuery(tabletBreakpoint);
   return isTablet;
 };
 
-export const useDesktop = (): any => {
-  const [isDesktop] = useMediaQuery("(max-width: 1250px)");
+export const desktopBreakpoint = "(min-width: 951px)";
+export const useDesktop = (): boolean => {
+  const [isDesktop] = useMediaQuery(desktopBreakpoint);
   return isDesktop;
 };

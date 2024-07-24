@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export interface ModalType {
   descricao: string | null;
   ferramenta?: any;
@@ -9,8 +7,17 @@ export interface FiltrosType {
   onApplyFilters?: any;
   filters?: any;
 }
+
+export enum UsuariosTypeStatus {
+  Liberado = "Liberado",
+  Pendente = "Pendente",
+  Recusado = "Recusado",
+  Bloqueado = "Bloqueado",
+  Expirado = "Expirado",
+}
+
 export interface UsuariosType {
-  status: any;
+  status: UsuariosTypeStatus;
   idAcesso: number;
   perfil: string;
   nome: string;
@@ -18,18 +25,37 @@ export interface UsuariosType {
   foto: string;
 }
 
+export interface CardTypeGrupo {
+  status: UsuariosTypeStatus;
+  idAcesso: number;
+  nome: string;
+  foto: string;
+  gerente: string;
+  superintendente: string;
+  supervisor: string;
+  isAdmin: boolean;
+}
+
 export interface CardType {
-  idFerramenta: number;
-  status: string;
-  ferramenta: string;
-  ativo: boolean;
   banner: string;
   descricao: string | null;
+  ferramenta: string;
   foto: string | null;
-  grupo: {
-    status: ReactNode;
-    idUsuario: string;
-    nome: string;
-    foto: string;
-  }[];
+  grupo: CardTypeGrupo[];
+  idFerramenta: number;
+  status: UsuariosTypeStatus;
+}
+
+export type RetornoConsultaMarketplace = CardType;
+
+export interface BodyPutSolicitacaoAcesso {
+  id_acesso: number;
+  id_produto: number;
+  status: "Bloqueado" | "Pendente";
+}
+
+export interface BodyPutSolicitacaoAdmins {
+  id_acesso: number;
+  id_produto: number;
+  is_admin: boolean;
 }

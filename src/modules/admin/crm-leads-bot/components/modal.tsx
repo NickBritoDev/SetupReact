@@ -35,7 +35,9 @@ const ModalComponent: React.FC = () => {
     Quente: true,
   });
 
-  const [filterStatus, setFilterStatus] = useState<{ [key: string]: boolean }>({
+  const [filterStatus, setFilterStatus] = useState<{
+    [key: string]: boolean;
+  }>({
     Novo: true,
     Contato: true,
     Negociando: true,

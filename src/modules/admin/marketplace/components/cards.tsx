@@ -28,13 +28,16 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { BsThreeDots } from "react-icons/bs";
 import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import logo from "../images/logo.png";
-import { CardType, FiltrosType } from "../types/types";
+import { CardType, FiltrosType, UsuariosTypeStatus } from "../types/types";
 import { useGetProdutos } from "../hooks/useGetProdutos";
 import DialogSolicitacaoAcessoComponent from "./dialogSolicitacaoAcesso";
 import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 import { FaSearch } from "react-icons/fa";
 import { formatCNPJ } from "../../../../utils/mask/mascaras";
 import solicitacaoAcesso from "../images/solicitacaoAcesso.png";
+import DialogSolicitacaoRenovacaoComponent from "./dialogSolicitacaoRenovacao";
+import DialogSolicitacaoBloqueioComponent from "./dialogSolicitacaoBloqueio";
+import DialogEdicaoAcessosComponent from "./dialogEdicaoAcessos";
 
 export default function CardsComponent({ filters }: FiltrosType) {
   const [cnpj, setCnpj] = useState("");
@@ -51,9 +54,10 @@ export default function CardsComponent({ filters }: FiltrosType) {
 
   useEffect(() => {
     if (!isLoading && data) {
-      let newFilteredData: CardType[] = [...data];
+      let newFilteredData = [...data];
 
       if (filters.ferramentas.length > 0) {
+<<<<<<< HEAD
         newFilteredData = newFilteredData.filter((f: CardType) =>
           filters.ferramentas?.includes(f.ferramenta),
         );
@@ -62,10 +66,27 @@ export default function CardsComponent({ filters }: FiltrosType) {
         newFilteredData = newFilteredData.filter((f: CardType) => {
           const status = f.ativo ? "Ativos" : "Inativos";
           return filters.status?.includes(status);
+=======
+        newFilteredData = newFilteredData.filter((f) =>
+          filters.ferramentas.includes(f.ferramenta),
+        );
+      }
+      if (filters.status.length > 0) {
+        newFilteredData = newFilteredData.filter((f) => {
+          const statusAtivos = [
+            UsuariosTypeStatus.Liberado,
+            UsuariosTypeStatus.Pendente,
+          ];
+
+          const status = statusAtivos.includes(f.status)
+            ? "Ativos"
+            : "Inativos";
+          return filters.status.includes(status);
+>>>>>>> 81986cf60e4a34e70d0fbb093bdefe9c23668f0e
         });
       }
       if (filters.grupos.length > 0) {
-        newFilteredData = newFilteredData.filter((f: CardType) => {
+        newFilteredData = newFilteredData.filter((f) => {
           const grupo =
             f.grupo.length > 0
               ? "Com grupo de confiança"
@@ -84,6 +105,11 @@ export default function CardsComponent({ filters }: FiltrosType) {
     );
     setShowNoRequestsMessage(!hasValidGroup);
   }, [filteredData]);
+
+  const statusPodeListarUsuarios = [
+    UsuariosTypeStatus.Pendente,
+    UsuariosTypeStatus.Liberado,
+  ];
 
   return (
     <>
@@ -158,16 +184,31 @@ export default function CardsComponent({ filters }: FiltrosType) {
                       />
                     </Tooltip>
                     <MenuList mt={-4}>
-                      <MenuItem>Solicitar cancelamento</MenuItem>
-                      <MenuItem>Solicitar renovação</MenuItem>
-                      <MenuItem>
+                      <MenuItem p={0}>
+                        <DialogSolicitacaoBloqueioComponent
+                          filteredData={card.grupo}
+                          idFerramenta={card.idFerramenta}
+                        />
+                      </MenuItem>
+                      <MenuItem p={0}>
+                        <DialogSolicitacaoRenovacaoComponent
+                          filteredData={card.grupo}
+                          idFerramenta={card.idFerramenta}
+                        />
+                      </MenuItem>
+                      <MenuItem p={0}>
                         <DialogSolicitacaoAcessoComponent
                           filteredData={card.grupo}
                           idPromotora={minhaConta.idPromotora}
                           idFerramenta={card.idFerramenta}
                         />
                       </MenuItem>
-                      <MenuItem>Editar acessos</MenuItem>
+                      <MenuItem p={0}>
+                        <DialogEdicaoAcessosComponent
+                          filteredData={card.grupo}
+                          idFerramenta={card.idFerramenta}
+                        />
+                      </MenuItem>
                     </MenuList>
                   </Menu>
                 </Flex>
@@ -206,7 +247,9 @@ export default function CardsComponent({ filters }: FiltrosType) {
 
                 <Flex
                   display={
-                    card.grupo.some((grupo) => grupo.status === "Pendente")
+                    card.grupo.some((grupo) =>
+                      statusPodeListarUsuarios.includes(grupo.status),
+                    )
                       ? "flex"
                       : "none"
                   }
@@ -217,7 +260,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
                   <AvatarGroup size="sm" max={2}>
                     {card.grupo.map(
                       (member, memberIndex) =>
-                        member.status === "Pendente" && (
+                        statusPodeListarUsuarios.includes(member.status) && (
                           <Avatar
                             key={memberIndex}
                             name={member.nome}
@@ -302,6 +345,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
         pos={"absolute"}
         bottom={20}
         w={"100%"}
+        zIndex={"-1"}
       >
         <Image src={solicitacaoAcesso} w={"750px"} />
         <Heading size={"md"}>
