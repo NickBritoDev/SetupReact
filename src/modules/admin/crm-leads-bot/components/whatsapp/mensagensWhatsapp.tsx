@@ -8,8 +8,8 @@ import pdfIMG from '../../images/pdf-logo.jpg'
 export default function MensagensWhatsappComponent({ dataMsg }: any) {
   const renderDownloadIcon = (url: any) => {
     const fileTypes = ["pdf", "xlsx", "docx", "txt"];
-    const fileExtension = url.split('.').pop();
-    if (fileTypes.includes(fileExtension)) {
+    const fileExtension = url?.split('.').pop();
+    if (fileTypes?.includes(fileExtension)) {
       return (
         <Link display={"flex"} flexDir={"column"} alignItems={"flex-start"} justifyContent={"space-between"} gap={10} href={url} isExternal>
           {fileExtension === 'xlsx' &&
@@ -61,7 +61,7 @@ export default function MensagensWhatsappComponent({ dataMsg }: any) {
           bg={dataMsg?.direction === "in" ? "green" : "gray.400"}
           display={
             dataMsg?.quotedMsgId !== null &&
-              !dataMsg?.mensagemRespondida?.message.includes("http") &&
+              !dataMsg?.mensagemRespondida?.message?.includes("http") &&
               dataMsg?.mensagemRespondida?.message
               ? "flex"
               : "none"
@@ -80,10 +80,10 @@ export default function MensagensWhatsappComponent({ dataMsg }: any) {
           maxW={"350px"}
           maxH={"400px"}
           src={dataMsg?.mensagem}
-          display={dataMsg?.type === 'image' || dataMsg?.mensagem.includes('image') || dataMsg?.mensagem.includes('webp') || dataMsg?.mensagem.includes('jpeg') || dataMsg?.mensagem.includes('png') || dataMsg?.mensagem.includes('jpg ') ? "flex" : "none"}
+          display={dataMsg?.type === 'image' || dataMsg?.mensagem?.includes('image') || dataMsg?.mensagem?.includes('webp') || dataMsg?.mensagem?.includes('jpeg') || dataMsg?.mensagem?.includes('png') || dataMsg?.mensagem?.includes('jpg ') ? "flex" : "none"}
         />
         {/* video  */}
-        <Box display={dataMsg?.mensagem.includes('video') || dataMsg?.mensagem.includes('mp4') ? "" : "none"}
+        <Box display={dataMsg?.mensagem?.includes('video') || dataMsg?.mensagem?.includes('mp4') ? "" : "none"}
           maxW="250px" borderWidth="1px" borderRadius="lg" overflow="hidden">
           <video width="100%" controls>
             <source src={dataMsg?.mensagem} type="video/mp4" />

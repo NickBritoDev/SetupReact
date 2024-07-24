@@ -22,7 +22,7 @@ export default function SidebarComponent({
   const sortedContatos = filteredContatos
     .filter((contato) =>
       Object.values(contato).some((value) =>
-        String(value).toLowerCase().includes(searchTerm.toLowerCase()),
+        String(value).toLowerCase()?.includes(searchTerm.toLowerCase()),
       ),
     )
     .sort((a, b) => {

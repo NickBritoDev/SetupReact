@@ -1,7 +1,7 @@
 import { Button, Flex, Input, Spinner } from "@chakra-ui/react";
 import { LuSendHorizonal } from "react-icons/lu";
-import GravarAudioComponent from "./gravarAudio";
 import EnviarArquivosComponents from "./enviarArquivos";
+import GravarAudioComponent from "./gravarAudio";
 
 export default function InputWhatsappConponent({
   telefone,

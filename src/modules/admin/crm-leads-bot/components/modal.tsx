@@ -8,6 +8,7 @@ import {
   Button,
   Text,
   Flex,
+  Tooltip,
 } from "@chakra-ui/react";
 import { RiUserSettingsLine } from "react-icons/ri";
 import user from "../images/user.png";
@@ -18,8 +19,11 @@ import SidebarComponent from "./sidebar";
 import InteracaoComponent from "./interacao";
 import { Contato } from "../types/types";
 import { useGetLeads } from "../hooks/useGetLeads";
+import { FaQrcode } from "react-icons/fa";
+import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 
 const ModalComponent: React.FC = () => {
+  const { data: minhaConta } = useGetMinhaConta();
   const { data: contatos } = useGetLeads();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [detalhesLeads, setDetalhesLeads] = useState<Contato | null>(null);
@@ -55,24 +59,24 @@ const ModalComponent: React.FC = () => {
     const bDate = new Date(b.logs[0]?.data_atualizacao || 0);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-  
+
     if (aDate >= today && bDate < today) {
       return -1;
     } else if (aDate < today && bDate >= today) {
       return 1;
     }
-  
+
     if (aDate.getTime() !== bDate.getTime()) {
-      return bDate.getTime() - aDate.getTime(); 
+      return bDate.getTime() - aDate.getTime();
     }
-  
+
     if (statusPriority[a.status!] !== statusPriority[b.status!]) {
       return statusPriority[a.status!] - statusPriority[b.status!];
     }
 
     return scorePriority[a.score!] - scorePriority[b.score!];
   };
-  
+
 
   const contatosOrdenados = contatos
     ? contatos.slice().sort(compareContacts)
@@ -98,19 +102,44 @@ const ModalComponent: React.FC = () => {
 
   return (
     <>
-      <Button
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        gap={2}
-        mt={-4}
-        mr={2}
-        colorScheme="blue"
-        onClick={onOpen}
-      >
-        <Text>Gerenciamento de leads</Text>
-        <RiUserSettingsLine size={22} />
-      </Button>
+      <Flex gap={2} mt={-4}>
+        <Tooltip
+          hasArrow
+          placement="left"
+          label="Baixar Gerenciador de Instâncias"
+        >
+          <Button
+            display={minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? 'flex' : 'none'}
+            colorScheme="green"
+            alignItems={"center"}
+            justifyContent={"center"}
+            gap={2}
+            onClick={() => {
+              const link = document.createElement('a');
+              link.href = "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-2.0.0-setup.exe";
+              link.download = "whadesk-2.0.0-setup.exe";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+          >
+            <FaQrcode size={22} />
+            <Text>Baixar Gerenciador de Instâncias</Text>
+          </Button>
+        </Tooltip>
+        <Button
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          gap={2}
+          mr={2}
+          colorScheme="blue"
+          onClick={onOpen}
+        >
+          <Text>Gerenciamento de leads</Text>
+          <RiUserSettingsLine size={22} />
+        </Button>
+      </Flex>
 
       <Modal size={"full"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

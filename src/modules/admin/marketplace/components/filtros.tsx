@@ -126,7 +126,7 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
                         <MenuItem key={ferramenta.ferramenta}>
                           <Checkbox
                             colorScheme="green"
-                            isChecked={selectedFerramentas.includes(
+                            isChecked={selectedFerramentas?.includes(
                               ferramenta.ferramenta,
                             )}
                             onChange={(e) => {
@@ -166,7 +166,7 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
                         <MenuItem key={status}>
                           <Checkbox
                             colorScheme="green"
-                            isChecked={selectedStatus.includes(status)}
+                            isChecked={selectedStatus?.includes(status)}
                             onChange={(e) => {
                               const newSelection = e.target.checked
                                 ? [...selectedStatus, status]
@@ -200,7 +200,7 @@ export default function FiltrosComponent({ onApplyFilters }: FiltrosType) {
                           <MenuItem key={grupo}>
                             <Checkbox
                               colorScheme="green"
-                              isChecked={selectedGrupos.includes(grupo)}
+                              isChecked={selectedGrupos?.includes(grupo)}
                               onChange={(e) => {
                                 const newSelection = e.target.checked
                                   ? [...selectedGrupos, grupo]

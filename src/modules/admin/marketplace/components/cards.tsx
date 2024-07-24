@@ -55,13 +55,13 @@ export default function CardsComponent({ filters }: FiltrosType) {
 
       if (filters.ferramentas.length > 0) {
         newFilteredData = newFilteredData.filter((f: CardType) =>
-          filters.ferramentas.includes(f.ferramenta),
+          filters.ferramentas?.includes(f.ferramenta),
         );
       }
       if (filters.status.length > 0) {
         newFilteredData = newFilteredData.filter((f: CardType) => {
           const status = f.ativo ? "Ativos" : "Inativos";
-          return filters.status.includes(status);
+          return filters.status?.includes(status);
         });
       }
       if (filters.grupos.length > 0) {
@@ -70,7 +70,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
             f.grupo.length > 0
               ? "Com grupo de confiança"
               : "Sem grupo de confiança";
-          return filters.grupos.includes(grupo);
+          return filters.grupos?.includes(grupo);
         });
       }
 

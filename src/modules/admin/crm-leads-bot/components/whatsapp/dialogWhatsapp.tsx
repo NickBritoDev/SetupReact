@@ -23,7 +23,6 @@ import InputWhatsappConponent from "./inputWhatsapp";
 import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";
 
 export default function DialogWhatsappComponent({
-  // produto,
   nome,
   idLead,
   telefone,
@@ -45,8 +44,7 @@ export default function DialogWhatsappComponent({
   const blocoDeMensagens = data || [];
   const { UseRequestPostMensagensWhatsApp } = usePostMensagensWhatsApp();
 
-  // let nomeFormatado = minhaConta?.nome?.toLowerCase()
-  //   .replace(/(?:^|\s)\S/g, function(a: string) { return a.toUpperCase(); });
+  const mensagemRef = useRef<HTMLDivElement>(null);
 
   const enviarMensagem = () => {
     setIsLoading(true);
@@ -78,7 +76,7 @@ export default function DialogWhatsappComponent({
     onOpen();
     setTimeout(() => {
       setCarregamentoMsgs(false);
-    }, 10000);
+    }, 5000);
   };
 
   useEffect(() => {
@@ -86,6 +84,12 @@ export default function DialogWhatsappComponent({
       carregarMenagens();
     }
   }, [instanceOnline]);
+
+  useEffect(() => {
+    if (isOpen && mensagemRef.current && !carregamentoMsgs) {
+      mensagemRef.current.scrollTop = mensagemRef.current.scrollHeight;
+    }
+  }, [isOpen, blocoDeMensagens, carregamentoMsgs]);
 
   return (
     <>
@@ -112,7 +116,7 @@ export default function DialogWhatsappComponent({
           {instanceOnline ? (
             <Text>Abrir WhatsApp</Text>
           ) : (
-            <Text>Seu Whatsapp está Offline</Text>
+            <Text>Whatsapp Offline</Text>
           )}
           <SiWhatsapp size={22} />
         </Button>
@@ -155,7 +159,7 @@ export default function DialogWhatsappComponent({
             </Flex>
           </Flex>
 
-          <DrawerBody py={20} w={"100%"} pos={"relative"}>
+          <DrawerBody py={20} w={"100%"} pos={"relative"} ref={mensagemRef}>
             {carregamentoMsgs ? (
               <Flex alignItems={"center"} justifyContent={"center"} mt={"35%"}>
                 <Spinner size={"xl"} color="white" />

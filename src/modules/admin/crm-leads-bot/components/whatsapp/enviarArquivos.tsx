@@ -18,7 +18,6 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
   const uploadArquvioAws = async (document: File): Promise<void> => {
     try {
       const locationAws = await UseRequestPostUploadFile({ file: document });
-      console.log(locationAws, 'location retorno');
       enviarArquivo(locationAws, document.type);
     } catch (error) {
       console.error('Erro ao enviar arquivo:', error);
