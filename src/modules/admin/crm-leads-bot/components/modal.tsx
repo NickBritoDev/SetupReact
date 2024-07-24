@@ -108,7 +108,7 @@ const ModalComponent: React.FC = () => {
         <Tooltip
           hasArrow
           placement="left"
-          label="Baixar Gerenciador de Instâncias"
+          label="Gerenciador de Instâncias 64x"
         >
           <Button
             display={minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? 'flex' : 'none'}
@@ -119,14 +119,38 @@ const ModalComponent: React.FC = () => {
             onClick={() => {
               const link = document.createElement('a');
               link.href = "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-2.0.0-setup.exe";
-              link.download = "whadesk-2.0.0-setup.exe";
+              link.download = "whadesk-2.0.0-64xsetup.exe";
               document.body.appendChild(link);
               link.click();
               document.body.removeChild(link);
             }}
           >
             <FaQrcode size={22} />
-            <Text>Baixar Gerenciador de Instâncias</Text>
+            <Text>Gerenciador de Instâncias 64x</Text>
+          </Button>
+        </Tooltip>
+        <Tooltip
+          hasArrow
+          placement="left"
+          label="Gerenciador de Instâncias 32x"
+        >
+          <Button
+            display={minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? 'flex' : 'none'}
+            colorScheme="yellow"
+            alignItems={"center"}
+            justifyContent={"center"}
+            gap={2}
+            onClick={() => {
+              const link = document.createElement('a');
+              link.href = "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-2.0.0-32x-setup.exe";
+              link.download = "whadesk-2.0.0-32xsetup.exe";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+          >
+            <FaQrcode size={22} />
+            <Text>Gerenciador de Instâncias 32x</Text>
           </Button>
         </Tooltip>
         <Button
