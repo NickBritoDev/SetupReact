@@ -85,7 +85,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             produto={detalhesLeads?.produto}
             email={detalhesLeads?.email}
           />
-          {minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? (
+          {minhaConta.nome === 'LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED' ? (
             <DialogWhatsappComponent
               produto={detalhesLeads?.produto}
               telefone={removePrefix(detalhesLeads.telefone)}

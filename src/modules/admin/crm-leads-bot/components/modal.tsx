@@ -111,7 +111,7 @@ const ModalComponent: React.FC = () => {
           label="Gerenciador de Instâncias 64x"
         >
           <Button
-            display={minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? 'flex' : 'none'}
+            display={minhaConta.nome === 'LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED' ? 'flex' : 'none'}
             colorScheme="green"
             alignItems={"center"}
             justifyContent={"center"}
@@ -135,7 +135,7 @@ const ModalComponent: React.FC = () => {
           label="Gerenciador de Instâncias 32x"
         >
           <Button
-            display={minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? 'flex' : 'none'}
+            display={minhaConta.nome === 'LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED' ? 'none' : 'none'}
             colorScheme="yellow"
             alignItems={"center"}
             justifyContent={"center"}
