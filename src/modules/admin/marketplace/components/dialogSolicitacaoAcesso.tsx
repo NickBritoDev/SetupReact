@@ -61,7 +61,7 @@ export default function DialogSolicitacaoAcessoComponent({
 
   const handleCheckboxChange = (idAcesso: number) => {
     setSelectedIds((prevSelectedIds) =>
-      prevSelectedIds.includes(idAcesso)
+      prevSelectedIds?.includes(idAcesso)
         ? prevSelectedIds.filter((id) => id !== idAcesso)
         : [...prevSelectedIds, idAcesso],
     );
@@ -78,7 +78,7 @@ export default function DialogSolicitacaoAcessoComponent({
   const listaUsuarios = filteredData
     .filter(
       (user: UsuariosType) =>
-        !["Pendente", "Liberado", "Bloqueado"].includes(user.status),
+        !["Pendente", "Liberado", "Bloqueado"]?.includes(user.status),
     )
     .reduce((unique: UsuariosType[], user: UsuariosType) => {
       if (!unique.some((u) => u.idAcesso === user.idAcesso)) {

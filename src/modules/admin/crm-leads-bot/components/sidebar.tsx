@@ -1,51 +1,36 @@
 import { useState } from "react";
 import { Key } from "react";
 import { Text, Flex, Box, Badge, Input } from "@chakra-ui/react";
-import { RiUserHeartFill } from "react-icons/ri";
-import {
-  FaCartArrowDown,
-  FaRoad,
-  FaUserCheck,
-  FaUserPlus,
-  FaUsers,
-} from "react-icons/fa";
 import { SiFireship } from "react-icons/si";
 import { GiIceCube } from "react-icons/gi";
 import { Contato } from "../types/types";
 import { FaTemperatureArrowUp } from "react-icons/fa6";
+import { formatDataHora } from "../../../../utils/mask/mascaras";
+import { FcClock, FcNeutralTrading, FcVlc } from "react-icons/fc";
 
 export default function SidebarComponent({
   detalhesLeads,
   filteredContatos,
   openDetailsLeads,
 }: {
-  detalhesLeads: Contato;
+  detalhesLeads: any;
   filteredContatos: Contato[];
   openDetailsLeads: (contato: Contato) => void;
 }) {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const getElapsedMinutes = (lastUpdateTime: string) => {
-    const [hours, minutes] = lastUpdateTime.split(":").map(Number);
-    const lastUpdate = new Date();
-    lastUpdate.setHours(hours, minutes, 0, 0);
-    const now = new Date();
-    return Math.floor((now.getTime() - lastUpdate.getTime()) / 60000);
-  };
-
-  const getColor = (elapsedMinutes: number) => {
-    if (elapsedMinutes <= 15) {
-      return "green";
-    } else if (elapsedMinutes <= 30) {
-      return "orange";
-    } else {
-      return "red";
-    }
-  };
-
   const sortedContatos = filteredContatos
     .filter((contato) =>
       Object.values(contato).some((value) =>
+<<<<<<< HEAD
+        String(value).toLowerCase()?.includes(searchTerm.toLowerCase()),
+      ),
+    )
+    .sort((a, b) => {
+      const aDate = new Date(a.logs[0]?.data_atualizacao || 0);
+      const bDate = new Date(b.logs[0]?.data_atualizacao || 0);
+      return bDate.getTime() - aDate.getTime(); // Ordena pela data de atualização em ordem decrescente
+=======
         String(value).toLowerCase().includes(searchTerm.toLowerCase()),
       ),
     )
@@ -68,6 +53,7 @@ export default function SidebarComponent({
       );
 
       return bElapsed - aElapsed;
+>>>>>>> 81986cf60e4a34e70d0fbb093bdefe9c23668f0e
     });
 
   const handleSearchInputChange = (
@@ -85,10 +71,27 @@ export default function SidebarComponent({
       bottom={0}
       h={"91.5vh"}
       overflowY={"scroll"}
+      overflowX={"hidden"}
       flexDir={"column"}
       w={"25%"}
       boxShadow={"lg"}
     >
+<<<<<<< HEAD
+      <Box zIndex={9} w={'350px'} bg={'white'} pos={"relative"} p={1}>
+        <Input
+          left={0}
+          boxShadow={'md'}
+          mt={-2}
+          bg={'white'}
+          w={'340px'}
+          pos={"fixed"}
+          placeholder="Buscar lead..."
+          value={searchTerm}
+          onChange={handleSearchInputChange}
+        />
+      </Box>
+      <Flex pt={7} position={"relative"} h={"100vh"} flexDir={"column"}>
+=======
       <Flex pt={10} position={"relative"} h={"100vh"} flexDir={"column"}>
         <Box
           rounded={"lg"}
@@ -105,6 +108,7 @@ export default function SidebarComponent({
             onChange={handleSearchInputChange}
           />
         </Box>
+>>>>>>> 81986cf60e4a34e70d0fbb093bdefe9c23668f0e
         {sortedContatos.length <= 0 && (
           <Text mx={"auto"} mt={2} fontWeight={"semibold"}>
             😅 Nenhum lead até o momento...
@@ -112,11 +116,6 @@ export default function SidebarComponent({
         )}
 
         {sortedContatos.map((contato, index: Key | null | undefined) => {
-          const lastLog = contato.logs[contato.logs.length - 1];
-          const lastUpdateTime = lastLog.data_atualizacao.slice(11, 16);
-          const elapsedMinutes = getElapsedMinutes(lastUpdateTime);
-          const color = getColor(elapsedMinutes);
-
           return (
             <Box
               bg={contato.idLead === detalhesLeads?.idLead ? "gray.100" : ""}
@@ -138,49 +137,48 @@ export default function SidebarComponent({
                   mt={2}
                   boxShadow={"lg"}
                   rounded={"xl"}
-                  pr={4}
+                  pr={2}
+                  pl={2}
                   gap={2}
                   alignItems={"center"}
                   justifyContent={"center"}
                 >
                   <Box
-                    bg={"rgba(0,0,0,0.4)"}
                     boxShadow={"lg"}
-                    ml={-1}
+                    ml={-1.5}
                     borderRadius={"50%"}
                     p={2}
                   >
-                    {contato.status === "Novo" && (
-                      <FaUserPlus size={22} color="white" />
+                    {contato.score === "Frio" && (
+                      <GiIceCube color="#44B3CF" size={22} />
                     )}
-                    {contato.status === "Contato" && (
-                      <FaUsers size={22} color="white" />
+                    {contato.score === "Médio" && (
+                      <FaTemperatureArrowUp color="#F4B61D" size={22} />
                     )}
-                    {contato.status === "Negociando" && (
-                      <RiUserHeartFill size={22} color="white" />
-                    )}
-                    {contato.status === "Finalizado" && (
-                      <FaUserCheck size={22} color="white" />
+                    {contato.score === "Quente" && (
+                      <SiFireship color="#F44B1D" size={22} />
                     )}
                   </Box>
-                  <Text fontWeight={"semibold"}>{contato.nome}</Text>
+                  <Text fontSize={14} fontWeight="semibold" isTruncated maxW="150px">
+                    {contato.nome}
+                  </Text>
                 </Flex>
-                <Flex alignItems={"center"} justifyContent={"center"} gap={2}>
-                  {contato.score === "Frio" && (
-                    <GiIceCube color="#44B3CF" size={22} />
-                  )}
-                  {contato.score === "Médio" && (
-                    <FaTemperatureArrowUp color="#F4B61D" size={22} />
-                  )}
-                  {contato.score === "Quente" && (
-                    <SiFireship color="#F44B1D" size={22} />
-                  )}
+                <Flex flexDir={"column"} alignItems={"center"} justifyContent={"center"} gap={2}>
+
                   <Flex
                     gap={1}
                     flexDir={"column"}
                     alignItems={"flex-end"}
                     justifyContent={"flex-end"}
                   >
+                    <Flex
+                      mt={4}
+                      alignItems={"center"}
+                      justifyContent={"flex-start"}
+                    >
+                      <FcClock size={18} />
+                      <Text fontSize={14} fontWeight={"semibold"}>{formatDataHora(contato.logs[0]?.data_atualizacao).slice(0, 6)}</Text>
+                    </Flex>
                     <Badge
                       variant={"solid"}
                       bg={
@@ -197,32 +195,26 @@ export default function SidebarComponent({
                     >
                       {contato.status}
                     </Badge>
-                    {contato.status === "Novo" ? (
-                      <Badge variant="solid" bg={color}>
-                        {lastUpdateTime}
-                      </Badge>
-                    ) : (
-                      <Badge variant="solid">{lastUpdateTime}</Badge>
-                    )}
                   </Flex>
                 </Flex>
               </Flex>
-              <Flex flexDir={"column"}>
+              <Flex flexDir={"column"} alignItems={"flex-start"} justifyContent={"flex-start"}>
                 <Flex
                   alignItems={"center"}
                   justifyContent={"flex-start"}
-                  gap={2}
+                  gap={1}
                 >
-                  <FaCartArrowDown size={22} />
-                  <Text fontWeight={"semibold"}>{contato.produto}</Text>
+                  <FcVlc size={18} />
+                  <Text fontSize={14} fontWeight={"semibold"}>{contato.produto}</Text>
                 </Flex>
                 <Flex
+                  mt={-1}
                   alignItems={"center"}
                   justifyContent={"flex-start"}
-                  gap={2}
+                  gap={1}
                 >
-                  <FaRoad size={22} />
-                  <Text fontWeight={"semibold"}>{contato.origem}</Text>
+                  <FcNeutralTrading size={18} />
+                  <Text fontSize={14} fontWeight={"semibold"}>{contato.origem}</Text>
                 </Flex>
               </Flex>
             </Box>

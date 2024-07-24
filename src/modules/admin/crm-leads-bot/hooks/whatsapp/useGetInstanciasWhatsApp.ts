@@ -18,8 +18,8 @@ const useGetInstanciasWhatsApp = () => {
     {
       enabled: !!token,
       refetchOnWindowFocus: true,
-      staleTime: 60000,
-      refetchInterval: 60000,
+      staleTime: 5000,
+      refetchInterval: 5000,
     },
   );
 };

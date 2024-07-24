@@ -6,10 +6,9 @@ import InfosComponent from "./infos";
 import LogsComponent from "./logs";
 import AgendaComponent from "./agenda";
 import DialogEmailComponent from "./dialogEmail";
-// import DialogWhatsappComponent from "./whatsapp/dialogWhatsapp";
-import { FaQrcode } from "react-icons/fa";
-import { SiWhatsapp } from "react-icons/si";
 import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
+import DialogWhatsappComponent from "./whatsapp/dialogWhatsapp";
+import { SiWhatsapp } from "react-icons/si";
 
 export default function InteracaoComponent({ user, detalhesLeads }: any) {
   const { data: minhaConta } = useGetMinhaConta();
@@ -53,26 +52,6 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           gap={2}
           mt={4}
         >
-          <Tooltip
-            hasArrow
-            placement="top"
-            label="Baixar gerenciado de instâncias"
-          >
-            <Button
-              display={"none"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              gap={2}
-              onClick={() => {
-                window.open(
-                  "https://drive.google.com/file/d/10z9mE3cTBXvjTX6Vz2-Pz8oElJlv8a9g/view?usp=sharing",
-                  "_blank",
-                );
-              }}
-            >
-              <FaQrcode size={22} />
-            </Button>
-          </Tooltip>
 
           <Tooltip hasArrow placement="top" label="Ligar para o cliente">
             <Button
@@ -106,8 +85,8 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             produto={detalhesLeads?.produto}
             email={detalhesLeads?.email}
           />
-
-          {/* <DialogWhatsappComponent
+          {minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? (
+            <DialogWhatsappComponent
               produto={detalhesLeads?.produto}
             telefone={detalhesLeads.telefone}
             idLead={detalhesLeads.idLead}
@@ -119,7 +98,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
               href={`https://api.whatsapp.com/send?phone=+55${detalhesLeads.telefone}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
               target="_blank"
               rel="noopener noreferrer"
-              w={"100%"}
+              w={'100%'}
               colorScheme="green"
               display={"flex"}
               alignItems={"center"}
