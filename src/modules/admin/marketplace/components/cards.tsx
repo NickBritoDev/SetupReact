@@ -57,7 +57,6 @@ export default function CardsComponent({ filters }: FiltrosType) {
       let newFilteredData = [...data];
 
       if (filters.ferramentas.length > 0) {
-<<<<<<< HEAD
         newFilteredData = newFilteredData.filter((f: CardType) =>
           filters.ferramentas?.includes(f.ferramenta),
         );
@@ -66,23 +65,6 @@ export default function CardsComponent({ filters }: FiltrosType) {
         newFilteredData = newFilteredData.filter((f: CardType) => {
           const status = f.ativo ? "Ativos" : "Inativos";
           return filters.status?.includes(status);
-=======
-        newFilteredData = newFilteredData.filter((f) =>
-          filters.ferramentas.includes(f.ferramenta),
-        );
-      }
-      if (filters.status.length > 0) {
-        newFilteredData = newFilteredData.filter((f) => {
-          const statusAtivos = [
-            UsuariosTypeStatus.Liberado,
-            UsuariosTypeStatus.Pendente,
-          ];
-
-          const status = statusAtivos.includes(f.status)
-            ? "Ativos"
-            : "Inativos";
-          return filters.status.includes(status);
->>>>>>> 81986cf60e4a34e70d0fbb093bdefe9c23668f0e
         });
       }
       if (filters.grupos.length > 0) {

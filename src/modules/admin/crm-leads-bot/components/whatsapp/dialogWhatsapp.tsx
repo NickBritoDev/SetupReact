@@ -104,12 +104,7 @@ export default function DialogWhatsappComponent({
       >
         <Button
           w={"100%"}
-<<<<<<< HEAD
           colorScheme={instanceOnline ? "green" : "red"}
-=======
-          colorScheme="green"
-          display={"none"}
->>>>>>> 81986cf60e4a34e70d0fbb093bdefe9c23668f0e
           alignItems={"center"}
           justifyContent={"space-between"}
           gap={2}

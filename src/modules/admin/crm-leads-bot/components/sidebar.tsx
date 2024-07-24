@@ -22,7 +22,6 @@ export default function SidebarComponent({
   const sortedContatos = filteredContatos
     .filter((contato) =>
       Object.values(contato).some((value) =>
-<<<<<<< HEAD
         String(value).toLowerCase()?.includes(searchTerm.toLowerCase()),
       ),
     )
@@ -30,30 +29,6 @@ export default function SidebarComponent({
       const aDate = new Date(a.logs[0]?.data_atualizacao || 0);
       const bDate = new Date(b.logs[0]?.data_atualizacao || 0);
       return bDate.getTime() - aDate.getTime(); // Ordena pela data de atualização em ordem decrescente
-=======
-        String(value).toLowerCase().includes(searchTerm.toLowerCase()),
-      ),
-    )
-    .sort((a, b) => {
-      const statusOrder = ["Novo", "Contato", "Negociando", "Finalizado"];
-      const aStatusIndex = statusOrder.indexOf(a.status);
-      const bStatusIndex = statusOrder.indexOf(b.status);
-
-      if (aStatusIndex !== bStatusIndex) {
-        return aStatusIndex - bStatusIndex;
-      }
-
-      const aLastLog = a.logs[a.logs.length - 1];
-      const bLastLog = b.logs[b.logs.length - 1];
-      const aElapsed = getElapsedMinutes(
-        aLastLog.data_atualizacao.slice(11, 16),
-      );
-      const bElapsed = getElapsedMinutes(
-        bLastLog.data_atualizacao.slice(11, 16),
-      );
-
-      return bElapsed - aElapsed;
->>>>>>> 81986cf60e4a34e70d0fbb093bdefe9c23668f0e
     });
 
   const handleSearchInputChange = (
@@ -71,12 +46,10 @@ export default function SidebarComponent({
       bottom={0}
       h={"91.5vh"}
       overflowY={"scroll"}
-      overflowX={"hidden"}
       flexDir={"column"}
       w={"25%"}
       boxShadow={"lg"}
     >
-<<<<<<< HEAD
       <Box zIndex={9} w={'350px'} bg={'white'} pos={"relative"} p={1}>
         <Input
           left={0}
@@ -91,24 +64,6 @@ export default function SidebarComponent({
         />
       </Box>
       <Flex pt={7} position={"relative"} h={"100vh"} flexDir={"column"}>
-=======
-      <Flex pt={10} position={"relative"} h={"100vh"} flexDir={"column"}>
-        <Box
-          rounded={"lg"}
-          boxShadow={"lg"}
-          top={12}
-          bg={"white"}
-          w={"24.8%"}
-          p={1}
-          pos={"fixed"}
-        >
-          <Input
-            placeholder="Buscar lead..."
-            value={searchTerm}
-            onChange={handleSearchInputChange}
-          />
-        </Box>
->>>>>>> 81986cf60e4a34e70d0fbb093bdefe9c23668f0e
         {sortedContatos.length <= 0 && (
           <Text mx={"auto"} mt={2} fontWeight={"semibold"}>
             😅 Nenhum lead até o momento...

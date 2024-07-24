@@ -37,6 +37,7 @@ export interface CardTypeGrupo {
 }
 
 export interface CardType {
+  [x: string]: any;
   banner: string;
   descricao: string | null;
   ferramenta: string;

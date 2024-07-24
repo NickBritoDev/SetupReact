@@ -1,10 +1,10 @@
 import { Button, Text, Flex, Image, Heading, Tooltip } from "@chakra-ui/react";
 import { LuPhoneOutgoing } from "react-icons/lu";
-import { maskPhone } from "../../../../utils/mask/mascaras";
+import { maskPhone, removePrefix } from "../../../../utils/mask/mascaras";
 import { MdOutlineTextsms } from "react-icons/md";
 import InfosComponent from "./infos";
 import LogsComponent from "./logs";
-import AgendaComponent from "./agenda";
+// import AgendaComponent from "./agenda";
 import DialogEmailComponent from "./dialogEmail";
 import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 import DialogWhatsappComponent from "./whatsapp/dialogWhatsapp";
@@ -88,29 +88,31 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           {minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? (
             <DialogWhatsappComponent
               produto={detalhesLeads?.produto}
-            telefone={detalhesLeads.telefone}
-            idLead={detalhesLeads.idLead}
-            nome={detalhesLeads?.nome}
-          /> */}
-          <Tooltip hasArrow placement="top" label="Enviar whatsapp">
-            <Button
-              as="a"
-              href={`https://api.whatsapp.com/send?phone=+55${detalhesLeads.telefone}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
-              target="_blank"
-              rel="noopener noreferrer"
-              w={'100%'}
-              colorScheme="green"
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-              gap={2}
-            >
-              <Text>Abrir WhatsApp</Text>
-              <SiWhatsapp size={22} />
-            </Button>
-          </Tooltip>
-          <AgendaComponent detalhesLeads={detalhesLeads} />
+              telefone={removePrefix(detalhesLeads.telefone)}
+              idLead={detalhesLeads.idLead}
+              nome={detalhesLeads?.nome}
+            />
+          ) : (
+            <Tooltip hasArrow placement="top" label="Enviar whatsapp">
+              <Button
+                as="a"
+                href={`https://api.whatsapp.com/send?phone=+55${removePrefix(detalhesLeads.telefone)}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
+                target="_blank"
+                rel="noopener noreferrer"
+                w={'100%'}
+                colorScheme="green"
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+                gap={2}
+              >
+                <Text>Abrir WhatsApp</Text>
+                <SiWhatsapp size={22} />
+              </Button>
+            </Tooltip>
+          )}
         </Flex>
+        {/* // <AgendaComponent detalhesLeads={detalhesLeads} /> */}
 
         <LogsComponent detalhesLeads={detalhesLeads} />
       </Flex>
