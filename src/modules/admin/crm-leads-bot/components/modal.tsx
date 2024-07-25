@@ -113,7 +113,7 @@ const ModalComponent: React.FC = () => {
         >
           <Button
             display={
-              minhaConta.nome === "LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED"
+              minhaConta.nome === "BRUNO CEZAR PEREIRA DE SOUZA"
                 ? "flex"
                 : "none"
             }
@@ -133,37 +133,6 @@ const ModalComponent: React.FC = () => {
           >
             <FaQrcode size={22} />
             <Text>Gerenciador de Instâncias 64x</Text>
-          </Button>
-        </Tooltip>
-        <Tooltip
-          hasArrow
-          placement="left"
-          label="Gerenciador de Instâncias 32x"
-        >
-          <Button
-            display={
-              minhaConta.nome ===
-                "ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED" ||
-              minhaConta.nome === "LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED"
-                ? "flex"
-                : "none"
-            }
-            colorScheme="yellow"
-            alignItems={"center"}
-            justifyContent={"center"}
-            gap={2}
-            onClick={() => {
-              const link = document.createElement("a");
-              link.href =
-                "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-2.0.0-32x-setup.exe";
-              link.download = "whadesk-2.0.0-32xsetup.exe";
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            }}
-          >
-            <FaQrcode size={22} />
-            <Text>Gerenciador de Instâncias 32x</Text>
           </Button>
         </Tooltip>
         <Button
