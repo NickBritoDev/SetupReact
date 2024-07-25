@@ -17,10 +17,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { FcFilledFilter } from "react-icons/fc";
-import { BsFire } from "react-icons/bs";
-import { BiSolidPhoneCall } from "react-icons/bi";
-import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
-import { FaUserPlus, FaUserSlash } from "react-icons/fa";
 import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import { MdLogout } from "react-icons/md";
 import { FaTemperatureArrowUp } from "react-icons/fa6";
@@ -40,18 +36,15 @@ export default function FiltroComponent({
   const { data: statusLeads } = useGetStatusLeads();
   const { data } = useGetMinhaConta();
   const { isOpen, onOpen, onClose: onMenuClose } = useDisclosure();
-  const [selectAllScore, setSelectAllScore] = useState(false);
-  const [selectAllStatus, setSelectAllStatus] = useState(false);
+  const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
-    const allSelected = Object.values(filterScore).every((value) => value);
-    setSelectAllScore(allSelected);
-  }, [filterScore]);
-
-  useEffect(() => {
-    const allSelected = Object.values(filterStatus).every((value) => value);
-    setSelectAllStatus(allSelected);
-  }, [filterStatus]);
+    const allSelectedScore = Object.values(filterScore).every((value) => value);
+    const allSelectedStatus = Object.values(filterStatus).every(
+      (value) => value,
+    );
+    setSelectAll(allSelectedScore && allSelectedStatus);
+  }, [filterScore, filterStatus]);
 
   const handleCheckboxChange = (scoreOrStatus: string, isScore = true) => {
     if (isScore) {
@@ -61,20 +54,16 @@ export default function FiltroComponent({
     }
   };
 
-  const handleSelectAllChange = (isScore = true) => {
-    if (isScore) {
-      const newSelectAll = !selectAllScore;
-      setSelectAllScore(newSelectAll);
-      Object.keys(filterScore).forEach((score) => {
-        toggleFilterScore(score, newSelectAll);
-      });
-    } else {
-      const newSelectAll = !selectAllStatus;
-      setSelectAllStatus(newSelectAll);
-      Object.keys(filterStatus).forEach((status) => {
-        toggleFilterStatus(status, newSelectAll);
-      });
-    }
+  const handleSelectAllChange = () => {
+    const newSelectAll = !selectAll;
+    setSelectAll(newSelectAll);
+
+    Object.keys(filterScore).forEach((score) => {
+      toggleFilterScore(score, newSelectAll);
+    });
+    Object.keys(filterStatus).forEach((status) => {
+      toggleFilterStatus(status, newSelectAll);
+    });
   };
 
   return (
@@ -120,17 +109,18 @@ export default function FiltroComponent({
               </Flex>
             </MenuButton>
           </Tooltip>
-          <MenuList>
+          <MenuList mt={9}>
+            <MenuItem>
+              <Checkbox
+                colorScheme="green"
+                isChecked={selectAll}
+                onChange={handleSelectAllChange}
+              >
+                Selecionar Todos
+              </Checkbox>
+            </MenuItem>
+            <MenuDivider />
             <MenuGroup w={"280px"} title="SCORE">
-              <MenuItem>
-                <Checkbox
-                  colorScheme="green"
-                  isChecked={selectAllScore}
-                  onChange={() => handleSelectAllChange(true)}
-                >
-                  Selecionar Todos
-                </Checkbox>
-              </MenuItem>
               {["Frio", "Médio", "Quente"].map((score) => (
                 <MenuItem key={score}>
                   <Checkbox
@@ -160,16 +150,7 @@ export default function FiltroComponent({
             </MenuGroup>
             <MenuDivider />
             <MenuGroup title="STATUS">
-              <MenuItem>
-                <Checkbox
-                  colorScheme="green"
-                  isChecked={selectAllStatus}
-                  onChange={() => handleSelectAllChange(false)}
-                >
-                  Selecionar Todos
-                </Checkbox>
-              </MenuItem>
-              {statusLeads.map(({ status }: any) => (
+              {statusLeads?.map(({ status }: any) => (
                 <MenuItem key={status}>
                   <Checkbox
                     colorScheme="green"
@@ -182,24 +163,6 @@ export default function FiltroComponent({
                       justifyContent={"space-between"}
                     >
                       <Text fontWeight={"semibold"}>{status}</Text>
-                      {status === "Novo" && (
-                        <FaUserPlus color="#44B3CF" size={22} />
-                      )}
-                      {status === "Contato" && (
-                        <BiSolidPhoneCall color="#F4B61D" size={22} />
-                      )}
-                      {status === "Negociando" && (
-                        <BsFire color="#F44B1D" size={22} />
-                      )}
-                      {status === "Finalizado" && (
-                        <TbRosetteDiscountCheckFilled
-                          color="#229544"
-                          size={22}
-                        />
-                      )}
-                      {status === "Excluído" && (
-                        <FaUserSlash color="#B22222" size={22} />
-                      )}
                     </Flex>
                   </Checkbox>
                 </MenuItem>

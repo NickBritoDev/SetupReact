@@ -147,11 +147,11 @@ export default function SidebarComponent({
                       bg={
                         contato.status === "Novo"
                           ? "#44B3CF"
-                          : contato.status === "Contato"
+                          : contato.status === "Pendente"
                             ? "#F4B61D"
-                            : contato.status === "Negociando"
+                            : contato.status === "Em Aberto"
                               ? "#F44B1D"
-                              : contato.status === "Finalizado"
+                              : contato.status === "Concluído"
                                 ? "#229544"
                                 : "black"
                       }

@@ -39,9 +39,10 @@ const ModalComponent: React.FC = () => {
     [key: string]: boolean;
   }>({
     Novo: true,
-    Contato: true,
-    Negociando: true,
-    Finalizado: true,
+    "Em Aberto": true,
+    Pendente: true,
+    Concluído: true,
+    Excluído: true,
   });
 
   const scorePriority: { [key: string]: number } = {
@@ -51,9 +52,10 @@ const ModalComponent: React.FC = () => {
   };
   const statusPriority: { [key: string]: number } = {
     Novo: 1,
-    Contato: 2,
-    Negociando: 3,
-    Finalizado: 4,
+    "Em Aberto": 2,
+    Pendente: 3,
+    Concluído: 4,
+    Excluído: 4,
   };
 
   const compareContacts = (a: Contato, b: Contato): number => {
