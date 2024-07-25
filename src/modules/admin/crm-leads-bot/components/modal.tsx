@@ -79,7 +79,6 @@ const ModalComponent: React.FC = () => {
     return scorePriority[a.score!] - scorePriority[b.score!];
   };
 
-
   const contatosOrdenados = contatos
     ? contatos.slice().sort(compareContacts)
     : [];
@@ -111,14 +110,19 @@ const ModalComponent: React.FC = () => {
           label="Gerenciador de Instâncias 64x"
         >
           <Button
-            display={minhaConta.nome === 'LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED' ? 'flex' : 'none'}
+            display={
+              minhaConta.nome === "LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED"
+                ? "flex"
+                : "none"
+            }
             colorScheme="green"
             alignItems={"center"}
             justifyContent={"center"}
             gap={2}
             onClick={() => {
-              const link = document.createElement('a');
-              link.href = "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-3.0.0-setup+(1).exe";
+              const link = document.createElement("a");
+              link.href =
+                "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-3.0.0-setup+(1).exe";
               link.download = "whadesk-3.0.0-64xsetup.exe";
               document.body.appendChild(link);
               link.click();
@@ -135,14 +139,21 @@ const ModalComponent: React.FC = () => {
           label="Gerenciador de Instâncias 32x"
         >
           <Button
-            display={minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' || minhaConta.nome === 'LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED'? 'flex' : 'none'}
+            display={
+              minhaConta.nome ===
+                "ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED" ||
+              minhaConta.nome === "LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED"
+                ? "flex"
+                : "none"
+            }
             colorScheme="yellow"
             alignItems={"center"}
             justifyContent={"center"}
             gap={2}
             onClick={() => {
-              const link = document.createElement('a');
-              link.href = "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-2.0.0-32x-setup.exe";
+              const link = document.createElement("a");
+              link.href =
+                "https://appbancos.s3.sa-east-1.amazonaws.com/whadesk-2.0.0-32x-setup.exe";
               link.download = "whadesk-2.0.0-32xsetup.exe";
               document.body.appendChild(link);
               link.click();

@@ -1,27 +1,70 @@
-import { LuCheck, LuCheckCheck, LuX, LuDownload, LuClock } from "react-icons/lu";
+import {
+  LuCheck,
+  LuCheckCheck,
+  LuX,
+  LuDownload,
+  LuClock,
+} from "react-icons/lu";
 import { formatDataHora } from "../../../../../utils/mask/mascaras";
 import { Text, Box, Flex, Image, Link } from "@chakra-ui/react";
-import excelIMG from '../../images/excel-logo.png'
-import wordIMG from '../../images/word-logo.png'
-import pdfIMG from '../../images/pdf-logo.jpg'
+import excelIMG from "../../images/excel-logo.png";
+import wordIMG from "../../images/word-logo.png";
+import pdfIMG from "../../images/pdf-logo.jpg";
 
 export default function MensagensWhatsappComponent({ dataMsg }: any) {
   const renderDownloadIcon = (url: any) => {
     const fileTypes = ["pdf", "xlsx", "docx", "txt"];
-    const fileExtension = url?.split('.').pop();
+    const fileExtension = url?.split(".").pop();
     if (fileTypes?.includes(fileExtension)) {
       return (
-        <Link display={"flex"} flexDir={"column"} alignItems={"flex-start"} justifyContent={"space-between"} gap={10} href={url} isExternal>
-          {fileExtension === 'xlsx' &&
-            <Image boxShadow={'2xl'} w={'250px'} rounded={'2xl'} bg={'white'} src={excelIMG} alt="excel logo" />
-          }
-          {fileExtension === 'docx' &&
-            <Image boxShadow={'2xl'} w={'250px'} rounded={'2xl'} bg={'white'} src={wordIMG} alt="excel logo" />
-          }
-          {fileExtension === 'pdf' &&
-            <Image boxShadow={'2xl'} w={'250px'} rounded={'2xl'} bg={'white'} src={pdfIMG} alt="excel logo" />
-          }
-          <Flex rounded={'2xl'} p={2} bg={'white'} color={"green"} alignItems={"center"} justifyContent={"center"} gap={4}>
+        <Link
+          display={"flex"}
+          flexDir={"column"}
+          alignItems={"flex-start"}
+          justifyContent={"space-between"}
+          gap={10}
+          href={url}
+          isExternal
+        >
+          {fileExtension === "xlsx" && (
+            <Image
+              boxShadow={"2xl"}
+              w={"250px"}
+              rounded={"2xl"}
+              bg={"white"}
+              src={excelIMG}
+              alt="excel logo"
+            />
+          )}
+          {fileExtension === "docx" && (
+            <Image
+              boxShadow={"2xl"}
+              w={"250px"}
+              rounded={"2xl"}
+              bg={"white"}
+              src={wordIMG}
+              alt="excel logo"
+            />
+          )}
+          {fileExtension === "pdf" && (
+            <Image
+              boxShadow={"2xl"}
+              w={"250px"}
+              rounded={"2xl"}
+              bg={"white"}
+              src={pdfIMG}
+              alt="excel logo"
+            />
+          )}
+          <Flex
+            rounded={"2xl"}
+            p={2}
+            bg={"white"}
+            color={"green"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            gap={4}
+          >
             <Text>Clique para fazer download</Text>
             <LuDownload size={30} />
           </Flex>
@@ -61,8 +104,8 @@ export default function MensagensWhatsappComponent({ dataMsg }: any) {
           bg={dataMsg?.direction === "in" ? "green" : "gray.400"}
           display={
             dataMsg?.quotedMsgId !== null &&
-              !dataMsg?.mensagemRespondida?.message?.includes("http") &&
-              dataMsg?.mensagemRespondida?.message
+            !dataMsg?.mensagemRespondida?.message?.includes("http") &&
+            dataMsg?.mensagemRespondida?.message
               ? "flex"
               : "none"
           }
@@ -75,23 +118,53 @@ export default function MensagensWhatsappComponent({ dataMsg }: any) {
         </Text>
         {/* imagem */}
         <Image
-          boxShadow={'2xl'}
-          rounded={'2xl'}
+          boxShadow={"2xl"}
+          rounded={"2xl"}
           maxW={"350px"}
           maxH={"400px"}
           src={dataMsg?.mensagem}
-          display={dataMsg?.type === 'image' || dataMsg?.mensagem?.includes('image') || dataMsg?.mensagem?.includes('webp') || dataMsg?.mensagem?.includes('jpeg') || dataMsg?.mensagem?.includes('png') || dataMsg?.mensagem?.includes('jpg ') ? "flex" : "none"}
+          display={
+            dataMsg?.type === "image" ||
+            dataMsg?.mensagem?.includes("image") ||
+            dataMsg?.mensagem?.includes("webp") ||
+            dataMsg?.mensagem?.includes("jpeg") ||
+            dataMsg?.mensagem?.includes("png") ||
+            dataMsg?.mensagem?.includes("jpg ")
+              ? "flex"
+              : "none"
+          }
         />
         {/* video  */}
-        <Box display={dataMsg?.mensagem?.includes('video') || dataMsg?.mensagem?.includes('mp4') ? "" : "none"}
-          maxW="250px" borderWidth="1px" borderRadius="lg" overflow="hidden">
+        <Box
+          display={
+            dataMsg?.mensagem?.includes("video") ||
+            dataMsg?.mensagem?.includes("mp4")
+              ? ""
+              : "none"
+          }
+          maxW="250px"
+          borderWidth="1px"
+          borderRadius="lg"
+          overflow="hidden"
+        >
           <video width="100%" controls>
             <source src={dataMsg?.mensagem} type="video/mp4" />
             Seu navegador não suporta a tag de vídeo.
           </video>
         </Box>
         {/* audio */}
-        <Box w={'100%'} display={dataMsg?.mensagem?.includes("audio") || dataMsg?.mensagem?.includes("oga") || dataMsg?.mensagem?.includes("mp3") || dataMsg?.mensagem?.includes("wav") || dataMsg?.mensagem?.includes("webm") ? "flex" : "none"}>
+        <Box
+          w={"100%"}
+          display={
+            dataMsg?.mensagem?.includes("audio") ||
+            dataMsg?.mensagem?.includes("oga") ||
+            dataMsg?.mensagem?.includes("mp3") ||
+            dataMsg?.mensagem?.includes("wav") ||
+            dataMsg?.mensagem?.includes("webm")
+              ? "flex"
+              : "none"
+          }
+        >
           <audio controls>
             <source src={dataMsg?.mensagem} type={dataMsg?.mimetype} />
           </audio>
@@ -110,10 +183,10 @@ export default function MensagensWhatsappComponent({ dataMsg }: any) {
           justifyContent={"space-between"}
         >
           {dataMsg?.direction === "out" ? (
-
             <>
               {formatDataHora(dataMsg?.dataMensagem).slice(11, 17)}
-              {dataMsg?.status === "Entregue" || dataMsg?.status === "Recebida" ? (
+              {dataMsg?.status === "Entregue" ||
+              dataMsg?.status === "Recebida" ? (
                 <LuCheck size={22} />
               ) : dataMsg?.status === "Erro" ? (
                 <LuX size={22} color="red" />

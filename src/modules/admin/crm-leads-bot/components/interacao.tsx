@@ -52,7 +52,6 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           gap={2}
           mt={4}
         >
-
           <Tooltip hasArrow placement="top" label="Ligar para o cliente">
             <Button
               w={"100%"}
@@ -85,7 +84,9 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             produto={detalhesLeads?.produto}
             email={detalhesLeads?.email}
           />
-          {minhaConta.nome === 'LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED' || minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED' ? (
+          {minhaConta.nome === "LEANDRO DA SILVA SANTOS / X-PARCEIRO RC CRED" ||
+          minhaConta.nome ===
+            "ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED" ? (
             <>
               <DialogWhatsappComponent
                 produto={detalhesLeads?.produto}
@@ -99,7 +100,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
                   href={`https://api.whatsapp.com/send?phone=+55${removePrefix(detalhesLeads.telefone)}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  w={'100%'}
+                  w={"100%"}
                   colorScheme="green"
                   display={"flex"}
                   alignItems={"center"}
@@ -118,7 +119,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
                 href={`https://api.whatsapp.com/send?phone=+55${removePrefix(detalhesLeads.telefone)}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
                 target="_blank"
                 rel="noopener noreferrer"
-                w={'100%'}
+                w={"100%"}
                 colorScheme="green"
                 display={"flex"}
                 alignItems={"center"}

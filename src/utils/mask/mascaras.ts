@@ -134,7 +134,6 @@ export const handleChangeTelefone: IHandleChange =
 export const handleChangeReal: IHandleChange =
   generateHandleChangeMask(maskReal);
 
-
 export function removePrefix(phoneNumber: string) {
   if (phoneNumber.startsWith("55")) {
     return phoneNumber.substring(2);

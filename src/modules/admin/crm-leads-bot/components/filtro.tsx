@@ -20,13 +20,15 @@ import { FcFilledFilter } from "react-icons/fc";
 import { BsFire } from "react-icons/bs";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { FaUserPlus, FaUserSlash } from "react-icons/fa";
 import { useMobile } from "../../../../helpers/responsividade/useMediaQuery";
 import { MdLogout } from "react-icons/md";
-import { FaTemperatureArrowUp, FaUserPlus } from "react-icons/fa6";
+import { FaTemperatureArrowUp } from "react-icons/fa6";
 import { SiFireship } from "react-icons/si";
 import { GiIceCube } from "react-icons/gi";
 import { FiltrosTypes } from "../types/types";
 import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
+import { useGetStatusLeads } from "../hooks/useGetStatusLeads";
 
 export default function FiltroComponent({
   filterStatus,
@@ -35,6 +37,7 @@ export default function FiltroComponent({
   onClose,
   toggleFilterStatus,
 }: FiltrosTypes) {
+  const { data: statusLeads } = useGetStatusLeads();
   const { data } = useGetMinhaConta();
   const { isOpen, onOpen, onClose: onMenuClose } = useDisclosure();
   const [selectAllScore, setSelectAllScore] = useState(false);
@@ -166,7 +169,7 @@ export default function FiltroComponent({
                   Selecionar Todos
                 </Checkbox>
               </MenuItem>
-              {["Novo", "Contato", "Negociando", "Finalizado"].map((status) => (
+              {statusLeads.map(({ status }: any) => (
                 <MenuItem key={status}>
                   <Checkbox
                     colorScheme="green"
@@ -193,6 +196,9 @@ export default function FiltroComponent({
                           color="#229544"
                           size={22}
                         />
+                      )}
+                      {status === "Excluído" && (
+                        <FaUserSlash color="#B22222" size={22} />
                       )}
                     </Flex>
                   </Checkbox>

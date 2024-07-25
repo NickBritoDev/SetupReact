@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
-import { Button, Flex, useToast } from '@chakra-ui/react';
-import { AiFillAudio } from 'react-icons/ai';
-import { FaRegStopCircle } from 'react-icons/fa';
-import { usePostMensagensWhatsApp } from '../../hooks/whatsapp/usePostMensagensWhatsApp';
-import { useGetInstanciasWhatsApp } from '../../hooks/whatsapp/useGetInstanciasWhatsApp';
-import { useGetMinhaConta } from '../../../../../hooks/useGetMinhaConta';
-import { usePostUploadFile } from '../../hooks/whatsapp/usePostUploadFile';
-import RecordRTC from 'recordrtc';
-import { saveAs } from 'file-saver';
+import React, { useState } from "react";
+import { Button, Flex, useToast } from "@chakra-ui/react";
+import { AiFillAudio } from "react-icons/ai";
+import { FaRegStopCircle } from "react-icons/fa";
+import { usePostMensagensWhatsApp } from "../../hooks/whatsapp/usePostMensagensWhatsApp";
+import { useGetInstanciasWhatsApp } from "../../hooks/whatsapp/useGetInstanciasWhatsApp";
+import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";
+import { usePostUploadFile } from "../../hooks/whatsapp/usePostUploadFile";
+import RecordRTC from "recordrtc";
+import { saveAs } from "file-saver";
 
-const GravarAudioComponent: React.FC<{ telefone: string; idLead: string }> = ({ telefone, idLead }) => {
+const GravarAudioComponent: React.FC<{ telefone: string; idLead: string }> = ({
+  telefone,
+  idLead,
+}) => {
   const { data: minhaConta } = useGetMinhaConta();
   const { data: instancias } = useGetInstanciasWhatsApp();
-  const minhaInstancia = instancias && instancias[0] ? instancias[0].instance : null;
+  const minhaInstancia =
+    instancias && instancias[0] ? instancias[0].instance : null;
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const { UseRequestPostMensagensWhatsApp } = usePostMensagensWhatsApp();
   const { UseRequestPostUploadFile } = usePostUploadFile();
@@ -20,10 +24,10 @@ const GravarAudioComponent: React.FC<{ telefone: string; idLead: string }> = ({ 
   const toast = useToast();
 
   const enviarArquivo = async (audioBlob: Blob): Promise<void> => {
-    const audioFile = new File([audioBlob], 'audio.oga', { type: 'audio/ogg' });
+    const audioFile = new File([audioBlob], "audio.oga", { type: "audio/ogg" });
     try {
       const locationAws = await UseRequestPostUploadFile({ file: audioFile });
-      console.log(locationAws, 'location retorno');
+      console.log(locationAws, "location retorno");
       enviarAudio(locationAws);
     } catch (error) {
       toast({
@@ -51,7 +55,7 @@ const GravarAudioComponent: React.FC<{ telefone: string; idLead: string }> = ({ 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const newRecorder = new RecordRTC(stream, { type: 'audio' });
+      const newRecorder = new RecordRTC(stream, { type: "audio" });
       newRecorder.startRecording();
       setIsRecording(true);
       setRecorder(newRecorder);
@@ -73,14 +77,14 @@ const GravarAudioComponent: React.FC<{ telefone: string; idLead: string }> = ({ 
         const audioBlob = recorder.getBlob();
         URL.createObjectURL(audioBlob);
         setIsRecording(false);
-        saveAs(audioBlob, 'audio.oga');
+        saveAs(audioBlob, "audio.oga");
         enviarArquivo(audioBlob);
       });
     }
   };
 
   return (
-    <Flex alignItems={'center'} justifyContent={'center'} gap={2}>
+    <Flex alignItems={"center"} justifyContent={"center"} gap={2}>
       <Button
         display={"none"}
         colorScheme="none"

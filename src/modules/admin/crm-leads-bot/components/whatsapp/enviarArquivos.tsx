@@ -1,17 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";
 import { useGetInstanciasWhatsApp } from "../../hooks/whatsapp/useGetInstanciasWhatsApp";
 import { usePostMensagensWhatsApp } from "../../hooks/whatsapp/usePostMensagensWhatsApp";
-import { Divider, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
+import {
+  Divider,
+  Flex,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa";
 import { FcAddImage, FcFile, FcSpeaker, FcVideoCall } from "react-icons/fc";
-import { usePostUploadFile } from '../../hooks/whatsapp/usePostUploadFile';
+import { usePostUploadFile } from "../../hooks/whatsapp/usePostUploadFile";
 
 export default function EnviarArquivosComponents({ idLead, telefone }: any) {
   const { data: minhaConta } = useGetMinhaConta();
   const { data: instancias } = useGetInstanciasWhatsApp();
   const { UseRequestPostMensagensWhatsApp } = usePostMensagensWhatsApp();
-  const minhaInstancia = instancias && instancias[0] ? instancias[0].instance : null;
+  const minhaInstancia =
+    instancias && instancias[0] ? instancias[0].instance : null;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { UseRequestPostUploadFile } = usePostUploadFile();
 
@@ -20,7 +30,7 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
       const locationAws = await UseRequestPostUploadFile({ file: document });
       enviarArquivo(locationAws, document.type);
     } catch (error) {
-      console.error('Erro ao enviar arquivo:', error);
+      console.error("Erro ao enviar arquivo:", error);
     }
   };
 
@@ -44,10 +54,10 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
   };
 
   const getType = (fileType: string) => {
-    if (fileType.startsWith('image/')) return 'image';
-    if (fileType.startsWith('video/')) return 'document';
-    if (fileType.startsWith('audio/')) return 'audio';
-    return 'document';
+    if (fileType.startsWith("image/")) return "image";
+    if (fileType.startsWith("video/")) return "document";
+    if (fileType.startsWith("audio/")) return "audio";
+    return "document";
   };
 
   return (
@@ -60,11 +70,10 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
         bg={"gray.200"}
         as={IconButton}
         icon={<FaPlus color="gray" />}
-      >
-      </MenuButton>
+      ></MenuButton>
       <MenuList>
         <MenuItem
-          _hover={{ bg: 'rgba(0,0,0,0.1)', fontWeight: 'semibold' }}
+          _hover={{ bg: "rgba(0,0,0,0.1)", fontWeight: "semibold" }}
           onClick={() => fileInputRef.current?.click()}
         >
           <Flex alignItems={"center"} justifyContent={"flex-start"} gap={2}>
@@ -74,7 +83,7 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
         </MenuItem>
         <Divider />
         <MenuItem
-          _hover={{ bg: 'rgba(0,0,0,0.1)', fontWeight: 'semibold' }}
+          _hover={{ bg: "rgba(0,0,0,0.1)", fontWeight: "semibold" }}
           onClick={() => fileInputRef.current?.click()}
         >
           <Flex alignItems={"center"} justifyContent={"flex-start"} gap={2}>
@@ -84,7 +93,7 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
         </MenuItem>
         <Divider />
         <MenuItem
-          _hover={{ bg: 'rgba(0,0,0,0.1)', fontWeight: 'semibold' }}
+          _hover={{ bg: "rgba(0,0,0,0.1)", fontWeight: "semibold" }}
           onClick={() => fileInputRef.current?.click()}
         >
           <Flex alignItems={"center"} justifyContent={"flex-start"} gap={2}>
@@ -92,9 +101,10 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
             <Text>DOCUMENTOS</Text>
           </Flex>
         </MenuItem>
-        <Divider display={'none'} />
-        <MenuItem display={'none'}
-          _hover={{ bg: 'rgba(0,0,0,0.1)', fontWeight: 'semibold' }}
+        <Divider display={"none"} />
+        <MenuItem
+          display={"none"}
+          _hover={{ bg: "rgba(0,0,0,0.1)", fontWeight: "semibold" }}
           onClick={() => fileInputRef.current?.click()}
         >
           <Flex alignItems={"center"} justifyContent={"flex-start"} gap={2}>
@@ -106,7 +116,7 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
       <input
         type="file"
         ref={fileInputRef}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         onChange={handleFileChange}
       />
     </Menu>

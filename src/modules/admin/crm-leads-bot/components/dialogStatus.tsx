@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   ClassAttributes,
   HTMLAttributes,
@@ -10,11 +11,13 @@ import {
 } from "react";
 import {
   Badge,
+  Box,
   Button,
   Text,
   Textarea,
   Tooltip,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import {
   AlertDialog,
@@ -35,9 +38,13 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
   const { data: statusLeads } = useGetStatusLeads();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
+  const toast = useToast();
   const [justificativa, setJustificativa] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<
     number | null | undefined
+  >(null);
+  const [selectedSubStatus, setSelectedSubStatus] = useState<
+    number | null | undefined | any
   >(null);
 
   const customOption = (props: {
@@ -84,6 +91,25 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
     isCurrentStatus: detalhesLeads?.status === data.status,
   }));
 
+  const subStatusOptions = selectedStatus
+    ? statusLeads
+        ?.find((status: any) => status.id_status === selectedStatus)
+        ?.subStatus.map((subStatus: any) => ({
+          value: subStatus.id_substatus,
+          label: subStatus.subStatus,
+        }))
+    : [];
+
+  const isFormValid = () => {
+    if (!selectedStatus || !justificativa) {
+      return false;
+    }
+    if (subStatusOptions?.length > 0 && !selectedSubStatus) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
       <Tooltip hasArrow placement="left" label="Alterar etapa do lead">
@@ -118,8 +144,20 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
                 placeholder="Selecione um status..."
                 options={options}
                 components={{ Option: customOption }}
-                onChange={(option) => setSelectedStatus(option?.value)}
+                onChange={(option) => {
+                  setSelectedStatus(option?.value);
+                  setSelectedSubStatus(null);
+                }}
               />
+              <Box my={4}></Box>
+              {subStatusOptions?.length > 0 && (
+                <Select
+                  placeholder="Selecione um sub status..."
+                  options={subStatusOptions}
+                  onChange={(option) => setSelectedSubStatus(option?.value)}
+                  isClearable
+                />
+              )}
 
               <Text mt={4}>Justifique o motivo da alteração</Text>
               <Textarea
@@ -143,14 +181,26 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
               <Button
                 colorScheme="green"
                 onClick={() => {
-                  if (selectedStatus) {
+                  if (isFormValid()) {
                     UseRequestAlterarStatus({
                       id_leads: detalhesLeads.idLead,
                       id_status: selectedStatus,
+                      id_substatus: selectedSubStatus,
                       justificativa: justificativa,
                     });
+                    setJustificativa("");
+                    onClose();
+                  } else {
+                    toast({
+                      title: "Preencha todos os campos",
+                      description:
+                        "È necessario preencher status, sub-status(caso tenha) e justificativa",
+                      status: "info",
+                      duration: 9000,
+                      isClosable: true,
+                      position: "top-right",
+                    });
                   }
-                  onClose();
                 }}
                 ml={3}
               >

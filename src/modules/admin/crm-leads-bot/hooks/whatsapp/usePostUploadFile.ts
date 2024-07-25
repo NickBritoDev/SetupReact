@@ -8,14 +8,14 @@ const usePostUploadFile = () => {
 
   const envioArquivo = async (payload: any) => {
     const formData = new FormData();
-    formData.append('file', payload.file);
-    
+    formData.append("file", payload.file);
+
     const response = await connectCrm.post(
       "/whatsapp/upload-arquivo",
       formData,
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       },
     );

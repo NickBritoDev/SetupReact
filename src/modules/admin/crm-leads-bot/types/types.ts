@@ -28,6 +28,7 @@ export interface Log {
 }
 
 export interface Contato {
+  substatus: string;
   idLead: number;
   nome: string;
   email: string;
