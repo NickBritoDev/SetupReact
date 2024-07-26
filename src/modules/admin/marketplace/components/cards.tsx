@@ -38,6 +38,7 @@ import solicitacaoAcesso from "../images/solicitacaoAcesso.png";
 import DialogSolicitacaoRenovacaoComponent from "./dialogSolicitacaoRenovacao";
 import DialogSolicitacaoBloqueioComponent from "./dialogSolicitacaoBloqueio";
 import DialogEdicaoAcessosComponent from "./dialogEdicaoAcessos";
+import DialogGruposAcessoComponent from "./dialogGruposAcesso";
 
 export default function CardsComponent({ filters }: FiltrosType) {
   const [cnpj, setCnpj] = useState("");
@@ -196,6 +197,12 @@ export default function CardsComponent({ filters }: FiltrosType) {
                         <DialogEdicaoAcessosComponent
                           filteredData={card.grupo}
                           idFerramenta={card.idFerramenta}
+                        />
+                      </MenuItem>
+                      <MenuItem p={0}>
+                        <DialogGruposAcessoComponent
+                          idFerramenta={card.idFerramenta}
+                          idPromotora={minhaConta.idPromotora}
                         />
                       </MenuItem>
                     </MenuList>

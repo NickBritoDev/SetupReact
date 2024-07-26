@@ -59,3 +59,11 @@ export interface BodyPutSolicitacaoAdmins {
   id_produto: number;
   is_admin: boolean;
 }
+
+export interface IGruposAcesso {
+  id: number;
+  nome: string;
+  id_produto: number;
+  id_promotora: number;
+  ativo: boolean;
+}
