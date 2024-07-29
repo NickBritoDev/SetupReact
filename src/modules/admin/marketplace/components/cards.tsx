@@ -203,6 +203,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
                         <DialogGruposAcessoComponent
                           idFerramenta={card.idFerramenta}
                           idPromotora={minhaConta.idPromotora}
+                          cnpj={cnpj}
                         />
                       </MenuItem>
                     </MenuList>
@@ -334,7 +335,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
         )}
       </Flex>
       <Flex
-        display={!data ? "flex" : "none"}
+        display={filteredData.length === 0 ? "flex" : "none"}
         alignItems={"center"}
         justifyContent={"center"}
         flexDir={"column"}

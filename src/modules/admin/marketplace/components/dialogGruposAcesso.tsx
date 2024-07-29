@@ -1,21 +1,39 @@
-import { Button, Modal, Text, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Accordion } from "@chakra-ui/react"
+import {
+  Button,
+  Modal,
+  Text,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+  Accordion,
+} from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useGetGruposAcesso } from "../hooks/useGetGruposAcesso";
 import CardComponent from "./dialogGruposAcesso/card";
+import CadastroComponent from "./dialogGruposAcesso/cadastro";
 
 type Props = {
   idFerramenta: number;
   idPromotora: number;
-}
+  cnpj: string;
+};
 
-export default function DialogGruposAcessoComponent({idFerramenta, idPromotora}: Props) {
+export default function DialogGruposAcessoComponent({
+  idFerramenta,
+  idPromotora,
+  cnpj,
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { useRequestGruposAcesso, data } = useGetGruposAcesso();
 
   useEffect(() => {
     if (isOpen) {
-      useRequestGruposAcesso({idFerramenta, idPromotora})
+      useRequestGruposAcesso({ idFerramenta, idPromotora });
     }
   }, [isOpen]);
 
@@ -38,9 +56,14 @@ export default function DialogGruposAcessoComponent({idFerramenta, idPromotora}:
           <ModalHeader></ModalHeader>
           <ModalCloseButton />
           <ModalBody overflowY={"scroll"}>
-            <Button colorScheme="green">Cadastrar um Novo</Button>
+            <CadastroComponent
+              idPromotora={idPromotora}
+              idProduto={idFerramenta}
+            />
             <Accordion allowToggle>
-              {data?.map((grupo) => <CardComponent {...grupo} />)}
+              {data?.map((grupo) => (
+                <CardComponent key={grupo.id} {...grupo} cnpj={cnpj} />
+              ))}
             </Accordion>
           </ModalBody>
           <ModalFooter>
@@ -51,5 +74,5 @@ export default function DialogGruposAcessoComponent({idFerramenta, idPromotora}:
         </ModalContent>
       </Modal>
     </>
-  )
+  );
 }

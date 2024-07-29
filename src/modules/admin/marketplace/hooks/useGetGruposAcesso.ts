@@ -6,14 +6,21 @@ import { IGruposAcesso } from "../types/types";
 type Payload = {
   idFerramenta: number;
   idPromotora: number;
-}
+  comUsuarios?: boolean;
+  comPermissoes?: boolean;
+};
 
 const useGetGruposAcesso = () => {
   const { token } = useKey();
 
-  const gruposAcesso = async ({ idFerramenta, idPromotora }: Payload) => {
+  const gruposAcesso = async ({
+    idFerramenta,
+    idPromotora,
+    comUsuarios = true,
+    comPermissoes = true,
+  }: Payload) => {
     const response = await connectApi.get<IGruposAcesso[]>(
-      `/v1/promotoras/grupos?where={'id_produto': ${idFerramenta}, 'ativo': true, 'id_promotora': ${idPromotora}}`,
+      `/v1/promotoras/grupos?where={'id_produto': ${idFerramenta}, 'ativo': true, 'id_promotora': ${idPromotora}}&comUsuarios=${comUsuarios}&comPermissoes=${comPermissoes}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

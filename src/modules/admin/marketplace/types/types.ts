@@ -60,10 +60,35 @@ export interface BodyPutSolicitacaoAdmins {
   is_admin: boolean;
 }
 
+export interface IPermissao {
+  chave: string;
+  nome: string;
+  id_produto: number;
+  descricao: string;
+}
+
+export interface ISolicitacaoAcesso {
+  id_acesso: number;
+  id_acesso_solicitante: number;
+  status: UsuariosTypeStatus;
+  motivo_status: null | string;
+  id_promotora: number;
+  id_produto: number;
+  is_admin: boolean;
+  is_dev: boolean;
+}
+
+export type IUsuarioGrupoAcesso = ISolicitacaoAcesso & {
+  nome: string;
+  foto: string;
+};
+
 export interface IGruposAcesso {
   id: number;
   nome: string;
   id_produto: number;
   id_promotora: number;
   ativo: boolean;
+  usuarios?: IUsuarioGrupoAcesso[];
+  permissoes?: IPermissao[];
 }
