@@ -13,16 +13,23 @@ import {
   AlertDialogFooter,
   AlertDialog,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDeletePermissaoGrupo } from "../../hooks/useDeletePermissaoGrupo";
 
-type Props = IPermissao & { idGrupo: number };
+type Props = IPermissao & { idGrupo: number; refetch: () => void };
 
 export default function CardPermissaoComponent(permissao: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any>();
 
-  const { useRequestDeletePermissaoGrupo } = useDeletePermissaoGrupo();
+  const { useRequestDeletePermissaoGrupo, isLoading, isIdle } = useDeletePermissaoGrupo();
+
+  useEffect(() => {
+    if (!isLoading && !isIdle) {
+      permissao.refetch();
+    }
+
+  }, [isLoading, isIdle])
 
   const handleExcluir = () => {
     useRequestDeletePermissaoGrupo({

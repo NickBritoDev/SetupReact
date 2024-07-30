@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import connectApi from "../../../../api/connect";
 import { useKey } from "../../../../context/auth/token-login/authContext";
 
-type Payload = { cnpjMatriz: string };
+type Payload = { cnpjMatriz: string, canRefetch?: boolean; };
 type ResponseGetUsuarios = {
   cnpj_matriz: string;
   foto: string;
@@ -14,7 +14,7 @@ type ResponseGetUsuarios = {
   supervisor: string;
 }[];
 
-const useGetUsuarios = ({ cnpjMatriz }: Payload) => {
+const useGetUsuarios = ({ cnpjMatriz, canRefetch = true }: Payload) => {
   const { token } = useKey();
 
   return useQuery(
@@ -32,8 +32,8 @@ const useGetUsuarios = ({ cnpjMatriz }: Payload) => {
     },
     {
       refetchOnWindowFocus: true,
-      staleTime: 5000,
-      refetchInterval: 5000,
+      staleTime: canRefetch ? 5000 : Infinity,
+      refetchInterval: canRefetch ? 5000 : false,
     },
   );
 };

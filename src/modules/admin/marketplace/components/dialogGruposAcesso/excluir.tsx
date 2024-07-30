@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { IGruposAcesso } from "../../types/types";
 import {
   AlertDialog,
@@ -12,13 +12,20 @@ import {
 } from "@chakra-ui/react";
 import { useDeleteGrupoAcesso } from "../../hooks/useDeleteGruposAcesso";
 
-type Props = IGruposAcesso;
+type Props = IGruposAcesso & { refetch: () => void };
 
-export default function ExcluirComponent({ nome, id }: Props) {
+export default function ExcluirComponent({ nome, id, refetch }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any>();
 
-  const { useRequestDeleteGrupoAcesso } = useDeleteGrupoAcesso();
+  const { useRequestDeleteGrupoAcesso, isLoading, isSuccess } = useDeleteGrupoAcesso();
+
+  useEffect(() => {
+    if(!isLoading && isSuccess) {
+      refetch();
+    }
+
+  }, [isLoading, isSuccess]);
 
   const handleExcluir = () => {
     useRequestDeleteGrupoAcesso(id);

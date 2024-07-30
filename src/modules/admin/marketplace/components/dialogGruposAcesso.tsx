@@ -31,9 +31,13 @@ export default function DialogGruposAcessoComponent({
 
   const { useRequestGruposAcesso, data } = useGetGruposAcesso();
 
+  const refetch = () => {
+    useRequestGruposAcesso({ idFerramenta, idPromotora });
+  }
+
   useEffect(() => {
     if (isOpen) {
-      useRequestGruposAcesso({ idFerramenta, idPromotora });
+      refetch();
     }
   }, [isOpen]);
 
@@ -59,10 +63,11 @@ export default function DialogGruposAcessoComponent({
             <CadastroComponent
               idPromotora={idPromotora}
               idProduto={idFerramenta}
+              refetch={refetch}
             />
             <Accordion allowToggle>
               {data?.map((grupo) => (
-                <CardComponent key={grupo.id} {...grupo} cnpj={cnpj} />
+                <CardComponent key={grupo.id} {...grupo} cnpj={cnpj} refetch={refetch} />
               ))}
             </Accordion>
           </ModalBody>

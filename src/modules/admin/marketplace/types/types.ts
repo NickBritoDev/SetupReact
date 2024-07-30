@@ -39,6 +39,7 @@ export interface CardTypeGrupo {
 export interface CardType {
   banner: string;
   descricao: string | null;
+  promotora: IPromotora;
   ferramenta: string;
   foto: string | null;
   grupo: CardTypeGrupo[];
@@ -67,6 +68,13 @@ export interface IPermissao {
   descricao: string;
 }
 
+export interface IPromotora {
+  id: number;
+  cnpj: string;
+  ativo: boolean;
+  id_promotora_raiz: number | null;
+}
+
 export interface ISolicitacaoAcesso {
   id_acesso: number;
   id_acesso_solicitante: number;
@@ -91,4 +99,14 @@ export interface IGruposAcesso {
   ativo: boolean;
   usuarios?: IUsuarioGrupoAcesso[];
   permissoes?: IPermissao[];
+}
+
+export interface IPermissaoGrupo {
+  chave_permissao: string;
+  id_grupo: number;
+}
+
+export interface IQueryFilter<T> {
+  where?: Partial<T>;
+  whereNot?: Partial<T>;
 }

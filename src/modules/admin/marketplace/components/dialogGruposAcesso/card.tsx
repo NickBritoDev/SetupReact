@@ -16,7 +16,7 @@ import AdicionarPermissoesComponent from "./adicionarPermissoes";
 import CardUsuarioComponent from "./cardUsuario";
 import CardPermissaoComponent from "./cardPermissao";
 
-type Props = IGruposAcesso & { cnpj: string };
+type Props = IGruposAcesso & { cnpj: string; refetch: () => void };
 
 export default function CardComponent(props: Props) {
   return (
@@ -53,6 +53,7 @@ export default function CardComponent(props: Props) {
             <CardPermissaoComponent
               key={permissao.chave}
               {...permissao}
+              refetch={props.refetch}
               idGrupo={props.id}
             />
           ))}

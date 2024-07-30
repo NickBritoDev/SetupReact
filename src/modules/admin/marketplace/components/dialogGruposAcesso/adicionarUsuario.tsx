@@ -1,4 +1,4 @@
-import { IGruposAcesso } from "../../types/types";
+import { IGruposAcesso, UsuariosTypeStatus } from "../../types/types";
 import {
   Button,
   Modal,
@@ -13,15 +13,23 @@ import {
   Box,
   FormLabel,
   Checkbox,
+  Text,
+  Avatar,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { FaPlus } from "react-icons/fa";
-import { useGetUsuarios } from "../../hooks/useGetUsuarios";
+import { usePostUsuariosGrupo } from "../../hooks/usePostUsuarioGrupo";
+import { useEffect } from "react";
+import { useGetSolicitacoesAcesso } from "../../hooks/useGetSolicitacoesAcesso";
+import { getSrcImageURL } from "@helpers/conta/imagem";
+import { useGetMinhaConta } from "../../../../../hooks/useGetMinhaConta";
 
-type Props = IGruposAcesso & { cnpj: string };
+type Props = IGruposAcesso & { cnpj: string; refetch: () => void };
 
 export default function AdicionarUsuarioComponent(props: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { useRequestPostUsuarioGrupo, isLoading, isSuccess } = usePostUsuariosGrupo();
+  const { data: minhaConta, isSuccess: minhaContaSuccess } = useGetMinhaConta();
 
   const handleOpen = () => {
     onOpen();
@@ -31,7 +39,29 @@ export default function AdicionarUsuarioComponent(props: Props) {
     onClose();
   };
 
-  const { data } = useGetUsuarios({ cnpjMatriz: props.cnpj });
+  useEffect(() => {
+    if (isOpen && minhaContaSuccess) {
+      useRequestGetSolicitacoesAcesso({
+        where: {
+          status: UsuariosTypeStatus.Liberado,
+          id_produto: props.id_produto,
+          id_promotora: props.id_promotora,
+        },
+        whereNot: {
+          id_acesso: minhaConta.idAcesso
+        }
+      })
+    }
+  }, [isOpen, minhaConta, minhaContaSuccess])
+
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      props.refetch();
+    }
+
+  }, [isLoading, isSuccess])
+
+  const { data, useRequestGetSolicitacoesAcesso } = useGetSolicitacoesAcesso();
 
   const filteredData =
     data?.filter(
@@ -44,7 +74,7 @@ export default function AdicionarUsuarioComponent(props: Props) {
       id_acesso: Number(id),
       id_grupo: props.id,
     }));
-    console.log(payload);
+    useRequestPostUsuarioGrupo(payload)
     formik.resetForm();
     handleClose();
   };
@@ -61,26 +91,38 @@ export default function AdicionarUsuarioComponent(props: Props) {
       <Button colorScheme="green" onClick={handleOpen} rightIcon={<FaPlus />}>
         Adicionar
       </Button>
-      <Modal isOpen={isOpen} onClose={handleClose}>
+      <Modal size={"5xl"} isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Adicionar Usuários</ModalHeader>
           <ModalCloseButton />
           <ModalBody overflowY={"scroll"}>
             <Box as="form" onSubmit={formik.handleSubmit} h="100%" w="100%">
-              <Flex>
+              <Flex flexWrap={"wrap"} gap={5}>
                 {filteredData.map((usuario) => (
-                  <Box>
-                    <FormLabel htmlFor={`id-${usuario.id_acesso}`}>
+                  <FormLabel
+                    htmlFor={`id-${usuario.id_acesso}`}
+                    key={usuario.id_acesso}
+                    bg={formik.values.ids.includes(String(usuario.id_acesso)) ? "green" : "transparent"}
+                    cursor={"pointer"}
+                    display={"flex"}
+                    alignItems={"center"}
+                    maxW={"30%"}
+                    gap={2}
+                    rounded={"xl"}
+                    p={2}
+                    border={"1px solid #eee"}
+                  >
                       <Checkbox
                         name="ids"
+                        id={`id-${usuario.id_acesso}`}
                         value={usuario.id_acesso}
                         onChange={formik.handleChange}
-                      >
-                        {usuario.nome}
-                      </Checkbox>
-                    </FormLabel>
-                  </Box>
+                        display={"none"}
+                      />
+                    <Avatar name={usuario.nome} src={getSrcImageURL(usuario.foto)} />
+                    <Text>{usuario.nome}</Text>
+                  </FormLabel>
                 ))}
               </Flex>
             </Box>

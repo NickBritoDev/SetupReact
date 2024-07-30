@@ -9,7 +9,9 @@ const usePutGrupoAcesso = () => {
   const grupoAcesso = async (payload: IGruposAcesso) => {
     const response = await connectApi.put(
       `/v1/promotoras/grupos/${payload.id}`,
-      payload,
+      {
+        nome: payload.nome,
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -19,16 +21,14 @@ const usePutGrupoAcesso = () => {
     return response.data;
   };
 
-  const mutation = useMutation(grupoAcesso);
+  const {mutate, mutateAsync, ...mutation} = useMutation(grupoAcesso);
 
   const useRequestPutGrupoAcesso = (payload: IGruposAcesso) => {
-    mutation.mutate(payload);
+    mutate(payload);
   };
   return {
     useRequestPutGrupoAcesso,
-    isLoading: mutation.isLoading,
-    isError: mutation.isError,
-    isSuccess: mutation.isSuccess,
+    ...mutation,
   };
 };
 

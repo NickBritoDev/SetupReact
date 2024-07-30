@@ -17,8 +17,9 @@ import {
 import { IGruposAcesso } from "../../types/types";
 import { useFormik } from "formik";
 import { usePutGrupoAcesso } from "../../hooks/usePutGruposAcesso";
+import { useEffect } from "react";
 
-type Props = IGruposAcesso;
+type Props = IGruposAcesso & { refetch: () => void };
 
 export default function EditarComponent(props: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,10 +32,17 @@ export default function EditarComponent(props: Props) {
     onClose();
   };
 
-  const { useRequestPutGrupoAcesso } = usePutGrupoAcesso();
+  const { useRequestPutGrupoAcesso, isLoading, data } = usePutGrupoAcesso();
+
+  useEffect(() => {
+    if (data && !isLoading) {
+      props.refetch();
+    }
+  }, [data, isLoading]);
 
   const handleSubmit = (data: Props) => {
     useRequestPutGrupoAcesso(data);
+    formik.resetForm();
     handleClose();
   };
 

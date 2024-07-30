@@ -31,7 +31,6 @@ import logo from "../images/logo.png";
 import { CardType, FiltrosType, UsuariosTypeStatus } from "../types/types";
 import { useGetProdutos } from "../hooks/useGetProdutos";
 import DialogSolicitacaoAcessoComponent from "./dialogSolicitacaoAcesso";
-import { useGetMinhaConta } from "../../../../hooks/useGetMinhaConta";
 import { FaSearch } from "react-icons/fa";
 import { formatCNPJ } from "../../../../utils/mask/mascaras";
 import solicitacaoAcesso from "../images/solicitacaoAcesso.png";
@@ -46,7 +45,6 @@ export default function CardsComponent({ filters }: FiltrosType) {
   const [filteredData, setFilteredData] = useState<CardType[]>([]);
   const [showNoRequestsMessage, setShowNoRequestsMessage] = useState(false);
   const isMobile = useMobile();
-  const { data: minhaConta } = useGetMinhaConta();
 
   const handleCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formattedCnpj = formatCNPJ(e.target.value);
@@ -101,6 +99,8 @@ export default function CardsComponent({ filters }: FiltrosType) {
     UsuariosTypeStatus.Liberado,
   ];
 
+  const isConsultaValida = cnpj.length === 18 && filteredData.length > 0;
+
   return (
     <>
       <Flex
@@ -136,7 +136,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
           templateColumns={isMobile ? "repeat(1, 1fr)" : "repeat(4, 1fr)"}
           gap={6}
         >
-          {filteredData.map((card: CardType, index: Key | null | undefined) => (
+          {filteredData.map((card, index) => (
             <Flex
               h={"max-content"}
               mt={-4}
@@ -189,7 +189,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
                       <MenuItem p={0}>
                         <DialogSolicitacaoAcessoComponent
                           filteredData={card.grupo}
-                          idPromotora={minhaConta.idPromotora}
+                          idPromotora={card.promotora.id}
                           idFerramenta={card.idFerramenta}
                         />
                       </MenuItem>
@@ -202,8 +202,8 @@ export default function CardsComponent({ filters }: FiltrosType) {
                       <MenuItem p={0}>
                         <DialogGruposAcessoComponent
                           idFerramenta={card.idFerramenta}
-                          idPromotora={minhaConta.idPromotora}
-                          cnpj={cnpj}
+                          idPromotora={card.promotora.id}
+                          cnpj={card.promotora.cnpj}
                         />
                       </MenuItem>
                     </MenuList>
@@ -272,13 +272,13 @@ export default function CardsComponent({ filters }: FiltrosType) {
           ))}
         </Grid>
 
-        {data && showNoRequestsMessage && (
+        {isConsultaValida && showNoRequestsMessage && (
           <Text fontSize={"18"} fontWeight={"semibold"} ml={2} mt={4} mb={4}>
             Nenhuma solicitação para essa ferramenta.
           </Text>
         )}
 
-        {!showNoRequestsMessage && (
+        {isConsultaValida && !showNoRequestsMessage && (
           <>
             <Text fontSize={"22"} fontWeight={"semibold"} ml={2} mt={4} mb={4}>
               Acompanhamento Solicitações
@@ -335,7 +335,7 @@ export default function CardsComponent({ filters }: FiltrosType) {
         )}
       </Flex>
       <Flex
-        display={filteredData.length === 0 ? "flex" : "none"}
+        display={!isConsultaValida ? "flex" : "none"}
         alignItems={"center"}
         justifyContent={"center"}
         flexDir={"column"}

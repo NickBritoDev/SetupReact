@@ -3,7 +3,8 @@ import store from "./store";
 import axios from "axios";
 
 const connectApi = axios.create({
-  baseURL: "https://apimaisvalorlabs.portalmaisvalor.com/api",
+  // baseURL: "https://apimaisvalorlabs.portalmaisvalor.com/api",
+  baseURL: "http://localhost:7006/api",
 });
 
 const { dispatch } = store;

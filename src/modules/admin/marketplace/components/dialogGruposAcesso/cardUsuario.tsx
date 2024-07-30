@@ -15,6 +15,7 @@ import { IUsuarioGrupoAcesso } from "../../types/types";
 import { FaMinus } from "react-icons/fa";
 import { useRef } from "react";
 import { useDeleteUsuarioGrupo } from "../../hooks/useDeleteUsuarioGrupo";
+import { getSrcImageURL } from "@helpers/conta/imagem";
 
 type Props = IUsuarioGrupoAcesso & { idGrupo: number };
 
@@ -22,7 +23,7 @@ export default function CardUsuarioComponent(usuario: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any>();
 
-  const foto = "https://appbancos.s3.amazonaws.com/" + usuario.foto;
+  const foto = getSrcImageURL(usuario.foto);
   const { useRequestDeleteUsuarioGrupo } = useDeleteUsuarioGrupo();
 
   const handleExcluir = () => {
