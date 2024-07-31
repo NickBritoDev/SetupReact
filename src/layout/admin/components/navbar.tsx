@@ -15,7 +15,7 @@ import logo from "../images/logo.png";
 import { FaHome } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useGetMinhaConta } from "../../../hooks/useGetMinhaConta";
-// import SidebarComponent from "./sidebar";
+import SidebarComponent from "./sidebar";
 
 export default function NavbarComponent() {
   const { data } = useGetMinhaConta();
@@ -41,18 +41,19 @@ export default function NavbarComponent() {
       py={1}
       borderRadius={"0 0 20px 20px"}
     >
-      <Flex
-        ml={4}
-        boxShadow={"lg"}
-        pr={4}
-        rounded={"2xl"}
-        alignItems={"center"}
-        justifyContent={"center"}
-      >
-        <Image w={50} src={logo} alt="logo eagles software house" />
-        <Text fontWeight={"semibold"}>Eagles Software House</Text>
+      <Flex alignItems={"center"}>
+        <SidebarComponent />
+        <Flex
+          boxShadow={"lg"}
+          pr={4}
+          rounded={"2xl"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Image w={50} src={logo} alt="logo eagles software house" />
+          <Text fontWeight={"semibold"}>Eagles Software House</Text>
+        </Flex>
       </Flex>
-      {/* <SidebarComponent /> */}
 
       <Box>
         <Wrap>

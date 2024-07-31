@@ -18,11 +18,13 @@ import Marketplace from "./modules/admin/marketplace";
 import { useAuthHelpers } from "./helpers/conta/permissao";
 import AutocontratacaoFgts from "./modules/public/autocontratacao-fgts";
 import { useToast } from "@chakra-ui/react";
+import RelatoriosCrm from "@modules/admin/relatorios/crm";
 
 const Routes: React.FC = () => {
   const toast = useToast();
   const { keyStatus } = useKey();
   const { isAdmin, temPermissao, isMatriz, isLoading } = useAuthHelpers();
+  console.log(temPermissao("CRM"));
 
   useEffect(() => {
     if (keyStatus) return;
@@ -76,6 +78,16 @@ const Routes: React.FC = () => {
             true
           ) : keyStatus && temPermissao("CRM") ? (
             <CrmLeadsBot />
+          ) : (
+            <Navigate to="/public/nao-autorizado" replace />
+          ),
+        },
+        {
+          path: "relatorios/crm",
+          element: isLoading ? (
+            true
+          ) : keyStatus && temPermissao("CRM") ? (
+            <RelatoriosCrm />
           ) : (
             <Navigate to="/public/nao-autorizado" replace />
           ),
