@@ -22,9 +22,9 @@ export default function CardsComponent() {
 
   const leadStatuses = [
     { status: "Novo", quantidade: leads.Novo },
-    { status: "Contato", quantidade: leads.Contato },
-    { status: "Finalizado", quantidade: leads.Finalizado },
-    { status: "Negociando", quantidade: leads.Negociando },
+    { status: "Pendente", quantidade: leads.Pendente },
+    { status: "Concluído", quantidade: leads.Concluído },
+    { status: "Em Aberto", quantidade: leads.Em_Aberto },
   ];
 
   return (
@@ -36,13 +36,13 @@ export default function CardsComponent() {
           bg={
             data.status === "Novo"
               ? "#44B3CF"
-              : data.status === "Contato"
+              : data.status === "Pendente"
                 ? "#F4B61D"
-                : data.status === "Negociando"
+                : data.status === "Em Aberto"
                   ? "#F44B1D"
-                  : data.status === "Finalizado"
+                  : data.status === "Concluído"
                     ? "#229544"
-                    : "black"
+                    : "#d53dbc"
           }
           borderRadius={"30px 30px 30px 0"}
           p={4}

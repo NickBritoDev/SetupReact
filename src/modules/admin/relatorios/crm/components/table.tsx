@@ -1,11 +1,17 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AG_GRID_LOCALE_PT_BR } from "../config/table.config";
 
 export default function TableComponent({ dados }: any) {
-  const [rowData] = useState(dados);
+  const [rowData, setRowData] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (dados) {
+      setRowData(dados);
+    }
+  }, [dados]);
 
   const [columnDefs] = useState<any[]>([
     { field: "usuario", headerName: "Operador" },

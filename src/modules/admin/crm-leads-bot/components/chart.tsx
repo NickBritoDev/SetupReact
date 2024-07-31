@@ -20,36 +20,30 @@ ChartJS.register(
   Legend,
 );
 
-const initialData = [
-  {
-    Novo: "0",
-    Contato: "0",
-    Finalizado: "0",
-    Negociando: "0",
-  },
-];
-
 export default function ChartComponent() {
   const { data: data_crm } = useGetAcompanhamentoLeads();
-  const crm = data_crm ? data_crm : initialData;
+  const crm = data_crm ? data_crm : [];
 
-  const leads = crm[0];
+  const leads = crm[0] && typeof crm[0] === "object" ? crm[0] : {};
 
-  const labels = Object.keys(leads);
-  const totalData = Object.values(leads).map(Number);
+  const filteredLeads = Object?.entries(leads)?.filter(
+    ([key]) => key !== "total",
+  );
+  const labels = filteredLeads.map(([key]) => key);
+  const totalData = filteredLeads.map(([, value]) => Number(value));
 
   const backgroundColors = labels.map((label) => {
     switch (label) {
       case "Novo":
         return "#44B3CF";
-      case "Contato":
+      case "Pendente":
         return "#F4B61D";
-      case "Negociando":
+      case "Em_Aberto":
         return "#F44B1D";
-      case "Finalizado":
+      case "Concluído":
         return "#229544";
       default:
-        return "#000000";
+        return "#d53dbc";
     }
   });
 

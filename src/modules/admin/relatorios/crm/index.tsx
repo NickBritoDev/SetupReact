@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Flex,
   Heading,
@@ -21,14 +21,132 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Button,
+  Text,
+  Spinner,
+  Skeleton,
 } from "@chakra-ui/react";
 import TableComponent from "./components/table";
-import dados from "../../../../json/crm/data5.json";
+import GraphComponent from "./components/grafico";
+import { GiRibbonMedal } from "react-icons/gi";
+import { HiUserGroup } from "react-icons/hi2";
+import { useGetFiltros } from "./hooks/useGetFiltros";
+import { usePostRelatoriosFinalizados } from "./hooks/usePostRelatoriosFinalizados";
 
 export default function RelatoriosCrm() {
-  const [rangeData, setRangeData] = useState("1");
+  const filtros = useGetFiltros();
+  const [loadinItems, setLoadingItems] = useState(true);
+
+  const [rangeData, setRangeData] = useState<string>("dia");
+  const [produtosSelecionados, setProdutosSelecionados] = useState<string[]>(
+    [],
+  );
+  const [origensSelecionadas, setOrigensSelecionadas] = useState<string[]>([]);
+  const [scoresSelecionados, setScoresSelecionados] = useState<string[]>([]);
+
+  const [dados, setDados] = useState<any>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
+
+  const { useRequestPostRelatoriosFinalizados } =
+    usePostRelatoriosFinalizados();
+
+  const buscaDadosRelatorio = async () => {
+    const payload = {
+      periodo: rangeData,
+      produto: produtosSelecionados,
+      origem: origensSelecionadas,
+      score: scoresSelecionados,
+    };
+
+    try {
+      const resultado = await useRequestPostRelatoriosFinalizados(payload);
+      setDados(resultado);
+      setLoadingItems(false);
+    } catch (error) {
+      console.error("Erro ao buscar dados do relatório:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setProdutosSelecionados([...filtros?.data?.listaProdutos]);
+      setOrigensSelecionadas([...filtros?.data?.listaOrigens]);
+      setScoresSelecionados([...filtros?.data?.listaScore]);
+      const payload = {
+        periodo: "dia",
+        produto: [...filtros?.data?.listaProdutos],
+        origem: [...filtros?.data?.listaOrigens],
+        score: [...filtros?.data?.listaScore],
+      };
+
+      try {
+        const resultado = await useRequestPostRelatoriosFinalizados(payload);
+        setDados(resultado);
+        setLoadingItems(false);
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
+
+    if (filtros.status === "success" && dados === null) {
+      fetchData();
+    }
+  }, [filtros]);
+
+  function somarCampos(dados: any[]) {
+    let totalContratoFechado = 0;
+    let totalSemRegraNegocio = 0;
+    let totalSemInteresse = 0;
+    let totalReprovadoPoliticaInterna = 0;
+    let totalParouDeInteragir = 0;
+    let totalJaPossuiEmprestimo = 0;
+    let totalQtde = 0;
+
+    dados?.forEach((item) => {
+      totalContratoFechado += parseInt(item.contrato_fechado, 10);
+      totalSemRegraNegocio += parseInt(item.sem_regra_negocio, 10);
+      totalSemInteresse += parseInt(item.sem_interesse, 10);
+      totalReprovadoPoliticaInterna += parseInt(
+        item.reprovado_politica_interna,
+        10,
+      );
+      totalParouDeInteragir += parseInt(item.parou_de_interagir, 10);
+      totalJaPossuiEmprestimo += parseInt(item.ja_possui_emprestimo, 10);
+      totalQtde += parseInt(item.qtde, 10);
+    });
+
+    return {
+      totalContratoFechado,
+      totalSemRegraNegocio,
+      totalSemInteresse,
+      totalReprovadoPoliticaInterna,
+      totalParouDeInteragir,
+      totalJaPossuiEmprestimo,
+      totalQtde,
+    };
+  }
+
+  function getTop3Usuarios(usuarios: any[]) {
+    const usuariosComPercentual = usuarios?.map((user) => {
+      return {
+        usuario: user.usuario,
+        percentual: parseFloat(
+          user.percentual_contrato_fechado.replace("%", ""),
+        ),
+      };
+    });
+
+    const usuariosOrdenados = usuariosComPercentual?.sort(
+      (a, b) => b.percentual - a.percentual,
+    );
+
+    const top3Usuarios = usuariosOrdenados?.slice(0, 3);
+
+    return top3Usuarios;
+  }
+
+  const top3 = getTop3Usuarios(dados?.resultado);
+  const totais = somarCampos(dados?.resultado);
 
   return (
     <Flex w={"100%"} flexDir={"column"}>
@@ -39,7 +157,20 @@ export default function RelatoriosCrm() {
         mb={2}
         mt={-2}
       >
-        <Heading size={"md"}>Relatorios de Tabulação: CRM</Heading>
+        <Box>
+          <Heading size={"md"}>Relatorios de Tabulação: CRM</Heading>
+          <Text
+            fontWeight={"semibold"}
+            textTransform={"uppercase"}
+            color={"gray.600"}
+          >
+            Filtro:
+            {rangeData}
+          </Text>
+          {/* produtos:{...filtros?.data?.listaProdutos},
+          origem: {...filtros?.data?.listaOrigens},
+          score: {...filtros?.data?.listaScore}, */}
+        </Box>
 
         <Flex
           pos={"relative"}
@@ -52,6 +183,7 @@ export default function RelatoriosCrm() {
               Filtros
             </Button>
             <Drawer
+              size={"lg"}
               isOpen={isOpen}
               placement="right"
               onClose={onClose}
@@ -63,89 +195,170 @@ export default function RelatoriosCrm() {
                 <DrawerHeader>Modificar Filtros</DrawerHeader>
 
                 <DrawerBody>
-                  <Accordion allowMultiple allowToggle>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex="1" textAlign="left">
-                            Periodo
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <RadioGroup onChange={setRangeData} value={rangeData}>
+                  <Flex w={"100%"}>
+                    <Accordion
+                      w={"100%"}
+                      defaultIndex={[0]}
+                      allowMultiple
+                      allowToggle
+                    >
+                      <AccordionItem>
+                        <h2>
+                          <AccordionButton>
+                            <Box as="span" flex="1" textAlign="left">
+                              Período
+                            </Box>
+                            <AccordionIcon />
+                          </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4}>
+                          <RadioGroup onChange={setRangeData} value={rangeData}>
+                            <Stack direction="column">
+                              {filtros?.data?.periodo?.map(
+                                (data: any, index: number) => (
+                                  <Radio key={index} value={data}>
+                                    {data}
+                                  </Radio>
+                                ),
+                              )}
+                            </Stack>
+                          </RadioGroup>
+                        </AccordionPanel>
+                      </AccordionItem>
+                    </Accordion>
+                    <Accordion
+                      w={"100%"}
+                      defaultIndex={[0]}
+                      allowMultiple
+                      allowToggle
+                    >
+                      <AccordionItem>
+                        <h2>
+                          <AccordionButton>
+                            <Box as="span" flex="1" textAlign="left">
+                              Produto
+                            </Box>
+                            <AccordionIcon />
+                          </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4}>
                           <Stack direction="column">
-                            <Radio value="1">DIA</Radio>
-                            <Radio value="2">MÊS</Radio>
-                            <Radio value="3">ANO</Radio>
+                            {filtros?.data?.listaProdutos?.map(
+                              (data: any, index: number) => (
+                                <Checkbox
+                                  defaultChecked
+                                  key={index}
+                                  value={data}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    setProdutosSelecionados((prev) =>
+                                      e.target.checked
+                                        ? [...prev, value]
+                                        : prev.filter((item) => item !== value),
+                                    );
+                                  }}
+                                >
+                                  {data}
+                                </Checkbox>
+                              ),
+                            )}
                           </Stack>
-                        </RadioGroup>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
-                  <Accordion allowMultiple allowToggle>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex="1" textAlign="left">
-                            Produto
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Stack direction="column">
-                          <Checkbox value="1">Bolsa Familia</Checkbox>
-                          <Checkbox value="2">CP Baixa Renda</Checkbox>
-                        </Stack>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
-                  <Accordion allowMultiple allowToggle>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex="1" textAlign="left">
-                            Score
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Stack direction="column">
-                          <Checkbox value="1">Quente</Checkbox>
-                          <Checkbox value="2">Médio</Checkbox>
-                          <Checkbox value="3">Frio</Checkbox>
-                        </Stack>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
-                  <Accordion allowMultiple allowToggle>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex="1" textAlign="left">
-                            Score
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Stack direction="column">
-                          <Checkbox value="1">Landing Page</Checkbox>
-                          <Checkbox value="2">Instagram</Checkbox>
-                        </Stack>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
+                        </AccordionPanel>
+                      </AccordionItem>
+                    </Accordion>
+                  </Flex>
+
+                  <Flex w={"100%"}>
+                    <Accordion
+                      w={"100%"}
+                      defaultIndex={[0]}
+                      allowMultiple
+                      allowToggle
+                    >
+                      <AccordionItem>
+                        <h2>
+                          <AccordionButton>
+                            <Box as="span" flex="1" textAlign="left">
+                              Score
+                            </Box>
+                            <AccordionIcon />
+                          </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4}>
+                          <Stack direction="column">
+                            {filtros?.data?.listaScore?.map(
+                              (data: any, index: number) => (
+                                <Checkbox
+                                  key={index}
+                                  value={data}
+                                  defaultChecked
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    setScoresSelecionados((prev) =>
+                                      e.target.checked
+                                        ? [...prev, value]
+                                        : prev.filter((item) => item !== value),
+                                    );
+                                  }}
+                                >
+                                  {data}
+                                </Checkbox>
+                              ),
+                            )}
+                          </Stack>
+                        </AccordionPanel>
+                      </AccordionItem>
+                    </Accordion>
+                    <Accordion
+                      w={"100%"}
+                      defaultIndex={[0]}
+                      allowMultiple
+                      allowToggle
+                    >
+                      <AccordionItem>
+                        <h2>
+                          <AccordionButton>
+                            <Box as="span" flex="1" textAlign="left">
+                              Origem
+                            </Box>
+                            <AccordionIcon />
+                          </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4}>
+                          <Stack direction="column">
+                            {filtros?.data?.listaOrigens?.map(
+                              (data: any, index: number) => (
+                                <Checkbox
+                                  key={index}
+                                  value={data}
+                                  defaultChecked
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    setOrigensSelecionadas((prev) =>
+                                      e.target.checked
+                                        ? [...prev, value]
+                                        : prev.filter((item) => item !== value),
+                                    );
+                                  }}
+                                >
+                                  {data}
+                                </Checkbox>
+                              ),
+                            )}
+                          </Stack>
+                        </AccordionPanel>
+                      </AccordionItem>
+                    </Accordion>
+                  </Flex>
                 </DrawerBody>
 
                 <DrawerFooter>
                   <Button colorScheme="red" mr={3} onClick={onClose}>
                     Cancelar
                   </Button>
-                  <Button colorScheme="green">Salvar</Button>
+                  <Button onClick={buscaDadosRelatorio} colorScheme="green">
+                    Salvar
+                  </Button>
                 </DrawerFooter>
               </DrawerContent>
             </Drawer>
@@ -154,49 +367,107 @@ export default function RelatoriosCrm() {
       </Flex>
 
       <Flex gap={2}>
-        <Flex w={"100%"} h={"100px"} rounded={"2xl"} boxShadow={"lg"}></Flex>
-        <Flex w={"100%"} h={"100px"} rounded={"2xl"} boxShadow={"lg"}></Flex>
-        <Flex w={"100%"} h={"100px"} rounded={"2xl"} boxShadow={"lg"}></Flex>
-        <Flex w={"100%"} h={"100px"} rounded={"2xl"} boxShadow={"lg"}></Flex>
+        <Flex
+          p={2}
+          color={"white"}
+          bg={"#3ab8b6"}
+          flexDir={"column"}
+          w={"100%"}
+          h={"120px"}
+          rounded={"2xl"}
+          boxShadow={"lg"}
+        >
+          <Text mb={2} pl={2} rounded={"2xl"} color={"#3ab8b6"} bg={"white"}>
+            TOP 3 Contratos Fechados
+          </Text>
+          {loadinItems ? (
+            <Stack w={"100%"}>
+              <Skeleton height="20px" />
+              <Skeleton height="20px" />
+              <Skeleton height="20px" />
+            </Stack>
+          ) : (
+            top3?.map((user, index) => (
+              <Flex
+                px={2}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+                key={index}
+                w="100%"
+                h="auto"
+              >
+                <Text fontWeight="semibold">{user.usuario}</Text>
+                <Text fontWeight="bold">{user.percentual}%</Text>
+              </Flex>
+            ))
+          )}
+        </Flex>
+
+        <Flex
+          color={"white"}
+          bg={"#229544"}
+          flexDir={"column"}
+          p={2}
+          w={"100%"}
+          h={"120px"}
+          rounded={"2xl"}
+          boxShadow={"lg"}
+        >
+          <Text mb={2} pl={2} rounded={"2xl"} color={"#229544"} bg={"white"}>
+            Leads Entregues
+          </Text>
+          <Flex alignItems={"center"} justifyContent={"space-between"}>
+            {loadinItems ? (
+              <Spinner />
+            ) : (
+              <Text fontSize={30}>{totais.totalQtde}</Text>
+            )}
+            <HiUserGroup size={42} />
+          </Flex>
+        </Flex>
+
+        <Flex
+          color={"white"}
+          bg={"#eb6e21"}
+          flexDir={"column"}
+          p={2}
+          w={"100%"}
+          h={"120px"}
+          rounded={"2xl"}
+          boxShadow={"lg"}
+        >
+          <Text mb={2} pl={2} rounded={"2xl"} color={"#eb6e21"} bg={"white"}>
+            Contratos Fechados
+          </Text>
+          <Flex alignItems={"center"} justifyContent={"space-between"}>
+            {loadinItems ? (
+              <Spinner />
+            ) : (
+              <Text fontSize={30}>{totais.totalContratoFechado}</Text>
+            )}
+            <GiRibbonMedal size={62} />
+          </Flex>
+        </Flex>
+
+        <Flex pr={2} w={"100%"} h={"120px"} rounded={"2xl"} boxShadow={"lg"}>
+          <Box w={"100%"} ml={-4}>
+            {loadinItems ? (
+              <Stack p={4} ml={4} w={"100%"}>
+                <Skeleton height="20px" />
+                <Skeleton height="20px" />
+                <Skeleton height="20px" />
+                <Skeleton height="20px" />
+              </Stack>
+            ) : (
+              <GraphComponent totais={totais} />
+            )}
+          </Box>
+        </Flex>
       </Flex>
 
       <Flex mt={4} gap={2}>
         <Flex w={"100%"}>
-          {/* <TableContainer overflowY={'scroll'} maxH={'430px'}>
-            <Table size='sm'>
-              <Thead>
-                <Tr>
-                  <Th>Operador</Th>
-                  <Th>Produto</Th>
-                  <Th>Contratos <br /> Fechados</Th>
-                  <Th>Parou de<br /> Interagir</Th>
-                  <Th>Sem <br /> Interesse</Th>
-                  <Th>Possui <br /> Emprestimo</Th>
-                  <Th>Regra de <br /> Negocios</Th>
-                  <Th>Politicas <br /> Internas</Th>
-                  <Th>Quantidade</Th>
-                  <Th>Percentual  <br /> Contratos <br /> Fechados</Th>
-                </Tr>
-              </Thead>
-              <Tbody >
-                {dados?.map((operador, index) => (
-                  <Tr key={index}>
-                    <Td>{operador.usuario}</Td>
-                    <Td>{operador.produto}</Td>
-                    <Td>{operador.contrato_fechado}</Td>
-                    <Td>{operador.parou_de_interagir}</Td>
-                    <Td>{operador.sem_interesse}</Td>
-                    <Td>{operador.ja_possui_emprestimo}</Td>
-                    <Td>{operador.sem_regra_negocio}</Td>
-                    <Td>{operador.reprovado_politica_interna}</Td>
-                    <Td>{operador.qtde}</Td>
-                    <Td>{operador.percentual_contrato_fechado}</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer> */}
-          <TableComponent dados={dados} />
+          <TableComponent dados={dados?.resultado} />
         </Flex>
       </Flex>
     </Flex>
