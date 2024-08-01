@@ -92,7 +92,8 @@ export default function InfosComponent({
                       {props.label}
                     </Text>
                     <Text fontWeight="semibold">
-                      {props.label === "Extrato"
+                      {(props.label === "Extrato" && props.campos !== null) ||
+                      props.campos !== ""
                         ? formatDataHora(props.campos)
                         : props.campos === null || props.campos === ""
                           ? "Nenhum valor para ser exibido"
