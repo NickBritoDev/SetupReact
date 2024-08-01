@@ -1,5 +1,10 @@
 import {
-  Text, Flex, Heading, Divider, Button, useDisclosure,
+  Text,
+  Flex,
+  Heading,
+  Divider,
+  Button,
+  useDisclosure,
   Drawer,
   DrawerBody,
   DrawerHeader,
@@ -8,7 +13,7 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import { BsInfoCircleFill } from "react-icons/bs";
-import { maskCPF } from "../../../../utils/mask/mascaras";
+import { formatDataHora, maskCPF } from "../../../../utils/mask/mascaras";
 import DialogStatusComponent from "./dialogStatus";
 import DialogObservacoesComponent from "./dialogObservacoes";
 import OraculoComponent from "./oraculo/oraculo";
@@ -20,8 +25,8 @@ export default function InfosComponent({
   telefone,
   email,
 }: any) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const btnRef = useRef(null)
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef(null);
 
   return (
     <Flex p={2} flexDir={"column"} w={"40%"} rounded={"2xl"} boxShadow={"lg"}>
@@ -39,16 +44,24 @@ export default function InfosComponent({
       <Divider mb={2} />
       <Flex alignItems={"center"} justifyContent={"flex-start"} gap={2}>
         <>
-          <Button ref={btnRef} onClick={onOpen} display={"flex"} alignItems={"center"} justifyContent={"space-between"} w={'100%'} gap={4}>
+          <Button
+            ref={btnRef}
+            onClick={onOpen}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            w={"100%"}
+            gap={4}
+          >
             <Heading mt={-0.5} size={"md"}>
               MAIS INFORMAÇÕES
             </Heading>
             <BsInfoCircleFill color="#44B3CF" size={24} />
           </Button>
           <Drawer
-            size={'lg'}
+            size={"lg"}
             isOpen={isOpen}
-            placement='right'
+            placement="right"
             onClose={onClose}
             finalFocusRef={btnRef}
           >
@@ -78,21 +91,21 @@ export default function InfosComponent({
                     >
                       {props.label}
                     </Text>
-                    <Text fontWeight={"semibold"}>
-                      {props.campos === null || props.campos === "" ? "Nenhum valor para ser exibido" : props.campos}  
+                    <Text fontWeight="semibold">
+                      {index === 1
+                        ? formatDataHora(props.campos)
+                        : props.campos === null || props.campos === ""
+                          ? "Nenhum valor para ser exibido"
+                          : props.campos}
                     </Text>
                   </Flex>
                 ),
               )}
 
-              <DrawerBody>
-              </DrawerBody>
-
+              <DrawerBody></DrawerBody>
             </DrawerContent>
           </Drawer>
         </>
-
-
       </Flex>
       <Divider mt={2} />
       <Text
