@@ -36,7 +36,7 @@ export default function OraculoComponent({ detalhesLeads }: any) {
       <Button
         colorScheme="orange"
         w={"100%"}
-        display={detalhesLeads?.propriedades === null ? "none" : "flex"}
+        display={!detalhesLeads?.propriedades ? "none" : "flex"}
         alignItems={"center"}
         justifyContent={"space-between"}
         gap={2}
