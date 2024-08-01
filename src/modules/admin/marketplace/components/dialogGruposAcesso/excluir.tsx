@@ -14,21 +14,21 @@ import { useDeleteGrupoAcesso } from "../../hooks/useDeleteGruposAcesso";
 
 type Props = IGruposAcesso & { refetch: () => void };
 
-export default function ExcluirComponent({ nome, id, refetch }: Props) {
+export default function ExcluirComponent({ nome, id, ativo, refetch }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any>();
 
-  const { useRequestDeleteGrupoAcesso, isLoading, isSuccess } = useDeleteGrupoAcesso();
+  const { useRequestDeleteGrupoAcesso, isLoading, isSuccess } =
+    useDeleteGrupoAcesso();
 
   useEffect(() => {
-    if(!isLoading && isSuccess) {
+    if (!isLoading && isSuccess) {
       refetch();
     }
-
   }, [isLoading, isSuccess]);
 
   const handleExcluir = () => {
-    useRequestDeleteGrupoAcesso(id);
+    useRequestDeleteGrupoAcesso({ idGrupo: id, forceDelete: !ativo });
     onClose();
   };
   return (
@@ -48,7 +48,10 @@ export default function ExcluirComponent({ nome, id, refetch }: Props) {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Você tem certeza? Não é Possível desfazer após a exclusão.
+              Você tem certeza?{" "}
+              {ativo
+                ? "Você pode Ativar o Grupo mais tarde."
+                : "Não é Possível desfazer após a exclusão"}
             </AlertDialogBody>
 
             <AlertDialogFooter>

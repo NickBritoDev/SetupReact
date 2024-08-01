@@ -11,7 +11,7 @@ import {
   useDisclosure,
   Accordion,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useGetGruposAcesso } from "../hooks/useGetGruposAcesso";
 import CardComponent from "./dialogGruposAcesso/card";
 import CadastroComponent from "./dialogGruposAcesso/cadastro";
@@ -28,18 +28,19 @@ export default function DialogGruposAcessoComponent({
   cnpj,
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [grupoAtivo, setGrupoAtivo] = useState<boolean>(true);
 
   const { useRequestGruposAcesso, data } = useGetGruposAcesso();
 
   const refetch = () => {
-    useRequestGruposAcesso({ idFerramenta, idPromotora });
-  }
+    useRequestGruposAcesso({ idFerramenta, idPromotora, ativo: grupoAtivo });
+  };
 
   useEffect(() => {
     if (isOpen) {
       refetch();
     }
-  }, [isOpen]);
+  }, [isOpen, grupoAtivo]);
 
   const handleOpen = () => {
     onOpen();
@@ -65,9 +66,22 @@ export default function DialogGruposAcessoComponent({
               idProduto={idFerramenta}
               refetch={refetch}
             />
+            <Button
+              mb="3"
+              ml="3"
+              onClick={() => setGrupoAtivo((isAtivo) => !isAtivo)}
+              colorScheme={grupoAtivo ? "red" : "green"}
+            >
+              {grupoAtivo ? "Exibir Inativos" : "Exibir Ativos"}
+            </Button>
             <Accordion allowToggle>
               {data?.map((grupo) => (
-                <CardComponent key={grupo.id} {...grupo} cnpj={cnpj} refetch={refetch} />
+                <CardComponent
+                  key={grupo.id}
+                  {...grupo}
+                  cnpj={cnpj}
+                  refetch={refetch}
+                />
               ))}
             </Accordion>
           </ModalBody>

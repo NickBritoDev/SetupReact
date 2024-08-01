@@ -13,18 +13,24 @@ import {
 } from "@chakra-ui/react";
 import { IUsuarioGrupoAcesso } from "../../types/types";
 import { FaMinus } from "react-icons/fa";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useDeleteUsuarioGrupo } from "../../hooks/useDeleteUsuarioGrupo";
 import { getSrcImageURL } from "@helpers/conta/imagem";
 
-type Props = IUsuarioGrupoAcesso & { idGrupo: number };
+type Props = IUsuarioGrupoAcesso & { idGrupo: number; refetch: () => void };
 
 export default function CardUsuarioComponent(usuario: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any>();
 
   const foto = getSrcImageURL(usuario.foto);
-  const { useRequestDeleteUsuarioGrupo } = useDeleteUsuarioGrupo();
+  const { useRequestDeleteUsuarioGrupo, isSuccess } = useDeleteUsuarioGrupo();
+
+  useEffect(() => {
+    if (isSuccess) {
+      usuario.refetch();
+    }
+  }, [isSuccess]);
 
   const handleExcluir = () => {
     useRequestDeleteUsuarioGrupo({

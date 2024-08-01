@@ -51,11 +51,22 @@ export default function EditarComponent(props: Props) {
     onSubmit: handleSubmit,
   });
 
+  const ativarGrupo = () => {
+    formik.setFieldValue("ativo", true);
+
+    formik.submitForm();
+  };
+
   return (
     <>
       <Button colorScheme="blue" mr="2" onClick={handleOpen}>
         Editar
       </Button>
+      {!props.ativo && (
+        <Button colorScheme="green" mr="2" onClick={ativarGrupo}>
+          Ativar Grupo
+        </Button>
+      )}
       <Modal isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
         <ModalContent>

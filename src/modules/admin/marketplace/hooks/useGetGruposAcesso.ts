@@ -8,6 +8,7 @@ type Payload = {
   idPromotora: number;
   comUsuarios?: boolean;
   comPermissoes?: boolean;
+  ativo?: boolean;
 };
 
 const useGetGruposAcesso = () => {
@@ -18,9 +19,10 @@ const useGetGruposAcesso = () => {
     idPromotora,
     comUsuarios = true,
     comPermissoes = true,
+    ativo = true,
   }: Payload) => {
     const response = await connectApi.get<IGruposAcesso[]>(
-      `/v1/promotoras/grupos?where={'id_produto': ${idFerramenta}, 'ativo': true, 'id_promotora': ${idPromotora}}&comUsuarios=${comUsuarios}&comPermissoes=${comPermissoes}`,
+      `/v1/promotoras/grupos?where={'id_produto': ${idFerramenta}, 'ativo': ${ativo ? "true" : "false"}, 'id_promotora': ${idPromotora}}&comUsuarios=${comUsuarios}&comPermissoes=${comPermissoes}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -30,18 +32,17 @@ const useGetGruposAcesso = () => {
     return response.data;
   };
 
-  const mutation = useMutation(gruposAcesso);
+  const { mutate, mutateAsync, ...mutation } = useMutation(gruposAcesso, {
+    fetchPolicy: "no-cache",
+  });
 
   const useRequestGruposAcesso = (payload: Payload) => {
-    mutation.mutate(payload);
+    mutate(payload);
   };
 
   return {
     useRequestGruposAcesso,
-    isLoading: mutation.isLoading,
-    isError: mutation.isError,
-    isSuccess: mutation.isSuccess,
-    data: mutation.data,
+    ...mutation,
   };
 };
 

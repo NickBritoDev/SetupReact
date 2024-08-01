@@ -41,6 +41,7 @@ export default function CardComponent(props: Props) {
               key={usuario.id_acesso}
               {...usuario}
               idGrupo={props.id}
+              refetch={props.refetch}
             />
           ))}
         </Flex>
