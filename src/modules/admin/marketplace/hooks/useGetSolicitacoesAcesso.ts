@@ -4,8 +4,8 @@ import { useMutation } from "react-query";
 import { IQueryFilter, ISolicitacaoAcesso } from "../types/types";
 import { queryFilterToURLParams } from "@helpers/api/geral";
 
-type Payload = IQueryFilter<ISolicitacaoAcesso>
-type Retorno = ISolicitacaoAcesso & { foto: string; nome: string; };
+type Payload = IQueryFilter<ISolicitacaoAcesso>;
+type Retorno = ISolicitacaoAcesso & { foto: string; nome: string };
 
 const useGetSolicitacoesAcesso = () => {
   const { token } = useKey();
@@ -24,7 +24,7 @@ const useGetSolicitacoesAcesso = () => {
     return response.data;
   };
 
-  const {mutate, mutateAsync, ...mutation} = useMutation(solicitacoes);
+  const { mutate, mutateAsync, ...mutation } = useMutation(solicitacoes);
 
   const useRequestGetSolicitacoesAcesso = (payload: Payload) => {
     mutate(payload);

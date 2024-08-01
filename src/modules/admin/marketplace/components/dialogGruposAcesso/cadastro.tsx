@@ -1,5 +1,5 @@
 import {
-    Box,
+  Box,
   Button,
   FormControl,
   FormErrorMessage,
@@ -28,7 +28,7 @@ type Props = {
 type Form = {
   nome: string;
   id_produto: number;
-}
+};
 
 export default function CadastroComponent(props: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,12 +46,12 @@ export default function CadastroComponent(props: Props) {
     if (!isLoading && data) {
       props.refetch();
     }
-  }, [isLoading, data])
+  }, [isLoading, data]);
 
   const handleSubmit = (data: Form) => {
     useRequestPostGrupo(data);
     handleClose();
-  }
+  };
 
   const formik = useFormik<Form>({
     initialValues: {
@@ -63,7 +63,7 @@ export default function CadastroComponent(props: Props) {
     validationSchema: yup.object({
       nome: yup.string().min(1).required("Nome é necessário"),
       id_produto: yup.number().min(1).required(),
-    })
+    }),
   });
 
   return (
@@ -78,9 +78,15 @@ export default function CadastroComponent(props: Props) {
           <ModalCloseButton />
           <ModalBody overflowY={"scroll"}>
             <Box as="form" onSubmit={formik.handleSubmit}>
-              <FormControl isInvalid={formik.touched.nome && Boolean(formik.errors.nome)}>
+              <FormControl
+                isInvalid={formik.touched.nome && Boolean(formik.errors.nome)}
+              >
                 <FormLabel htmlFor="cadastro-nome-grupo">Nome</FormLabel>
-                <Input name="nome" id="cadastro-nome-grupo" onChange={formik.handleChange} />
+                <Input
+                  name="nome"
+                  id="cadastro-nome-grupo"
+                  onChange={formik.handleChange}
+                />
                 <FormErrorMessage>{formik.errors.nome}</FormErrorMessage>
               </FormControl>
             </Box>

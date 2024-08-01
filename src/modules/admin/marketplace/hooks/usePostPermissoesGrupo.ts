@@ -19,7 +19,7 @@ const usePostPermissoesGrupo = () => {
     return response.data;
   };
 
-  const {mutate, mutateAsync, ...mutation} = useMutation(permissoesGrupo);
+  const { mutate, mutateAsync, ...mutation } = useMutation(permissoesGrupo);
 
   const useRequestPostPermissoesGrupo = (payload: IPermissaoGrupo[]) => {
     mutate(payload);

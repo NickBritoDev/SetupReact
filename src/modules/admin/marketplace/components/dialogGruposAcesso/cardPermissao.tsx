@@ -22,14 +22,14 @@ export default function CardPermissaoComponent(permissao: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any>();
 
-  const { useRequestDeletePermissaoGrupo, isLoading, isIdle } = useDeletePermissaoGrupo();
+  const { useRequestDeletePermissaoGrupo, isLoading, isIdle } =
+    useDeletePermissaoGrupo();
 
   useEffect(() => {
     if (!isLoading && !isIdle) {
       permissao.refetch();
     }
-
-  }, [isLoading, isIdle])
+  }, [isLoading, isIdle]);
 
   const handleExcluir = () => {
     useRequestDeletePermissaoGrupo({

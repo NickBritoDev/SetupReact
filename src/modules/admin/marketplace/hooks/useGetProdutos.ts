@@ -29,7 +29,9 @@ const useGetProdutos = (cnpj: string) => {
       refetchInterval: false,
       retry: 1,
       onError: (err: any) => {
-        const message = err.data?.notification?.message ?? "Erro ao Consultar Produtos do Marketplace";
+        const message =
+          err.data?.notification?.message ??
+          "Erro ao Consultar Produtos do Marketplace";
         toast({
           title: "Ocorreu um erro!",
           description: message,
@@ -38,8 +40,7 @@ const useGetProdutos = (cnpj: string) => {
           position: "top-right",
           isClosable: true,
         });
-
-      }
+      },
     },
   );
 };

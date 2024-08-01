@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import connectApi from "../../../../api/connect";
 import { useKey } from "../../../../context/auth/token-login/authContext";
 
-type Payload = { cnpjMatriz: string, canRefetch?: boolean; };
+type Payload = { cnpjMatriz: string; canRefetch?: boolean };
 type ResponseGetUsuarios = {
   cnpj_matriz: string;
   foto: string;

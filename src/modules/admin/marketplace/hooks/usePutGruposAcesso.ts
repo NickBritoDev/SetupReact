@@ -21,7 +21,7 @@ const usePutGrupoAcesso = () => {
     return response.data;
   };
 
-  const {mutate, mutateAsync, ...mutation} = useMutation(grupoAcesso);
+  const { mutate, mutateAsync, ...mutation } = useMutation(grupoAcesso);
 
   const useRequestPutGrupoAcesso = (payload: IGruposAcesso) => {
     mutate(payload);

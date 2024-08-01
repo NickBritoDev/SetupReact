@@ -25,7 +25,11 @@ type Props = IGruposAcesso & { refetch: () => void };
 export default function AdicionarPermissoesComponent(props: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { useRequestGetPermissoes, data } = useGetPermissoes();
-  const { useRequestPostPermissoesGrupo, isLoading, data: postData } = usePostPermissoesGrupo();
+  const {
+    useRequestPostPermissoesGrupo,
+    isLoading,
+    data: postData,
+  } = usePostPermissoesGrupo();
 
   const handleOpen = () => {
     onOpen();
@@ -45,8 +49,7 @@ export default function AdicionarPermissoesComponent(props: Props) {
     if (!isLoading && postData) {
       props.refetch();
     }
-    
-  }, [isLoading, postData])
+  }, [isLoading, postData]);
 
   const handleSubmit = (body: { chaves: string[] }) => {
     const payload = body.chaves.map((chave) => ({

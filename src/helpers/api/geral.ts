@@ -9,8 +9,9 @@ export function queryFilterToURLParams<T>(query: IQueryFilter<T>): string {
 
   for (const key in query) {
     if (key in query) {
-      body += key + "=" + JSON.stringify(query[key as keyof typeof query]) + "&";
-    } 
+      body +=
+        key + "=" + JSON.stringify(query[key as keyof typeof query]) + "&";
+    }
   }
 
   return body;

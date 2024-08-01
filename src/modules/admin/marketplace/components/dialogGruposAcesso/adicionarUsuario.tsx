@@ -28,7 +28,8 @@ type Props = IGruposAcesso & { cnpj: string; refetch: () => void };
 
 export default function AdicionarUsuarioComponent(props: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { useRequestPostUsuarioGrupo, isLoading, isSuccess } = usePostUsuariosGrupo();
+  const { useRequestPostUsuarioGrupo, isLoading, isSuccess } =
+    usePostUsuariosGrupo();
   const { data: minhaConta, isSuccess: minhaContaSuccess } = useGetMinhaConta();
 
   const handleOpen = () => {
@@ -40,7 +41,7 @@ export default function AdicionarUsuarioComponent(props: Props) {
   };
 
   useEffect(() => {
-    if (isOpen && minhaContaSuccess) {
+    if (isOpen && minhaConta) {
       useRequestGetSolicitacoesAcesso({
         where: {
           status: UsuariosTypeStatus.Liberado,
@@ -48,18 +49,17 @@ export default function AdicionarUsuarioComponent(props: Props) {
           id_promotora: props.id_promotora,
         },
         whereNot: {
-          id_acesso: minhaConta.idAcesso
-        }
-      })
+          id_acesso: minhaConta.idAcesso,
+        },
+      });
     }
-  }, [isOpen, minhaConta, minhaContaSuccess])
+  }, [isOpen, minhaConta]);
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
       props.refetch();
     }
-
-  }, [isLoading, isSuccess])
+  }, [isLoading, isSuccess]);
 
   const { data, useRequestGetSolicitacoesAcesso } = useGetSolicitacoesAcesso();
 
@@ -74,7 +74,7 @@ export default function AdicionarUsuarioComponent(props: Props) {
       id_acesso: Number(id),
       id_grupo: props.id,
     }));
-    useRequestPostUsuarioGrupo(payload)
+    useRequestPostUsuarioGrupo(payload);
     formik.resetForm();
     handleClose();
   };
@@ -103,7 +103,11 @@ export default function AdicionarUsuarioComponent(props: Props) {
                   <FormLabel
                     htmlFor={`id-${usuario.id_acesso}`}
                     key={usuario.id_acesso}
-                    bg={formik.values.ids.includes(String(usuario.id_acesso)) ? "green" : "transparent"}
+                    bg={
+                      formik.values.ids.includes(String(usuario.id_acesso))
+                        ? "green"
+                        : "transparent"
+                    }
                     cursor={"pointer"}
                     display={"flex"}
                     alignItems={"center"}
@@ -113,14 +117,17 @@ export default function AdicionarUsuarioComponent(props: Props) {
                     p={2}
                     border={"1px solid #eee"}
                   >
-                      <Checkbox
-                        name="ids"
-                        id={`id-${usuario.id_acesso}`}
-                        value={usuario.id_acesso}
-                        onChange={formik.handleChange}
-                        display={"none"}
-                      />
-                    <Avatar name={usuario.nome} src={getSrcImageURL(usuario.foto)} />
+                    <Checkbox
+                      name="ids"
+                      id={`id-${usuario.id_acesso}`}
+                      value={usuario.id_acesso}
+                      onChange={formik.handleChange}
+                      display={"none"}
+                    />
+                    <Avatar
+                      name={usuario.nome}
+                      src={getSrcImageURL(usuario.foto)}
+                    />
                     <Text>{usuario.nome}</Text>
                   </FormLabel>
                 ))}

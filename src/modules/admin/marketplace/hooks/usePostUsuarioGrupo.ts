@@ -5,7 +5,7 @@ import { useMutation } from "react-query";
 type Payload = {
   id_acesso: number;
   id_grupo: number;
-}[]
+}[];
 
 const usePostUsuariosGrupo = () => {
   const { token } = useKey();
@@ -23,7 +23,7 @@ const usePostUsuariosGrupo = () => {
     return response.data;
   };
 
-  const {mutate, mutateAsync, ...mutation} = useMutation(usuariosGrupo);
+  const { mutate, mutateAsync, ...mutation } = useMutation(usuariosGrupo);
 
   const useRequestPostUsuarioGrupo = (payload: Payload) => {
     mutate(payload);
