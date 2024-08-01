@@ -19,10 +19,14 @@ export default function SidebarComponent({
 }) {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  const cleanString = (str: string) => str.replace(/[^a-zA-Z0-9]/g, "");
+
   const sortedContatos = filteredContatos
     .filter((contato) =>
       Object.values(contato).some((value) =>
-        String(value).toLowerCase()?.includes(searchTerm.toLowerCase()),
+        cleanString(String(value).toLowerCase()).includes(
+          cleanString(searchTerm).toLowerCase(),
+        ),
       ),
     )
     .sort((a, b) => {

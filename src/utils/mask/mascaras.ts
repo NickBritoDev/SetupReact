@@ -62,6 +62,9 @@ export const maskReal = (value: number | string): string => {
 };
 
 export const formatDataHora = (d: any) => {
+  if (d === null || d === "" || d === undefined) {
+    return "Nenhum valor para ser exibido";
+  }
   return dayjs(d).format(" DD/MM/YYYY HH:mm:ss");
 };
 

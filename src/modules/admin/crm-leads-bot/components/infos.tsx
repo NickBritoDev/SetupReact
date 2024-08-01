@@ -72,32 +72,28 @@ export default function InfosComponent({
               {detalhesLeads?.display?.map(
                 (props: any, index: Key | null | undefined) => (
                   <Flex
-                    cursor="not-allowed"
+                    cursor={"not-allowed"}
                     _hover={{ bg: "#229544", color: "white" }}
                     p={2}
-                    rounded="2xl"
-                    boxShadow="lg"
-                    flexDir="column"
-                    alignItems="flex-start"
-                    justifyContent="flex-start"
+                    rounded={"2xl"}
+                    boxShadow={"lg"}
+                    flexDir={"column"}
+                    alignItems={"flex-start"}
+                    justifyContent={"flex-start"}
                     mt={2}
                     key={index}
                   >
                     <Text
                       mb={2}
-                      textTransform="uppercase"
+                      textTransform={"uppercase"}
                       fontSize={18}
-                      fontWeight="bold"
+                      fontWeight={"bold"}
                     >
                       {props.label}
                     </Text>
                     <Text fontWeight="semibold">
-                      {props.label === "Ultima atualização"
-                        ? formatDataHora(
-                            props.campos === null || props.campos === ""
-                              ? "00000000"
-                              : props.campo,
-                          )
+                      {props.tipos === "data"
+                        ? formatDataHora(props.campos)
                         : props.campos === null || props.campos === ""
                           ? "Nenhum valor para ser exibido"
                           : props.campos}

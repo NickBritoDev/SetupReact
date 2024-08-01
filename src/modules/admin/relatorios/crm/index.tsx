@@ -164,12 +164,8 @@ export default function RelatoriosCrm() {
             textTransform={"uppercase"}
             color={"gray.600"}
           >
-            Filtro:
-            {rangeData}
+            Filtro: {dados?.filtro}
           </Text>
-          {/* produtos:{...filtros?.data?.listaProdutos},
-          origem: {...filtros?.data?.listaOrigens},
-          score: {...filtros?.data?.listaScore}, */}
         </Box>
 
         <Flex
@@ -414,7 +410,7 @@ export default function RelatoriosCrm() {
           boxShadow={"lg"}
         >
           <Text mb={2} pl={2} rounded={"2xl"} color={"#229544"} bg={"white"}>
-            Leads Entregues
+            Leads Finalizados
           </Text>
           <Flex alignItems={"center"} justifyContent={"space-between"}>
             {loadinItems ? (
