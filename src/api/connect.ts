@@ -1,9 +1,12 @@
+import { isEnvDevelopment } from "@helpers/config/app";
 import { executar } from "./interceptador";
 import store from "./store";
 import axios from "axios";
 
 const connectApi = axios.create({
-  baseURL: "https://apimaisvalorlabs.portalmaisvalor.com/api",
+  baseURL: isEnvDevelopment
+    ? "http://localhost:7006/api"
+    : "https://apimaisvalorlabs.portalmaisvalor.com/api",
 });
 
 const { dispatch } = store;
