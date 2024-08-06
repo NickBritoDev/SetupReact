@@ -32,7 +32,7 @@ import { HiUserGroup } from "react-icons/hi2";
 import { useGetFiltros } from "./hooks/useGetFiltros";
 import { usePostRelatoriosFinalizados } from "./hooks/usePostRelatoriosFinalizados";
 
-export default function RelatoriosCrm() {
+export default function RelatoriosFinalizadosCrm() {
   const filtros = useGetFiltros();
   const [loadinItems, setLoadingItems] = useState(true);
 

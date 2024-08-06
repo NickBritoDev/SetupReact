@@ -18,7 +18,9 @@ import Marketplace from "./modules/admin/marketplace";
 import { useAuthHelpers } from "./helpers/conta/permissao";
 import AutocontratacaoFgts from "./modules/public/autocontratacao-fgts";
 import { useToast } from "@chakra-ui/react";
-import RelatoriosCrm from "@modules/admin/relatorios/crm";
+import RelatoriosFinalizadosCrm from "@modules/admin/relatorios/leads-finalizados";
+import RelatoriosPorUsuarioCrm from "@modules/admin/relatorios/leads-por-usuario";
+import RelatoriosRecebidosCrm from "@modules/admin/relatorios/leads-recebidos";
 
 const Routes: React.FC = () => {
   const toast = useToast();
@@ -83,11 +85,31 @@ const Routes: React.FC = () => {
           ),
         },
         {
-          path: "relatorios/crm",
+          path: "relatorios-finalizados/crm",
           element: isLoading ? (
             true
           ) : keyStatus && temPermissao("CRM") ? (
-            <RelatoriosCrm />
+            <RelatoriosFinalizadosCrm />
+          ) : (
+            <Navigate to="/public/nao-autorizado" replace />
+          ),
+        },
+        {
+          path: "relatorios-por-usuario/crm",
+          element: isLoading ? (
+            true
+          ) : keyStatus && temPermissao("CRM") ? (
+            <RelatoriosPorUsuarioCrm />
+          ) : (
+            <Navigate to="/public/nao-autorizado" replace />
+          ),
+        },
+        {
+          path: "relatorios-recebidos/crm",
+          element: isLoading ? (
+            true
+          ) : keyStatus && temPermissao("CRM") ? (
+            <RelatoriosRecebidosCrm />
           ) : (
             <Navigate to="/public/nao-autorizado" replace />
           ),

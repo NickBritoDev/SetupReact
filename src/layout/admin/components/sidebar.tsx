@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import { FcGenealogy } from "react-icons/fc";
+import { FcApproval, FcNumericalSorting12, FcVoicePresentation } from "react-icons/fc";
 import { RiMenuFold4Fill, RiMenuUnfold2Fill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 // import ToggleModeComponent from "./toggleMode";
@@ -79,14 +79,36 @@ export default function SidebarComponent() {
               <MenuList w={"270px"}>
                 <MenuItem
                   onClick={() => {
-                    navigate("/admin/relatorios/crm");
+                    navigate("/admin/relatorios-finalizados/crm");
                   }}
                   display={"flex"}
                   alignItems={"center"}
                   justifyContent={"space-between"}
                 >
-                  <Text>Tabulações CRM</Text>
-                  <FcGenealogy size={22} />
+                  <Text>Leads Finalizados</Text>
+                  <FcApproval size={22} />
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/admin/relatorios-por-usuario/crm");
+                  }}
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                >
+                  <Text>Leads por Usuario</Text>
+                  <FcVoicePresentation size={22} />
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/admin/relatorios-recebidos/crm");
+                  }}
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                >
+                  <Text>Leads Recebidos</Text>
+                  <FcNumericalSorting12 size={22} />
                 </MenuItem>
               </MenuList>
             </Menu>
