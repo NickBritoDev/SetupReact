@@ -9,7 +9,6 @@ import {
 } from "recharts";
 
 const GraphComponent = ({ totais }: any) => {
-  console.log(totais)
   const data = [
     { name: "NOVOS", value: totais?.qtde_novos },
     { name: "EM ABERTO", value: totais?.qtde_emAberto },
@@ -17,12 +16,7 @@ const GraphComponent = ({ totais }: any) => {
     { name: "CONCLUIDO", value: totais?.qtde_concluido },
   ];
 
-  const COLORS = [
-    "#0088FE",
-    "#FFBB28",
-    "#FF8042",
-    "#00C49F",
-  ];
+  const COLORS = ["#0088FE", "#FFBB28", "#FF8042", "#00C49F"];
 
   return (
     <BarChart width={600} height={125} data={data}>

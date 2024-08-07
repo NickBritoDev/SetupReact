@@ -9,7 +9,8 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton} from "@chakra-ui/react";
+  DrawerCloseButton,
+} from "@chakra-ui/react";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { formatDataHora, maskCPF } from "../../../../utils/mask/mascaras";
 import DialogStatusComponent from "./dialogStatus";
@@ -41,7 +42,12 @@ export default function InfosComponent({
       </Flex>
 
       <Divider mb={2} />
-      <Flex flexDir={"column"} alignItems={"center"} justifyContent={"flex-start"} gap={2}>
+      <Flex
+        flexDir={"column"}
+        alignItems={"center"}
+        justifyContent={"flex-start"}
+        gap={2}
+      >
         <>
           <Button
             mt={-3}

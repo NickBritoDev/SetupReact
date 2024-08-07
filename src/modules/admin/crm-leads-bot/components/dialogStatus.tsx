@@ -49,18 +49,18 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
 
   const customOption = (props: {
     innerProps: JSX.IntrinsicAttributes &
-    ClassAttributes<HTMLDivElement> &
-    HTMLAttributes<HTMLDivElement>;
+      ClassAttributes<HTMLDivElement> &
+      HTMLAttributes<HTMLDivElement>;
     data: {
       label:
-      | string
-      | number
-      | boolean
-      | ReactElement<any, string | JSXElementConstructor<any>>
-      | Iterable<ReactNode>
-      | ReactPortal
-      | null
-      | undefined;
+        | string
+        | number
+        | boolean
+        | ReactElement<any, string | JSXElementConstructor<any>>
+        | Iterable<ReactNode>
+        | ReactPortal
+        | null
+        | undefined;
       isCurrentStatus: any;
       value: number | null | undefined;
     };
@@ -93,11 +93,11 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
 
   const subStatusOptions = selectedStatus
     ? statusLeads
-      ?.find((status: any) => status.id_status === selectedStatus)
-      ?.subStatus.map((subStatus: any) => ({
-        value: subStatus.id_substatus,
-        label: subStatus.subStatus,
-      }))
+        ?.find((status: any) => status.id_status === selectedStatus)
+        ?.subStatus.map((subStatus: any) => ({
+          value: subStatus.id_substatus,
+          label: subStatus.subStatus,
+        }))
     : [];
 
   const isFormValid = () => {

@@ -50,26 +50,25 @@ export const toNumber = (value: string | number): number => {
 };
 
 export const maskReal = (value: number | string): string => {
-  if (value === undefined || value === null || value === '') {
-    return 'R$ 0,00';
+  if (value === undefined || value === null || value === "") {
+    return "R$ 0,00";
   }
 
-  value = value.toString().replace(/\D/g, '');
-  
+  value = value.toString().replace(/\D/g, "");
+
   if (value.length === 0) {
-    return 'R$ 0,00';
+    return "R$ 0,00";
   }
 
   value = (parseFloat(value) / 100).toFixed(2).toString();
 
-  value = value.replace('.', ',');
+  value = value.replace(".", ",");
 
-  const parts = value.split(',');
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const parts = value.split(",");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-  return `R$ ${parts.join(',')}`;
+  return `R$ ${parts.join(",")}`;
 };
-
 
 export const formatDataHora = (d: any) => {
   if (d === null || d === "" || d === undefined) {

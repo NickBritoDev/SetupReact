@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
-import { Navigate, useRoutes } from "react-router-dom";
+import { Navigate, useRoutes, useLocation } from "react-router-dom";
 import { useKey } from "./context/auth/token-login/authContext";
+import { useGetValidacaoToken } from "@pages/public/token-login/hooks/getValidacaoToken";
 
 import LayoutAdmin from "./layout/admin";
 import LayoutPublic from "./layout/public";
 
 import Home from "./pages/admin/home";
 import Perfil from "./pages/admin/perfil";
-
 import TokenLogin from "./pages/public/token-login";
 import NaoLocalizado404 from "./pages/public/nao-localizado";
 import NaoAutorizado401 from "./pages/public/nao-autorizado";
-import Login from "./pages/public/login";
 
 import CrmLeadsBot from "./modules/admin/crm-leads-bot";
 import Marketplace from "./modules/admin/marketplace";
@@ -23,10 +22,46 @@ import RelatoriosPorUsuarioCrm from "@modules/admin/relatorios/leads-por-usuario
 import RelatoriosRecebidosCrm from "@modules/admin/relatorios/leads-recebidos";
 
 const Routes: React.FC = () => {
+  const { updateKeyStatus } = useKey();
+  const location = useLocation();
   const toast = useToast();
   const { keyStatus } = useKey();
   const { isAdmin, temPermissao, isMatriz, isLoading } = useAuthHelpers();
-  console.log(temPermissao("CRM"));
+
+  const query = new URLSearchParams(location.search);
+  const tokenFromUrl = query.get("TK");
+
+  const { data, isError } = useGetValidacaoToken(tokenFromUrl);
+
+  useEffect(() => {
+    if (data) {
+      updateKeyStatus(true, data);
+      toast({
+        title: "Bem Vindo(a)",
+        description: "Você acessou um serviço Mais Valor",
+        status: "success",
+        duration: 5000,
+        position: "top-right",
+        isClosable: true,
+      });
+      window.location.href = `/admin/crm`;
+    }
+  }, [data, tokenFromUrl, updateKeyStatus, toast, query]);
+
+  useEffect(() => {
+    if (isError) {
+      toast({
+        title: "Mais Valor Informa",
+        description:
+          "Poxa seu token não é mais valido, acesse o portal e tente novamente!",
+        status: "info",
+        duration: 5000,
+        position: "top-right",
+        isClosable: true,
+      });
+      updateKeyStatus(false, null);
+    }
+  }, [isError, toast, updateKeyStatus]);
 
   useEffect(() => {
     if (keyStatus) return;
@@ -41,13 +76,14 @@ const Routes: React.FC = () => {
           isClosable: true,
         });
         setTimeout(() => {
-          window.location.href = "/public/login";
+          window.location.href =
+            "https://www.portalmaisvalor.com/paginas/login.html";
         }, 1500);
       }
     }, 60000);
 
     return () => clearInterval(intervalId);
-  }, [keyStatus]);
+  }, [keyStatus, toast]);
 
   const routing = useRoutes([
     {
@@ -55,7 +91,7 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <LayoutAdmin />
       ) : (
-        <Navigate to="/public/login" replace />
+        <Navigate to="/admin/crm" replace />
       ),
       children: [
         {
@@ -130,7 +166,6 @@ const Routes: React.FC = () => {
       path: "/public",
       element: <LayoutPublic />,
       children: [
-        { path: "login", element: <Login /> },
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },
@@ -147,9 +182,9 @@ const Routes: React.FC = () => {
     {
       path: "/",
       element: keyStatus ? (
-        <Navigate to="/admin/home" replace />
+        <Navigate to="/admin/crm" replace />
       ) : (
-        <Navigate to="/public/login" replace />
+        <Navigate to="/admin/crm" replace />
       ),
     },
   ]);

@@ -19,7 +19,7 @@ import {
   Heading,
   useDisclosure,
   Text,
-  Skeleton
+  Skeleton,
 } from "@chakra-ui/react";
 import { usePostRelatoriosRecebidos } from "./hooks/usePostRelatoriosRecebidos";
 import { useEffect, useRef, useState } from "react";
@@ -31,23 +31,28 @@ export default function RelatoriosRecebidosCrm() {
   const mes = new Date().getMonth() + 1;
   const filtros = useGetFiltros();
 
-  const [rangeData, setRangeData] = useState<string>(mes < 10 ? `0${mes}` : `${mes}`);
+  const [rangeData, setRangeData] = useState<string>(
+    mes < 10 ? `0${mes}` : `${mes}`,
+  );
   const [agrupamento, setAgrupamento] = useState<string>("data");
-  const [produtosSelecionados, setProdutosSelecionados] = useState<string[]>([]);
+  const [produtosSelecionados, setProdutosSelecionados] = useState<string[]>(
+    [],
+  );
   const [origensSelecionadas, setOrigensSelecionadas] = useState<string[]>([]);
   const [dataRelatorio, setDataRelatorio] = useState<any>(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
 
-  const { useRequestPostRelatoriosRecebidos, isLoading } = usePostRelatoriosRecebidos();
+  const { useRequestPostRelatoriosRecebidos, isLoading } =
+    usePostRelatoriosRecebidos();
 
   const buscaDadosRelatorio = async () => {
     const payload = {
       produto: produtosSelecionados,
       origem: origensSelecionadas,
-      "mes": rangeData,
-      "agrupar": agrupamento
+      mes: rangeData,
+      agrupar: agrupamento,
     };
 
     try {
@@ -65,8 +70,8 @@ export default function RelatoriosRecebidosCrm() {
       const payload = {
         produto: [...filtros?.data?.listaProdutos],
         origem: [...filtros?.data?.listaOrigens],
-        "mes": rangeData,
-        "agrupar": agrupamento
+        mes: rangeData,
+        agrupar: agrupamento,
       };
 
       try {
@@ -80,19 +85,29 @@ export default function RelatoriosRecebidosCrm() {
     if (filtros.status === "success" && dataRelatorio === null) {
       fetchData();
     }
-  }, [filtros, dataRelatorio, rangeData, agrupamento, produtosSelecionados, origensSelecionadas]);
-
+  }, [
+    filtros,
+    dataRelatorio,
+    rangeData,
+    agrupamento,
+    produtosSelecionados,
+    origensSelecionadas,
+  ]);
 
   useEffect(() => {
     buscaDadosRelatorio();
   }, [rangeData, produtosSelecionados, origensSelecionadas, agrupamento]);
 
-
   return (
     <>
-      <Flex w={'100%'} flexDir={"column"}>
-        <Flex mt={-2} mb={2} alignItems={"center"} justifyContent={"space-between"}>
-          <Heading size={'md'}>Relatórios de Leads Recebidos: CRM</Heading>
+      <Flex w={"100%"} flexDir={"column"}>
+        <Flex
+          mt={-2}
+          mb={2}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
+          <Heading size={"md"}>Relatórios de Leads Recebidos: CRM</Heading>
 
           <>
             <Button ref={btnRef} colorScheme="green" onClick={onOpen}>
@@ -111,7 +126,12 @@ export default function RelatoriosRecebidosCrm() {
                 <DrawerHeader>Modificar Filtros</DrawerHeader>
 
                 <DrawerBody>
-                  <Accordion w={"100%"} defaultIndex={[0]} allowMultiple allowToggle>
+                  <Accordion
+                    w={"100%"}
+                    defaultIndex={[0]}
+                    allowMultiple
+                    allowToggle
+                  >
                     <AccordionItem>
                       <h2>
                         <AccordionButton>
@@ -123,31 +143,42 @@ export default function RelatoriosRecebidosCrm() {
                       </h2>
                       <AccordionPanel pb={4}>
                         <Stack direction="column">
-                          {filtros?.data?.meses?.map((data: any, index: number) => (
-                            <Flex key={index} justifyContent="space-between" alignItems="center">
-                              <Text>{data.mes}</Text>
-                              <Switch
-                                isChecked={rangeData === data.cod}
-                                onChange={(e) => {
-                                  const value = data.cod;
-                                  if (e.target.checked) {
-                                    setRangeData(value);
-                                  } else {
-                                    // Prevent unchecking the only selected month
-                                    if (rangeData === value) {
-                                      return;
+                          {filtros?.data?.meses?.map(
+                            (data: any, index: number) => (
+                              <Flex
+                                key={index}
+                                justifyContent="space-between"
+                                alignItems="center"
+                              >
+                                <Text>{data.mes}</Text>
+                                <Switch
+                                  isChecked={rangeData === data.cod}
+                                  onChange={(e) => {
+                                    const value = data.cod;
+                                    if (e.target.checked) {
+                                      setRangeData(value);
+                                    } else {
+                                      // Prevent unchecking the only selected month
+                                      if (rangeData === value) {
+                                        return;
+                                      }
                                     }
-                                  }
-                                }}
-                              />
-                            </Flex>
-                          ))}
+                                  }}
+                                />
+                              </Flex>
+                            ),
+                          )}
                         </Stack>
                       </AccordionPanel>
                     </AccordionItem>
                   </Accordion>
 
-                  <Accordion w={"100%"} defaultIndex={[0]} allowMultiple allowToggle>
+                  <Accordion
+                    w={"100%"}
+                    defaultIndex={[0]}
+                    allowMultiple
+                    allowToggle
+                  >
                     <AccordionItem>
                       <h2>
                         <AccordionButton>
@@ -159,31 +190,49 @@ export default function RelatoriosRecebidosCrm() {
                       </h2>
                       <AccordionPanel pb={4}>
                         <Stack direction="column">
-                          {filtros?.data?.listaProdutos?.map((data: any, index: number) => (
-                            <Flex key={index} justifyContent="space-between" alignItems="center">
-                              <Text>{data}</Text>
-                              <Switch
-                                isChecked={produtosSelecionados.includes(data)}
-                                isDisabled={produtosSelecionados.length === 1 && produtosSelecionados.includes(data)}
-                                onChange={(e) => {
-                                  const value = data;
-                                  setProdutosSelecionados((prev) =>
-                                    e.target.checked
-                                      ? [...prev, value]
-                                      : prev.length > 1
-                                        ? prev.filter((item) => item !== value)
-                                        : prev
-                                  );
-                                }}
-                              />
-                            </Flex>
-                          ))}
+                          {filtros?.data?.listaProdutos?.map(
+                            (data: any, index: number) => (
+                              <Flex
+                                key={index}
+                                justifyContent="space-between"
+                                alignItems="center"
+                              >
+                                <Text>{data}</Text>
+                                <Switch
+                                  isChecked={produtosSelecionados.includes(
+                                    data,
+                                  )}
+                                  isDisabled={
+                                    produtosSelecionados.length === 1 &&
+                                    produtosSelecionados.includes(data)
+                                  }
+                                  onChange={(e) => {
+                                    const value = data;
+                                    setProdutosSelecionados((prev) =>
+                                      e.target.checked
+                                        ? [...prev, value]
+                                        : prev.length > 1
+                                          ? prev.filter(
+                                              (item) => item !== value,
+                                            )
+                                          : prev,
+                                    );
+                                  }}
+                                />
+                              </Flex>
+                            ),
+                          )}
                         </Stack>
                       </AccordionPanel>
                     </AccordionItem>
                   </Accordion>
 
-                  <Accordion w={"100%"} defaultIndex={[0]} allowMultiple allowToggle>
+                  <Accordion
+                    w={"100%"}
+                    defaultIndex={[0]}
+                    allowMultiple
+                    allowToggle
+                  >
                     <AccordionItem>
                       <h2>
                         <AccordionButton>
@@ -195,31 +244,47 @@ export default function RelatoriosRecebidosCrm() {
                       </h2>
                       <AccordionPanel pb={4}>
                         <Stack direction="column">
-                          {filtros?.data?.listaOrigens?.map((data: any, index: number) => (
-                            <Flex key={index} justifyContent="space-between" alignItems="center">
-                              <Text>{data}</Text>
-                              <Switch
-                                isChecked={origensSelecionadas.includes(data)}
-                                isDisabled={origensSelecionadas.length === 1 && origensSelecionadas.includes(data)}
-                                onChange={(e) => {
-                                  const value = data;
-                                  setOrigensSelecionadas((prev) =>
-                                    e.target.checked
-                                      ? [...prev, value]
-                                      : prev.length > 1
-                                        ? prev.filter((item) => item !== value)
-                                        : prev
-                                  );
-                                }}
-                              />
-                            </Flex>
-                          ))}
+                          {filtros?.data?.listaOrigens?.map(
+                            (data: any, index: number) => (
+                              <Flex
+                                key={index}
+                                justifyContent="space-between"
+                                alignItems="center"
+                              >
+                                <Text>{data}</Text>
+                                <Switch
+                                  isChecked={origensSelecionadas.includes(data)}
+                                  isDisabled={
+                                    origensSelecionadas.length === 1 &&
+                                    origensSelecionadas.includes(data)
+                                  }
+                                  onChange={(e) => {
+                                    const value = data;
+                                    setOrigensSelecionadas((prev) =>
+                                      e.target.checked
+                                        ? [...prev, value]
+                                        : prev.length > 1
+                                          ? prev.filter(
+                                              (item) => item !== value,
+                                            )
+                                          : prev,
+                                    );
+                                  }}
+                                />
+                              </Flex>
+                            ),
+                          )}
                         </Stack>
                       </AccordionPanel>
                     </AccordionItem>
                   </Accordion>
 
-                  <Accordion w={"100%"} defaultIndex={[0]} allowMultiple allowToggle>
+                  <Accordion
+                    w={"100%"}
+                    defaultIndex={[0]}
+                    allowMultiple
+                    allowToggle
+                  >
                     <AccordionItem>
                       <h2>
                         <AccordionButton>
@@ -231,21 +296,27 @@ export default function RelatoriosRecebidosCrm() {
                       </h2>
                       <AccordionPanel pb={4}>
                         <Stack direction="column">
-                          <Flex justifyContent="space-between" alignItems="center">
+                          <Flex
+                            justifyContent="space-between"
+                            alignItems="center"
+                          >
                             <Text>Mês</Text>
                             <Switch
-                              isChecked={agrupamento === 'data'}
+                              isChecked={agrupamento === "data"}
                               onChange={() => {
-                                setAgrupamento('data');
+                                setAgrupamento("data");
                               }}
                             />
                           </Flex>
-                          <Flex justifyContent="space-between" alignItems="center">
+                          <Flex
+                            justifyContent="space-between"
+                            alignItems="center"
+                          >
                             <Text>Usuário</Text>
                             <Switch
-                              isChecked={agrupamento === 'usuario'}
+                              isChecked={agrupamento === "usuario"}
                               onChange={() => {
-                                setAgrupamento('usuario');
+                                setAgrupamento("usuario");
                               }}
                             />
                           </Flex>
@@ -256,7 +327,7 @@ export default function RelatoriosRecebidosCrm() {
                 </DrawerBody>
 
                 <DrawerFooter>
-                  <Button variant={'outline'} mr={3} onClick={onClose}>
+                  <Button variant={"outline"} mr={3} onClick={onClose}>
                     Cancelar
                   </Button>
                 </DrawerFooter>
@@ -267,9 +338,9 @@ export default function RelatoriosRecebidosCrm() {
 
         {isLoading ? (
           <Stack>
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
+            <Skeleton height="20px" />
+            <Skeleton height="20px" />
+            <Skeleton height="20px" />
           </Stack>
         ) : (
           <CardsTotaisComponent dataRelatorio={dataRelatorio} />
@@ -277,14 +348,13 @@ export default function RelatoriosRecebidosCrm() {
 
         {isLoading ? (
           <Stack>
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
+            <Skeleton height="20px" />
+            <Skeleton height="20px" />
+            <Skeleton height="20px" />
           </Stack>
         ) : (
           <TableComponent dados={dataRelatorio} />
         )}
-
       </Flex>
     </>
   );

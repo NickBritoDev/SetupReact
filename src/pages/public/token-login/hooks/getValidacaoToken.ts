@@ -12,7 +12,7 @@ const useGetValidacaoToken = (token: string | null) => {
         const response = await connectApi.get(
           `/v1/usuarios/auth/login?h=${token}`,
         );
-        return response.data;
+        return response.data.token;
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
           navigate("public/login");

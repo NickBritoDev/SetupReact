@@ -1,5 +1,6 @@
 import {
-  Button, Flex,
+  Button,
+  Flex,
   Stack,
   Switch,
   Accordion,
@@ -27,14 +28,17 @@ import { useGetFiltros } from "./hooks/useGetFiltros";
 import CardsComponent from "./components/card";
 
 export default function RelatoriosPorUsuarioCrm() {
-  const { useRequestPostRelatoriosPorUsuario, isLoading } = usePostRelatoriosPorUsuario();
+  const { useRequestPostRelatoriosPorUsuario, isLoading } =
+    usePostRelatoriosPorUsuario();
   const filtros = useGetFiltros();
 
-  const [dados, setDados] = useState<any>(null)
-  const [top3, setTop3] = useState<any>(null)
-  const [bottom3, setBottom3] = useState<any>(null)
-  const [total, setTotais] = useState<any>(null)
-  const [produtosSelecionados, setProdutosSelecionados] = useState<string[]>([],);
+  const [dados, setDados] = useState<any>(null);
+  const [top3, setTop3] = useState<any>(null);
+  const [bottom3, setBottom3] = useState<any>(null);
+  const [total, setTotais] = useState<any>(null);
+  const [produtosSelecionados, setProdutosSelecionados] = useState<string[]>(
+    [],
+  );
   const [origensSelecionadas, setOrigensSelecionadas] = useState<string[]>([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,35 +47,51 @@ export default function RelatoriosPorUsuarioCrm() {
   const buscaDadosRelatorio = async () => {
     const payload = {
       produto: produtosSelecionados,
-      origem: origensSelecionadas
+      origem: origensSelecionadas,
     };
 
     try {
       const resultado = await useRequestPostRelatoriosPorUsuario(payload);
-      setDados(resultado.resultado)
+      setDados(resultado.resultado);
     } catch (error) {
       console.error("Erro ao buscar dados do relatório:", error);
     }
   };
 
-  const convertToNumber = (entry: { qtde_concluido: number; }) => ({
+  const convertToNumber = (entry: { qtde_concluido: number }) => ({
     ...entry,
-    qtde_concluido: Number(entry.qtde_concluido)
+    qtde_concluido: Number(entry.qtde_concluido),
   });
 
   const somarTotais = (resultado: any[]) => {
-    return resultado.reduce((acc: { qtde_novos: number; qtde_pendente: number; qtde_emAberto: number; qtde_concluido: number; }, curr: { qtde_novos: any; qtde_pendente: any; qtde_emAberto: any; qtde_concluido: any; }) => {
-      acc.qtde_novos += Number(curr.qtde_novos);
-      acc.qtde_pendente += Number(curr.qtde_pendente);
-      acc.qtde_emAberto += Number(curr.qtde_emAberto);
-      acc.qtde_concluido += Number(curr.qtde_concluido);
-      return acc;
-    }, {
-      qtde_novos: 0,
-      qtde_pendente: 0,
-      qtde_emAberto: 0,
-      qtde_concluido: 0
-    });
+    return resultado.reduce(
+      (
+        acc: {
+          qtde_novos: number;
+          qtde_pendente: number;
+          qtde_emAberto: number;
+          qtde_concluido: number;
+        },
+        curr: {
+          qtde_novos: any;
+          qtde_pendente: any;
+          qtde_emAberto: any;
+          qtde_concluido: any;
+        },
+      ) => {
+        acc.qtde_novos += Number(curr.qtde_novos);
+        acc.qtde_pendente += Number(curr.qtde_pendente);
+        acc.qtde_emAberto += Number(curr.qtde_emAberto);
+        acc.qtde_concluido += Number(curr.qtde_concluido);
+        return acc;
+      },
+      {
+        qtde_novos: 0,
+        qtde_pendente: 0,
+        qtde_emAberto: 0,
+        qtde_concluido: 0,
+      },
+    );
   };
 
   useEffect(() => {
@@ -80,7 +100,7 @@ export default function RelatoriosPorUsuarioCrm() {
       setOrigensSelecionadas([...filtros?.data?.listaOrigens]);
       const payload = {
         produto: [...filtros?.data?.listaProdutos],
-        origem: [...filtros?.data?.listaOrigens]
+        origem: [...filtros?.data?.listaOrigens],
       };
 
       try {
@@ -89,13 +109,19 @@ export default function RelatoriosPorUsuarioCrm() {
 
         const result = resultado?.resultado?.map(convertToNumber);
 
-        result?.sort((a: { qtde_concluido: number; }, b: { qtde_concluido: number; }) => b.qtde_concluido - a.qtde_concluido);
+        result?.sort(
+          (a: { qtde_concluido: number }, b: { qtde_concluido: number }) =>
+            b.qtde_concluido - a.qtde_concluido,
+        );
 
         setTop3(result.slice(0, 3));
 
         const filteredBottom3 = result
-          .filter((item: { qtde_concluido: number; }) => item.qtde_concluido > 0)
-          .sort((a: { qtde_concluido: number; }, b: { qtde_concluido: number; }) => a.qtde_concluido - b.qtde_concluido)
+          .filter((item: { qtde_concluido: number }) => item.qtde_concluido > 0)
+          .sort(
+            (a: { qtde_concluido: number }, b: { qtde_concluido: number }) =>
+              a.qtde_concluido - b.qtde_concluido,
+          )
           .slice(0, 3);
 
         setBottom3(filteredBottom3);
@@ -112,18 +138,20 @@ export default function RelatoriosPorUsuarioCrm() {
     }
   }, [filtros]);
 
-
   useEffect(() => {
     buscaDadosRelatorio();
   }, [produtosSelecionados, origensSelecionadas]);
 
-
-
   return (
     <>
-      <Flex w={'100%'} flexDir={"column"}>
-        <Flex mt={-2} mb={2} alignItems={"center"} justifyContent={"space-between"}>
-          <Heading size={'md'}>Relatorios de Leads Por Usuario: CRM</Heading>
+      <Flex w={"100%"} flexDir={"column"}>
+        <Flex
+          mt={-2}
+          mb={2}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
+          <Heading size={"md"}>Relatorios de Leads Por Usuario: CRM</Heading>
 
           <>
             <Button ref={btnRef} colorScheme="green" onClick={onOpen}>
@@ -161,11 +189,20 @@ export default function RelatoriosPorUsuarioCrm() {
                         <Stack direction="column">
                           {filtros?.data?.listaProdutos?.map(
                             (data: any, index: number) => (
-                              <Flex key={index} justifyContent="space-between" alignItems="center">
+                              <Flex
+                                key={index}
+                                justifyContent="space-between"
+                                alignItems="center"
+                              >
                                 <Text>{data}</Text>
                                 <Switch
-                                  isChecked={produtosSelecionados.includes(data)}
-                                  isDisabled={produtosSelecionados.includes(data) && produtosSelecionados.length === 1}
+                                  isChecked={produtosSelecionados.includes(
+                                    data,
+                                  )}
+                                  isDisabled={
+                                    produtosSelecionados.includes(data) &&
+                                    produtosSelecionados.length === 1
+                                  }
                                   onChange={(e) => {
                                     e.stopPropagation();
                                     const value = data;
@@ -173,8 +210,10 @@ export default function RelatoriosPorUsuarioCrm() {
                                       e.target.checked
                                         ? [...prev, value]
                                         : prev.length > 1
-                                          ? prev.filter((item) => item !== value)
-                                          : prev
+                                          ? prev.filter(
+                                              (item) => item !== value,
+                                            )
+                                          : prev,
                                     );
                                   }}
                                 />
@@ -205,11 +244,18 @@ export default function RelatoriosPorUsuarioCrm() {
                         <Stack direction="column">
                           {filtros?.data?.listaOrigens?.map(
                             (data: any, index: number) => (
-                              <Flex key={index} justifyContent="space-between" alignItems="center">
+                              <Flex
+                                key={index}
+                                justifyContent="space-between"
+                                alignItems="center"
+                              >
                                 <Text>{data}</Text>
                                 <Switch
                                   isChecked={origensSelecionadas.includes(data)}
-                                  isDisabled={origensSelecionadas.includes(data) && origensSelecionadas.length === 1}
+                                  isDisabled={
+                                    origensSelecionadas.includes(data) &&
+                                    origensSelecionadas.length === 1
+                                  }
                                   onChange={(e) => {
                                     e.stopPropagation();
                                     const value = data;
@@ -217,8 +263,10 @@ export default function RelatoriosPorUsuarioCrm() {
                                       e.target.checked
                                         ? [...prev, value]
                                         : prev.length > 1
-                                          ? prev.filter((item) => item !== value)
-                                          : prev
+                                          ? prev.filter(
+                                              (item) => item !== value,
+                                            )
+                                          : prev,
                                     );
                                   }}
                                 />
@@ -239,31 +287,28 @@ export default function RelatoriosPorUsuarioCrm() {
               </DrawerContent>
             </Drawer>
           </>
-
-        </Flex >
-
+        </Flex>
 
         {isLoading ? (
           <Stack>
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
+            <Skeleton height="20px" />
+            <Skeleton height="20px" />
+            <Skeleton height="20px" />
           </Stack>
         ) : (
           <CardsComponent bottom3={bottom3} top3={top3} total={total} />
         )}
-        
+
         {isLoading ? (
           <Stack>
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
-            <Skeleton height='20px' />
+            <Skeleton height="20px" />
+            <Skeleton height="20px" />
+            <Skeleton height="20px" />
           </Stack>
         ) : (
           <TableComponent dados={dados} />
         )}
-      </Flex >
+      </Flex>
     </>
-
-  )
+  );
 }

@@ -18,8 +18,8 @@ export default function TokenLogin() {
 
   useEffect(() => {
     if (data) {
+      updateKeyStatus(true, tokenFromUrl);
       if (!toastShown) {
-        updateKeyStatus(true, tokenFromUrl);
         toast({
           title: "Bem Vindo(a)",
           description: "Você acessou um serviço Mais Valor",
@@ -29,15 +29,7 @@ export default function TokenLogin() {
           isClosable: true,
         });
 
-        switch (redirectPath) {
-          case "marketplace":
-            navigate("/admin/marketplace");
-            break;
-          default:
-            navigate(`/admin/${redirectPath}`);
-            break;
-        }
-
+        navigate(`/admin/crm`);
         setToastShown(true);
       }
     }

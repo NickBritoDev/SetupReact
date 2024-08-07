@@ -17,13 +17,16 @@ export default function TableComponent({ dados }: any) {
     { field: "label", headerName: "Agrupamento" },
     { field: "qtde_concluidos", headerName: "Concluidos" },
     { field: "qtde_contratos_fechados", headerName: "Contratos Fechados" },
-    { field: "qtde_contratos_nao_fechados", headerName: "Contratos N/ Fechados" },
+    {
+      field: "qtde_contratos_nao_fechados",
+      headerName: "Contratos N/ Fechados",
+    },
     { field: "qtde_frio", headerName: "Leads Frios" },
     { field: "qtde_medio", headerName: "Leads Medios" },
     { field: "qtde_quente", headerName: "Leads Quentes" },
     { field: "qtde_nao_trabalhados", headerName: "Leads N/ Trabalhados" },
     { field: "qtde_trabalhados", headerName: "Leads Trabalhados" },
-    { field: "total_registros", headerName: "Total de Registros", },
+    { field: "total_registros", headerName: "Total de Registros" },
   ]);
 
   const defaultColDef = useMemo(() => {

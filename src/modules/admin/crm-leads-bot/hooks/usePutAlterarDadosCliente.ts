@@ -8,11 +8,15 @@ const usePutAlterarDadosCliente = () => {
   const { token } = useKey();
 
   const alterarDadosCliente = async (payload: any) => {
-    const response = await connectCrm.put("/leads/alterar-dados-lead", payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await connectCrm.put(
+      "/leads/alterar-dados-lead",
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     if (response.status === 200) {
       toast({

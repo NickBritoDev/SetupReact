@@ -45,7 +45,8 @@ export default function RelatoriosFinalizadosCrm() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
 
-  const { useRequestPostRelatoriosFinalizados, isLoading } = usePostRelatoriosFinalizados();
+  const { useRequestPostRelatoriosFinalizados, isLoading } =
+    usePostRelatoriosFinalizados();
 
   const buscaDadosRelatorio = async () => {
     const payload = {
@@ -92,7 +93,12 @@ export default function RelatoriosFinalizadosCrm() {
 
   useEffect(() => {
     buscaDadosRelatorio();
-  }, [rangeData, produtosSelecionados, origensSelecionadas, scoresSelecionados]);
+  }, [
+    rangeData,
+    produtosSelecionados,
+    origensSelecionadas,
+    scoresSelecionados,
+  ]);
 
   function somarCampos(dados: any[]) {
     let totalContratoFechado = 0;
@@ -210,19 +216,24 @@ export default function RelatoriosFinalizadosCrm() {
                         </h2>
                         <AccordionPanel pb={4}>
                           <Stack direction="column">
-                            {filtros?.data?.periodo?.map((data: any, index: number) => (
-                              <Flex key={index} justifyContent="space-between" alignItems="center">
-                                <Text>{data}</Text>
-                                <Switch
-                                  isChecked={rangeData === data}
-                                  onChange={() => setRangeData(data)}
-                                />
-                              </Flex>
-                            ))}
+                            {filtros?.data?.periodo?.map(
+                              (data: any, index: number) => (
+                                <Flex
+                                  key={index}
+                                  justifyContent="space-between"
+                                  alignItems="center"
+                                >
+                                  <Text>{data}</Text>
+                                  <Switch
+                                    isChecked={rangeData === data}
+                                    onChange={() => setRangeData(data)}
+                                  />
+                                </Flex>
+                              ),
+                            )}
                           </Stack>
                         </AccordionPanel>
                       </AccordionItem>
-
                     </Accordion>
                     <Accordion
                       w={"100%"}
@@ -243,19 +254,30 @@ export default function RelatoriosFinalizadosCrm() {
                           <Stack direction="column">
                             {filtros?.data?.listaProdutos?.map(
                               (data: any, index: number) => (
-                                <Flex key={index} justifyContent="space-between" alignItems="center">
+                                <Flex
+                                  key={index}
+                                  justifyContent="space-between"
+                                  alignItems="center"
+                                >
                                   <Text>{data}</Text>
                                   <Switch
-                                    isChecked={produtosSelecionados.includes(data)}
-                                    isDisabled={produtosSelecionados.includes(data) && produtosSelecionados.length === 1}
+                                    isChecked={produtosSelecionados.includes(
+                                      data,
+                                    )}
+                                    isDisabled={
+                                      produtosSelecionados.includes(data) &&
+                                      produtosSelecionados.length === 1
+                                    }
                                     onChange={(e) => {
                                       const value = data;
                                       setProdutosSelecionados((prev) =>
                                         e.target.checked
                                           ? [...prev, value]
                                           : prev.length > 1
-                                            ? prev.filter((item) => item !== value)
-                                            : prev
+                                            ? prev.filter(
+                                                (item) => item !== value,
+                                              )
+                                            : prev,
                                       );
                                     }}
                                   />
@@ -295,7 +317,10 @@ export default function RelatoriosFinalizadosCrm() {
                                 >
                                   <Text>{data}</Text>
                                   <Switch
-                                    isDisabled={scoresSelecionados.includes(data) && scoresSelecionados.length === 1}
+                                    isDisabled={
+                                      scoresSelecionados.includes(data) &&
+                                      scoresSelecionados.length === 1
+                                    }
                                     isChecked={scoresSelecionados.includes(
                                       data,
                                     )}
@@ -305,8 +330,8 @@ export default function RelatoriosFinalizadosCrm() {
                                         e.target.checked
                                           ? [...prev, value]
                                           : prev.filter(
-                                            (item) => item !== value,
-                                          ),
+                                              (item) => item !== value,
+                                            ),
                                       );
                                     }}
                                   />
@@ -343,7 +368,10 @@ export default function RelatoriosFinalizadosCrm() {
                                 >
                                   <Text>{data}</Text>
                                   <Switch
-                                    isDisabled={origensSelecionadas.includes(data) && origensSelecionadas.length === 1}
+                                    isDisabled={
+                                      origensSelecionadas.includes(data) &&
+                                      origensSelecionadas.length === 1
+                                    }
                                     isChecked={origensSelecionadas.includes(
                                       data,
                                     )}
@@ -353,8 +381,8 @@ export default function RelatoriosFinalizadosCrm() {
                                         e.target.checked
                                           ? [...prev, value]
                                           : prev.filter(
-                                            (item) => item !== value,
-                                          ),
+                                              (item) => item !== value,
+                                            ),
                                       );
                                     }}
                                   />
@@ -480,9 +508,9 @@ export default function RelatoriosFinalizadosCrm() {
 
       {isLoading ? (
         <Stack>
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
         </Stack>
       ) : (
         <Flex mt={4} gap={2}>
@@ -491,7 +519,6 @@ export default function RelatoriosFinalizadosCrm() {
           </Flex>
         </Flex>
       )}
-
     </Flex>
   );
 }

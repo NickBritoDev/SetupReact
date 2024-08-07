@@ -98,7 +98,7 @@ export default function NavbarComponent() {
               <button>
                 <FaHome
                   onClick={() => {
-                    navigate("/admin/home");
+                    navigate("/admin/crm");
                   }}
                   style={{ marginRight: "20px" }}
                   color={"black"}

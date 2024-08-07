@@ -37,7 +37,7 @@ export default function FormComponent() {
         position: "top-right",
         isClosable: true,
       });
-      navigate("/admin/home");
+      navigate("/admin/crm");
     }
   }, [isSuccess]);
 
