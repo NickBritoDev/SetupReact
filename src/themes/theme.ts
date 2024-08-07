@@ -10,7 +10,7 @@ const theme = extendTheme({
         height: "100%",
       },
       "::-webkit-scrollbar": {
-        width: "2px",
+        width: "10px",
       },
       "::-webkit-scrollbar-track": {
         background: "transparent",

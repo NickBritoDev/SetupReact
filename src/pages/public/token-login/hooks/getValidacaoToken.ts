@@ -1,10 +1,7 @@
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
 import connectApi from "../../../../api/connect";
 
 const useGetValidacaoToken = (token: string | null) => {
-  const navigate = useNavigate();
-
   return useQuery(
     "login_useGetValidacaoToken",
     async () => {
@@ -15,7 +12,8 @@ const useGetValidacaoToken = (token: string | null) => {
         return response.data.token;
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
-          navigate("public/login");
+          window.location.href =
+            "https://www.portalmaisvalor.com/paginas/login.html";
         }
         throw error;
       }

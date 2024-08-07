@@ -27,10 +27,8 @@ const Routes: React.FC = () => {
   const toast = useToast();
   const { keyStatus } = useKey();
   const { isAdmin, temPermissao, isMatriz, isLoading } = useAuthHelpers();
-
   const query = new URLSearchParams(location.search);
   const tokenFromUrl = query.get("TK");
-
   const { data, isError } = useGetValidacaoToken(tokenFromUrl);
 
   useEffect(() => {
@@ -91,7 +89,8 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <LayoutAdmin />
       ) : (
-        <Navigate to="/admin/crm" replace />
+        (window.location.href =
+          "https://www.portalmaisvalor.com/paginas/login.html")
       ),
       children: [
         {
@@ -184,7 +183,8 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <Navigate to="/admin/crm" replace />
       ) : (
-        <Navigate to="/admin/crm" replace />
+        (window.location.href =
+          "https://www.portalmaisvalor.com/paginas/login.html")
       ),
     },
   ]);
