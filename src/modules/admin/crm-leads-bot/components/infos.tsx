@@ -1,7 +1,6 @@
 import {
   Text,
   Flex,
-  Heading,
   Divider,
   Button,
   useDisclosure,
@@ -10,14 +9,14 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
-} from "@chakra-ui/react";
+  DrawerCloseButton} from "@chakra-ui/react";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { formatDataHora, maskCPF } from "../../../../utils/mask/mascaras";
 import DialogStatusComponent from "./dialogStatus";
 import DialogObservacoesComponent from "./dialogObservacoes";
 import OraculoComponent from "./oraculo/oraculo";
 import { Key, useRef } from "react";
+import FormAlterarLeadComponent from "./form-alterar-lead";
 
 export default function InfosComponent({
   detalhesLeads,
@@ -42,9 +41,10 @@ export default function InfosComponent({
       </Flex>
 
       <Divider mb={2} />
-      <Flex alignItems={"center"} justifyContent={"flex-start"} gap={2}>
+      <Flex flexDir={"column"} alignItems={"center"} justifyContent={"flex-start"} gap={2}>
         <>
           <Button
+            mt={-3}
             ref={btnRef}
             onClick={onOpen}
             display={"flex"}
@@ -53,9 +53,7 @@ export default function InfosComponent({
             w={"100%"}
             gap={4}
           >
-            <Heading mt={-0.5} size={"md"}>
-              MAIS INFORMAÇÕES
-            </Heading>
+            Mais Informações
             <BsInfoCircleFill color="#44B3CF" size={24} />
           </Button>
           <Drawer
@@ -106,7 +104,10 @@ export default function InfosComponent({
             </DrawerContent>
           </Drawer>
         </>
+
+        <FormAlterarLeadComponent detalhesLeads={detalhesLeads} />
       </Flex>
+
       <Divider mt={2} />
       <Text
         mt={4}

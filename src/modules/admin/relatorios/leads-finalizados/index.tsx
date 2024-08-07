@@ -2,10 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   Flex,
   Heading,
-  RadioGroup,
   Stack,
-  Radio,
-  Checkbox,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -24,6 +21,7 @@ import {
   Text,
   Spinner,
   Skeleton,
+  Switch,
 } from "@chakra-ui/react";
 import TableComponent from "./components/table";
 import GraphComponent from "./components/grafico";
@@ -47,8 +45,7 @@ export default function RelatoriosFinalizadosCrm() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
 
-  const { useRequestPostRelatoriosFinalizados } =
-    usePostRelatoriosFinalizados();
+  const { useRequestPostRelatoriosFinalizados, isLoading } = usePostRelatoriosFinalizados();
 
   const buscaDadosRelatorio = async () => {
     const payload = {
@@ -92,6 +89,10 @@ export default function RelatoriosFinalizadosCrm() {
       fetchData();
     }
   }, [filtros]);
+
+  useEffect(() => {
+    buscaDadosRelatorio();
+  }, [rangeData, produtosSelecionados, origensSelecionadas, scoresSelecionados]);
 
   function somarCampos(dados: any[]) {
     let totalContratoFechado = 0;
@@ -191,7 +192,7 @@ export default function RelatoriosFinalizadosCrm() {
                 <DrawerHeader>Modificar Filtros</DrawerHeader>
 
                 <DrawerBody>
-                  <Flex w={"100%"}>
+                  <Flex flexDir={"column"} w={"100%"}>
                     <Accordion
                       w={"100%"}
                       defaultIndex={[0]}
@@ -208,19 +209,20 @@ export default function RelatoriosFinalizadosCrm() {
                           </AccordionButton>
                         </h2>
                         <AccordionPanel pb={4}>
-                          <RadioGroup onChange={setRangeData} value={rangeData}>
-                            <Stack direction="column">
-                              {filtros?.data?.periodo?.map(
-                                (data: any, index: number) => (
-                                  <Radio key={index} value={data}>
-                                    {data}
-                                  </Radio>
-                                ),
-                              )}
-                            </Stack>
-                          </RadioGroup>
+                          <Stack direction="column">
+                            {filtros?.data?.periodo?.map((data: any, index: number) => (
+                              <Flex key={index} justifyContent="space-between" alignItems="center">
+                                <Text>{data}</Text>
+                                <Switch
+                                  isChecked={rangeData === data}
+                                  onChange={() => setRangeData(data)}
+                                />
+                              </Flex>
+                            ))}
+                          </Stack>
                         </AccordionPanel>
                       </AccordionItem>
+
                     </Accordion>
                     <Accordion
                       w={"100%"}
@@ -241,21 +243,23 @@ export default function RelatoriosFinalizadosCrm() {
                           <Stack direction="column">
                             {filtros?.data?.listaProdutos?.map(
                               (data: any, index: number) => (
-                                <Checkbox
-                                  defaultChecked
-                                  key={index}
-                                  value={data}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    setProdutosSelecionados((prev) =>
-                                      e.target.checked
-                                        ? [...prev, value]
-                                        : prev.filter((item) => item !== value),
-                                    );
-                                  }}
-                                >
-                                  {data}
-                                </Checkbox>
+                                <Flex key={index} justifyContent="space-between" alignItems="center">
+                                  <Text>{data}</Text>
+                                  <Switch
+                                    isChecked={produtosSelecionados.includes(data)}
+                                    isDisabled={produtosSelecionados.includes(data) && produtosSelecionados.length === 1}
+                                    onChange={(e) => {
+                                      const value = data;
+                                      setProdutosSelecionados((prev) =>
+                                        e.target.checked
+                                          ? [...prev, value]
+                                          : prev.length > 1
+                                            ? prev.filter((item) => item !== value)
+                                            : prev
+                                      );
+                                    }}
+                                  />
+                                </Flex>
                               ),
                             )}
                           </Stack>
@@ -264,7 +268,7 @@ export default function RelatoriosFinalizadosCrm() {
                     </Accordion>
                   </Flex>
 
-                  <Flex w={"100%"}>
+                  <Flex flexDir={"column"} w={"100%"}>
                     <Accordion
                       w={"100%"}
                       defaultIndex={[0]}
@@ -284,21 +288,29 @@ export default function RelatoriosFinalizadosCrm() {
                           <Stack direction="column">
                             {filtros?.data?.listaScore?.map(
                               (data: any, index: number) => (
-                                <Checkbox
+                                <Flex
                                   key={index}
-                                  value={data}
-                                  defaultChecked
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    setScoresSelecionados((prev) =>
-                                      e.target.checked
-                                        ? [...prev, value]
-                                        : prev.filter((item) => item !== value),
-                                    );
-                                  }}
+                                  justifyContent="space-between"
+                                  alignItems="center"
                                 >
-                                  {data}
-                                </Checkbox>
+                                  <Text>{data}</Text>
+                                  <Switch
+                                    isDisabled={scoresSelecionados.includes(data) && scoresSelecionados.length === 1}
+                                    isChecked={scoresSelecionados.includes(
+                                      data,
+                                    )}
+                                    onChange={(e) => {
+                                      const value = data;
+                                      setScoresSelecionados((prev) =>
+                                        e.target.checked
+                                          ? [...prev, value]
+                                          : prev.filter(
+                                            (item) => item !== value,
+                                          ),
+                                      );
+                                    }}
+                                  />
+                                </Flex>
                               ),
                             )}
                           </Stack>
@@ -324,21 +336,29 @@ export default function RelatoriosFinalizadosCrm() {
                           <Stack direction="column">
                             {filtros?.data?.listaOrigens?.map(
                               (data: any, index: number) => (
-                                <Checkbox
+                                <Flex
                                   key={index}
-                                  value={data}
-                                  defaultChecked
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    setOrigensSelecionadas((prev) =>
-                                      e.target.checked
-                                        ? [...prev, value]
-                                        : prev.filter((item) => item !== value),
-                                    );
-                                  }}
+                                  justifyContent="space-between"
+                                  alignItems="center"
                                 >
-                                  {data}
-                                </Checkbox>
+                                  <Text>{data}</Text>
+                                  <Switch
+                                    isDisabled={origensSelecionadas.includes(data) && origensSelecionadas.length === 1}
+                                    isChecked={origensSelecionadas.includes(
+                                      data,
+                                    )}
+                                    onChange={(e) => {
+                                      const value = data;
+                                      setOrigensSelecionadas((prev) =>
+                                        e.target.checked
+                                          ? [...prev, value]
+                                          : prev.filter(
+                                            (item) => item !== value,
+                                          ),
+                                      );
+                                    }}
+                                  />
+                                </Flex>
                               ),
                             )}
                           </Stack>
@@ -349,11 +369,8 @@ export default function RelatoriosFinalizadosCrm() {
                 </DrawerBody>
 
                 <DrawerFooter>
-                  <Button colorScheme="red" mr={3} onClick={onClose}>
+                  <Button variant="outline" mr={3} onClick={onClose}>
                     Cancelar
-                  </Button>
-                  <Button onClick={buscaDadosRelatorio} colorScheme="green">
-                    Salvar
                   </Button>
                 </DrawerFooter>
               </DrawerContent>
@@ -461,11 +478,20 @@ export default function RelatoriosFinalizadosCrm() {
         </Flex>
       </Flex>
 
-      <Flex mt={4} gap={2}>
-        <Flex w={"100%"}>
-          <TableComponent dados={dados?.resultado} />
+      {isLoading ? (
+        <Stack>
+          <Skeleton height='20px' />
+          <Skeleton height='20px' />
+          <Skeleton height='20px' />
+        </Stack>
+      ) : (
+        <Flex mt={4} gap={2}>
+          <Flex w={"100%"}>
+            <TableComponent dados={dados?.resultado} />
+          </Flex>
         </Flex>
-      </Flex>
+      )}
+
     </Flex>
   );
 }

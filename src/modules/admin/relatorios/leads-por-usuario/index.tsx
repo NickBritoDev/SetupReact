@@ -1,7 +1,7 @@
 import {
   Button, Flex,
   Stack,
-  Checkbox,
+  Switch,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -17,13 +17,14 @@ import {
   DrawerCloseButton,
   Heading,
   useDisclosure,
+  Text,
+  Skeleton,
 } from "@chakra-ui/react";
 import { usePostRelatoriosPorUsuario } from "./hooks/usePostRelatoriosPorUsuario";
 import TableComponent from "./components/table";
 import { useEffect, useRef, useState } from "react";
 import { useGetFiltros } from "./hooks/useGetFiltros";
 import CardsComponent from "./components/card";
-import SkeletonComponent from "./components/skeleton";
 
 export default function RelatoriosPorUsuarioCrm() {
   const { useRequestPostRelatoriosPorUsuario, isLoading } = usePostRelatoriosPorUsuario();
@@ -90,9 +91,14 @@ export default function RelatoriosPorUsuarioCrm() {
 
         result?.sort((a: { qtde_concluido: number; }, b: { qtde_concluido: number; }) => b.qtde_concluido - a.qtde_concluido);
 
-        setTop3(result?.slice(0, 3));
+        setTop3(result.slice(0, 3));
 
-        setBottom3(result?.slice(-3));
+        const filteredBottom3 = result
+          .filter((item: { qtde_concluido: number; }) => item.qtde_concluido > 0)
+          .sort((a: { qtde_concluido: number; }, b: { qtde_concluido: number; }) => a.qtde_concluido - b.qtde_concluido)
+          .slice(0, 3);
+
+        setBottom3(filteredBottom3);
 
         const totais = somarTotais(result);
         setTotais(totais);
@@ -107,134 +113,156 @@ export default function RelatoriosPorUsuarioCrm() {
   }, [filtros]);
 
 
+  useEffect(() => {
+    buscaDadosRelatorio();
+  }, [produtosSelecionados, origensSelecionadas]);
+
+
+
   return (
     <>
-      {isLoading ? (
-        <SkeletonComponent />
-      ) : (
-        <Flex w={'100%'} flexDir={"column"}>
-          <Flex mt={-2} mb={2} alignItems={"center"} justifyContent={"space-between"}>
-            <Heading size={'md'}>Relatorios de Leads Por Usuario: CRM</Heading>
+      <Flex w={'100%'} flexDir={"column"}>
+        <Flex mt={-2} mb={2} alignItems={"center"} justifyContent={"space-between"}>
+          <Heading size={'md'}>Relatorios de Leads Por Usuario: CRM</Heading>
 
-            <>
-              <Button ref={btnRef} colorScheme="green" onClick={onOpen}>
-                Filtros
-              </Button>
-              <Drawer
-                size={"lg"}
-                isOpen={isOpen}
-                placement="right"
-                onClose={onClose}
-                finalFocusRef={btnRef}
-              >
-                <DrawerOverlay />
-                <DrawerContent>
-                  <DrawerCloseButton />
-                  <DrawerHeader>Modificar Filtros</DrawerHeader>
+          <>
+            <Button ref={btnRef} colorScheme="green" onClick={onOpen}>
+              Filtros
+            </Button>
+            <Drawer
+              size={"lg"}
+              isOpen={isOpen}
+              placement="right"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Modificar Filtros</DrawerHeader>
 
-                  <DrawerBody>
-                    <Accordion
-                      w={"100%"}
-                      defaultIndex={[0]}
-                      allowMultiple
-                      allowToggle
-                    >
-                      <AccordionItem>
-                        <h2>
-                          <AccordionButton>
-                            <Box as="span" flex="1" textAlign="left">
-                              Produto
-                            </Box>
-                            <AccordionIcon />
-                          </AccordionButton>
-                        </h2>
-                        <AccordionPanel pb={4}>
-                          <Stack direction="column">
-                            {filtros?.data?.listaProdutos?.map(
-                              (data: any, index: number) => (
-                                <Checkbox
-                                  defaultChecked
-                                  key={index}
-                                  value={data}
+                <DrawerBody>
+                  <Accordion
+                    w={"100%"}
+                    defaultIndex={[0]}
+                    allowMultiple
+                    allowToggle
+                  >
+                    <AccordionItem>
+                      <h2>
+                        <AccordionButton>
+                          <Box as="span" flex="1" textAlign="left">
+                            Produto
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Stack direction="column">
+                          {filtros?.data?.listaProdutos?.map(
+                            (data: any, index: number) => (
+                              <Flex key={index} justifyContent="space-between" alignItems="center">
+                                <Text>{data}</Text>
+                                <Switch
+                                  isChecked={produtosSelecionados.includes(data)}
+                                  isDisabled={produtosSelecionados.includes(data) && produtosSelecionados.length === 1}
                                   onChange={(e) => {
-                                    const value = e.target.value;
+                                    e.stopPropagation();
+                                    const value = data;
                                     setProdutosSelecionados((prev) =>
                                       e.target.checked
                                         ? [...prev, value]
-                                        : prev.filter((item) => item !== value),
+                                        : prev.length > 1
+                                          ? prev.filter((item) => item !== value)
+                                          : prev
                                     );
                                   }}
-                                >
-                                  {data}
-                                </Checkbox>
-                              ),
-                            )}
-                          </Stack>
-                        </AccordionPanel>
-                      </AccordionItem>
-                    </Accordion>
+                                />
+                              </Flex>
+                            ),
+                          )}
+                        </Stack>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
 
-                    <Accordion
-                      w={"100%"}
-                      defaultIndex={[0]}
-                      allowMultiple
-                      allowToggle
-                    >
-                      <AccordionItem>
-                        <h2>
-                          <AccordionButton>
-                            <Box as="span" flex="1" textAlign="left">
-                              Origem
-                            </Box>
-                            <AccordionIcon />
-                          </AccordionButton>
-                        </h2>
-                        <AccordionPanel pb={4}>
-                          <Stack direction="column">
-                            {filtros?.data?.listaOrigens?.map(
-                              (data: any, index: number) => (
-                                <Checkbox
-                                  key={index}
-                                  value={data}
-                                  defaultChecked
+                  <Accordion
+                    w={"100%"}
+                    defaultIndex={[0]}
+                    allowMultiple
+                    allowToggle
+                  >
+                    <AccordionItem>
+                      <h2>
+                        <AccordionButton>
+                          <Box as="span" flex="1" textAlign="left">
+                            Origem
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Stack direction="column">
+                          {filtros?.data?.listaOrigens?.map(
+                            (data: any, index: number) => (
+                              <Flex key={index} justifyContent="space-between" alignItems="center">
+                                <Text>{data}</Text>
+                                <Switch
+                                  isChecked={origensSelecionadas.includes(data)}
+                                  isDisabled={origensSelecionadas.includes(data) && origensSelecionadas.length === 1}
                                   onChange={(e) => {
-                                    const value = e.target.value;
+                                    e.stopPropagation();
+                                    const value = data;
                                     setOrigensSelecionadas((prev) =>
                                       e.target.checked
                                         ? [...prev, value]
-                                        : prev.filter((item) => item !== value),
+                                        : prev.length > 1
+                                          ? prev.filter((item) => item !== value)
+                                          : prev
                                     );
                                   }}
-                                >
-                                  {data}
-                                </Checkbox>
-                              ),
-                            )}
-                          </Stack>
-                        </AccordionPanel>
-                      </AccordionItem>
-                    </Accordion>
-                  </DrawerBody>
+                                />
+                              </Flex>
+                            ),
+                          )}
+                        </Stack>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </DrawerBody>
 
-                  <DrawerFooter>
-                    <Button colorScheme="red" mr={3} onClick={onClose}>
-                      Cancelar
-                    </Button>
-                    <Button onClick={buscaDadosRelatorio} colorScheme="green">
-                      Salvar
-                    </Button>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
-            </>
+                <DrawerFooter>
+                  <Button variant="outline" mr={3} onClick={onClose}>
+                    Cancelar
+                  </Button>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+          </>
 
-          </Flex >
-
-          <CardsComponent bottom3={bottom3} top3={top3} total={total} />
-          <TableComponent dados={dados} />
         </Flex >
-      )
-      }
+
+
+        {isLoading ? (
+          <Stack>
+            <Skeleton height='20px' />
+            <Skeleton height='20px' />
+            <Skeleton height='20px' />
+          </Stack>
+        ) : (
+          <CardsComponent bottom3={bottom3} top3={top3} total={total} />
+        )}
+        
+        {isLoading ? (
+          <Stack>
+            <Skeleton height='20px' />
+            <Skeleton height='20px' />
+            <Skeleton height='20px' />
+          </Stack>
+        ) : (
+          <TableComponent dados={dados} />
+        )}
+      </Flex >
     </>
 
   )

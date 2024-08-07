@@ -50,16 +50,26 @@ export const toNumber = (value: string | number): number => {
 };
 
 export const maskReal = (value: number | string): string => {
-  value = toNumber(value).toLocaleString("PT-br");
-
-  const index = value.indexOf(",");
-
-  if (value.substring(index + 1).length == 1) {
-    value = value + "0";
+  if (value === undefined || value === null || value === '') {
+    return 'R$ 0,00';
   }
 
-  return value;
+  value = value.toString().replace(/\D/g, '');
+  
+  if (value.length === 0) {
+    return 'R$ 0,00';
+  }
+
+  value = (parseFloat(value) / 100).toFixed(2).toString();
+
+  value = value.replace('.', ',');
+
+  const parts = value.split(',');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  return `R$ ${parts.join(',')}`;
 };
+
 
 export const formatDataHora = (d: any) => {
   if (d === null || d === "" || d === undefined) {
