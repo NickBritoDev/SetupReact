@@ -45,12 +45,16 @@ import { useMobile } from "@helpers/responsividade/useMediaQuery";
 import { FcFilledFilter } from "react-icons/fc";
 
 const ModalComponent: React.FC = () => {
-  const hoje = new Date().toISOString().split('T')[0];
+  const hoje = new Date().toISOString().split("T")[0];
   const [rangeData, setRangeData] = useState<string>(hoje);
-  const [produtosSelecionados, setProdutosSelecionados] = useState<string[]>([]);
+  const [produtosSelecionados, setProdutosSelecionados] = useState<string[]>(
+    [],
+  );
   const [origensSelecionadas, setOrigensSelecionadas] = useState<string[]>([]);
-  const [statusSelecionados, setStatusSelecionados] = useState<string[]>(['1']);
-  const [subStatusSelecionados, setSubStatusSelecionados] = useState<string[]>([]);
+  const [statusSelecionados, setStatusSelecionados] = useState<string[]>(["1"]);
+  const [subStatusSelecionados, setSubStatusSelecionados] = useState<string[]>(
+    [],
+  );
 
   const payload = {
     periodo: rangeData,
@@ -60,19 +64,20 @@ const ModalComponent: React.FC = () => {
     subStatus: subStatusSelecionados,
   };
 
-
   const filtros = useGetFiltros();
   const { data: minhaConta } = useGetMinhaConta();
   const { data: contatos } = useGetLeads(payload);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isOpenFiltros, onOpen: onOpenFiltros, onClose: onCloseFiltros } = useDisclosure();
+  const {
+    isOpen: isOpenFiltros,
+    onOpen: onOpenFiltros,
+    onClose: onCloseFiltros,
+  } = useDisclosure();
   const btnRef = useRef(null);
 
   const [detalhesLeads, setDetalhesLeads] = useState<Contato | any>(contatos);
   const [hideRecepcao, setHideRecepcao] = useState(false);
-
-
 
   const openDetailsLeads = (contato: Contato) => {
     setDetalhesLeads(contato);
@@ -89,7 +94,7 @@ const ModalComponent: React.FC = () => {
     };
 
     try {
-      console.log('buscou na funcao')
+      console.log("buscou na funcao");
       const resultado = await useGetLeads(payload);
       setDetalhesLeads(resultado);
     } catch (error) {
@@ -111,7 +116,7 @@ const ModalComponent: React.FC = () => {
         subStatus: subStatusSelecionados,
       };
 
-      console.log('buscou no  useeffect')
+      console.log("buscou no  useeffect");
       const resultado = await useGetLeads(payload);
       setDetalhesLeads(resultado);
     };
@@ -140,8 +145,10 @@ const ModalComponent: React.FC = () => {
           label="Gerenciador de Instâncias 64x"
         >
           <Button
-            display={ 
-              minhaConta.nome === "BRUNO CEZAR PEREIRA DE SOUZA"  || minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED'
+            display={
+              minhaConta.nome === "BRUNO CEZAR PEREIRA DE SOUZA" ||
+              minhaConta.nome ===
+                "ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED"
                 ? "flex"
                 : "none"
             }
@@ -182,10 +189,28 @@ const ModalComponent: React.FC = () => {
         <ModalContent>
           <ModalBody pos={"relative"}>
             <Flex alignItems={"center"} justifyContent={"center"}>
-
               <>
-                <Flex pos={"absolute"} top={0} bg={'#229544'} pl={4} py={1} boxShadow={'xl'} borderRadius={'0 0 10px 10px'} w={'100%'} alignItems={"center"} justifyContent={"space-between"}>
-                  <Button display={"flex"} alignItems={"center"} justifyContent={"center"} ref={btnRef} bg={'white'} color={'#229544'} onClick={onOpenFiltros}>
+                <Flex
+                  pos={"absolute"}
+                  top={0}
+                  bg={"#229544"}
+                  pl={4}
+                  py={1}
+                  boxShadow={"xl"}
+                  borderRadius={"0 0 10px 10px"}
+                  w={"100%"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                >
+                  <Button
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    ref={btnRef}
+                    bg={"white"}
+                    color={"#229544"}
+                    onClick={onOpenFiltros}
+                  >
                     <Text>ABRIR FILTROS</Text> <FcFilledFilter size={22} />
                   </Button>
 
@@ -197,7 +222,11 @@ const ModalComponent: React.FC = () => {
                         justifyContent={"center"}
                         gap={2}
                       >
-                        <Avatar size={"sm"} name={minhaConta?.nome} src={minhaConta?.foto} />
+                        <Avatar
+                          size={"sm"}
+                          name={minhaConta?.nome}
+                          src={minhaConta?.foto}
+                        />
 
                         <Flex
                           display={useMobile() ? "none" : "flex"}
@@ -205,7 +234,9 @@ const ModalComponent: React.FC = () => {
                           alignItems={"flex-end"}
                           justifyContent={"center"}
                         >
-                          <Text fontWeight={"semibold"}>{minhaConta?.nome}</Text>
+                          <Text fontWeight={"semibold"}>
+                            {minhaConta?.nome}
+                          </Text>
                           <Text
                             color={"brand.invert_color_subtitle"}
                             fontWeight={"semibold"}
@@ -232,7 +263,12 @@ const ModalComponent: React.FC = () => {
                   </Box>
                 </Flex>
 
-                <Drawer size={"sm"} isOpen={isOpenFiltros} placement="left" onClose={onCloseFiltros}>
+                <Drawer
+                  size={"sm"}
+                  isOpen={isOpenFiltros}
+                  placement="left"
+                  onClose={onCloseFiltros}
+                >
                   <DrawerOverlay />
                   <DrawerContent>
                     <DrawerCloseButton />
@@ -240,113 +276,201 @@ const ModalComponent: React.FC = () => {
 
                     <DrawerBody>
                       <Flex flexDir={"column"} w={"100%"}>
-                        <Accordion w={"100%"} defaultIndex={[0]} allowMultiple allowToggle>
+                        <Accordion
+                          w={"100%"}
+                          defaultIndex={[0]}
+                          allowMultiple
+                          allowToggle
+                        >
                           <AccordionItem>
                             <h2>
                               <AccordionButton>
-                                <Box as="span" flex="1" textAlign="left">Data</Box>
+                                <Box as="span" flex="1" textAlign="left">
+                                  Data
+                                </Box>
                                 <AccordionIcon />
                               </AccordionButton>
                             </h2>
                             <AccordionPanel pb={4}>
                               <Stack direction="column">
-                                <Input type="date" value={rangeData} onChange={(e) => setRangeData(e.target.value)} />
+                                <Input
+                                  type="date"
+                                  value={rangeData}
+                                  onChange={(e) => setRangeData(e.target.value)}
+                                />
                               </Stack>
                             </AccordionPanel>
                           </AccordionItem>
                         </Accordion>
 
-                        <Accordion w={"100%"} defaultIndex={[0]} allowMultiple allowToggle>
+                        <Accordion
+                          w={"100%"}
+                          defaultIndex={[0]}
+                          allowMultiple
+                          allowToggle
+                        >
                           <AccordionItem>
                             <h2>
                               <AccordionButton>
-                                <Box as="span" flex="1" textAlign="left">Produto</Box>
+                                <Box as="span" flex="1" textAlign="left">
+                                  Produto
+                                </Box>
                                 <AccordionIcon />
                               </AccordionButton>
                             </h2>
                             <AccordionPanel pb={4}>
                               <Stack direction="column">
-                                {filtros?.data?.listaProdutos?.map((data: any, index: any) => (
-                                  <Flex key={index} justifyContent="space-between" alignItems="center">
-                                    <Text>{data}</Text>
-                                    <Switch
-                                      isChecked={produtosSelecionados.includes(data)}
-                                      onChange={(e) => {
-                                        setProdutosSelecionados(e.target.checked ? [data] : []);
-                                      }}
-                                    />
-                                  </Flex>
-                                ))}
-                              </Stack>
-                            </AccordionPanel>
-                          </AccordionItem>
-                        </Accordion>
-
-                        <Accordion w={"100%"} defaultIndex={[0]} allowMultiple allowToggle>
-                          <AccordionItem>
-                            <h2>
-                              <AccordionButton>
-                                <Box as="span" flex="1" textAlign="left">Status</Box>
-                                <AccordionIcon />
-                              </AccordionButton>
-                            </h2>
-                            <AccordionPanel pb={4}>
-                              <Stack direction="column">
-                                {filtros?.data?.listaStatus?.map((statusData: any, index: any) => (
-                                  <Flex key={index} flexDir="column">
-                                    <Flex justifyContent="space-between" alignItems="center">
-                                      <Text>{statusData.status}</Text>
+                                {filtros?.data?.listaProdutos?.map(
+                                  (data: any, index: any) => (
+                                    <Flex
+                                      key={index}
+                                      justifyContent="space-between"
+                                      alignItems="center"
+                                    >
+                                      <Text>{data}</Text>
                                       <Switch
-                                        isChecked={statusSelecionados.includes(statusData.id_status)}
+                                        isChecked={produtosSelecionados.includes(
+                                          data,
+                                        )}
                                         onChange={(e) => {
-                                          setStatusSelecionados(e.target.checked ? [statusData.id_status] : []);
-                                          setSubStatusSelecionados([]);
+                                          setProdutosSelecionados(
+                                            e.target.checked ? [data] : [],
+                                          );
                                         }}
                                       />
                                     </Flex>
-                                    {statusSelecionados.includes(statusData.id_status) && statusData.subStatus.length > 0 && (
-                                      <Stack px={6} mt={2}>
-                                        {statusData.subStatus.map((subStatus: any, subIndex: any) => (
-                                          <Flex key={subIndex} justifyContent="space-between" alignItems="center">
-                                            <Text fontWeight={'semibold'} fontSize={14}>{subStatus.subStatus}</Text>
-                                            <Switch
-                                              isChecked={subStatusSelecionados.includes(subStatus.id_substatus)}
-                                              onChange={(e) => {
-                                                setSubStatusSelecionados(e.target.checked ? [subStatus.id_substatus] : []);
-                                              }}
-                                            />
-                                          </Flex>
-                                        ))}
-                                      </Stack>
-                                    )}
-                                  </Flex>
-                                ))}
+                                  ),
+                                )}
                               </Stack>
                             </AccordionPanel>
                           </AccordionItem>
                         </Accordion>
 
-                        <Accordion w={"100%"} defaultIndex={[0]} allowMultiple allowToggle>
+                        <Accordion
+                          w={"100%"}
+                          defaultIndex={[0]}
+                          allowMultiple
+                          allowToggle
+                        >
                           <AccordionItem>
                             <h2>
                               <AccordionButton>
-                                <Box as="span" flex="1" textAlign="left">Origem</Box>
+                                <Box as="span" flex="1" textAlign="left">
+                                  Status
+                                </Box>
                                 <AccordionIcon />
                               </AccordionButton>
                             </h2>
                             <AccordionPanel pb={4}>
                               <Stack direction="column">
-                                {filtros?.data?.listaOrigens?.map((data: any, index: any) => (
-                                  <Flex key={index} justifyContent="space-between" alignItems="center">
-                                    <Text>{data}</Text>
-                                    <Switch
-                                      isChecked={origensSelecionadas.includes(data)}
-                                      onChange={(e) => {
-                                        setOrigensSelecionadas(e.target.checked ? [data] : []);
-                                      }}
-                                    />
-                                  </Flex>
-                                ))}
+                                {filtros?.data?.listaStatus?.map(
+                                  (statusData: any, index: any) => (
+                                    <Flex key={index} flexDir="column">
+                                      <Flex
+                                        justifyContent="space-between"
+                                        alignItems="center"
+                                      >
+                                        <Text>{statusData.status}</Text>
+                                        <Switch
+                                          isChecked={statusSelecionados.includes(
+                                            statusData.id_status,
+                                          )}
+                                          onChange={(e) => {
+                                            setStatusSelecionados(
+                                              e.target.checked
+                                                ? [statusData.id_status]
+                                                : [],
+                                            );
+                                            setSubStatusSelecionados([]);
+                                          }}
+                                        />
+                                      </Flex>
+                                      {statusSelecionados.includes(
+                                        statusData.id_status,
+                                      ) &&
+                                        statusData.subStatus.length > 0 && (
+                                          <Stack px={6} mt={2}>
+                                            {statusData.subStatus.map(
+                                              (
+                                                subStatus: any,
+                                                subIndex: any,
+                                              ) => (
+                                                <Flex
+                                                  key={subIndex}
+                                                  justifyContent="space-between"
+                                                  alignItems="center"
+                                                >
+                                                  <Text
+                                                    fontWeight={"semibold"}
+                                                    fontSize={14}
+                                                  >
+                                                    {subStatus.subStatus}
+                                                  </Text>
+                                                  <Switch
+                                                    isChecked={subStatusSelecionados.includes(
+                                                      subStatus.id_substatus,
+                                                    )}
+                                                    onChange={(e) => {
+                                                      setSubStatusSelecionados(
+                                                        e.target.checked
+                                                          ? [
+                                                              subStatus.id_substatus,
+                                                            ]
+                                                          : [],
+                                                      );
+                                                    }}
+                                                  />
+                                                </Flex>
+                                              ),
+                                            )}
+                                          </Stack>
+                                        )}
+                                    </Flex>
+                                  ),
+                                )}
+                              </Stack>
+                            </AccordionPanel>
+                          </AccordionItem>
+                        </Accordion>
+
+                        <Accordion
+                          w={"100%"}
+                          defaultIndex={[0]}
+                          allowMultiple
+                          allowToggle
+                        >
+                          <AccordionItem>
+                            <h2>
+                              <AccordionButton>
+                                <Box as="span" flex="1" textAlign="left">
+                                  Origem
+                                </Box>
+                                <AccordionIcon />
+                              </AccordionButton>
+                            </h2>
+                            <AccordionPanel pb={4}>
+                              <Stack direction="column">
+                                {filtros?.data?.listaOrigens?.map(
+                                  (data: any, index: any) => (
+                                    <Flex
+                                      key={index}
+                                      justifyContent="space-between"
+                                      alignItems="center"
+                                    >
+                                      <Text>{data}</Text>
+                                      <Switch
+                                        isChecked={origensSelecionadas.includes(
+                                          data,
+                                        )}
+                                        onChange={(e) => {
+                                          setOrigensSelecionadas(
+                                            e.target.checked ? [data] : [],
+                                          );
+                                        }}
+                                      />
+                                    </Flex>
+                                  ),
+                                )}
                               </Stack>
                             </AccordionPanel>
                           </AccordionItem>
@@ -355,11 +479,12 @@ const ModalComponent: React.FC = () => {
                     </DrawerBody>
 
                     <DrawerFooter>
-                      <Button variant="outline" mr={3} onClick={onCloseFiltros}>Cancelar</Button>
+                      <Button variant="outline" mr={3} onClick={onCloseFiltros}>
+                        Cancelar
+                      </Button>
                     </DrawerFooter>
                   </DrawerContent>
                 </Drawer>
-
               </>
 
               <SidebarComponent

@@ -18,10 +18,11 @@ const useGetLeads = (filters: any) => {
   if (origem) queryParams.push(`origem=${encodeURIComponent(origem)}`);
   if (produto) queryParams.push(`produto=${encodeURIComponent(produto)}`);
   if (status) queryParams.push(`id_status=${encodeURIComponent(status)}`);
-  if (subStatus) queryParams.push(`id_substatus=${encodeURIComponent(subStatus)}`);
+  if (subStatus)
+    queryParams.push(`id_substatus=${encodeURIComponent(subStatus)}`);
 
   // Converter array para string
-  const queryString = queryParams.length > 0 ? `?${queryParams.join('&')}` : '';
+  const queryString = queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
 
   return useQuery(
     ["useGetLeads", filters],
@@ -39,7 +40,7 @@ const useGetLeads = (filters: any) => {
       refetchOnWindowFocus: true,
       staleTime: 5000,
       refetchInterval: 5000,
-    }
+    },
   );
 };
 

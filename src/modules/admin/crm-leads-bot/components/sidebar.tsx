@@ -14,7 +14,7 @@ export default function SidebarComponent({
   detalhesLeads,
   openDetailsLeads,
 }: {
-  payload: any,
+  payload: any;
   detalhesLeads: any;
   openDetailsLeads: (contato: Contato) => void;
 }) {
@@ -24,18 +24,23 @@ export default function SidebarComponent({
   const cleanString = (str: string) => str.replace(/[^a-zA-Z0-9]/g, "");
 
   const sortedContatos = contatos
-    ?.filter((contato: { [s: string]: unknown; } | ArrayLike<unknown>) =>
+    ?.filter((contato: { [s: string]: unknown } | ArrayLike<unknown>) =>
       Object.values(contato).some((value) =>
         cleanString(String(value).toLowerCase()).includes(
           cleanString(searchTerm).toLowerCase(),
         ),
       ),
     )
-    .sort((a: { logs: { data_atualizacao: any; }[]; }, b: { logs: { data_atualizacao: any; }[]; }) => {
-      const aDate = new Date(a.logs[0]?.data_atualizacao || 0);
-      const bDate = new Date(b.logs[0]?.data_atualizacao || 0);
-      return bDate.getTime() - aDate.getTime();
-    });
+    .sort(
+      (
+        a: { logs: { data_atualizacao: any }[] },
+        b: { logs: { data_atualizacao: any }[] },
+      ) => {
+        const aDate = new Date(a.logs[0]?.data_atualizacao || 0);
+        const bDate = new Date(b.logs[0]?.data_atualizacao || 0);
+        return bDate.getTime() - aDate.getTime();
+      },
+    );
 
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -76,138 +81,140 @@ export default function SidebarComponent({
           </Text>
         )}
 
-        {sortedContatos?.map((contato: Contato, index: Key | null | undefined) => {
-          return (
-            <Box
-              bg={contato.idLead === detalhesLeads?.idLead ? "gray.100" : ""}
-              onClick={() => {
-                openDetailsLeads(contato);
-              }}
-              cursor={"pointer"}
-              p={2}
-              boxShadow={"lg"}
-              key={index}
-            >
-              <Flex
-                w={"100%"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
+        {sortedContatos?.map(
+          (contato: Contato, index: Key | null | undefined) => {
+            return (
+              <Box
+                bg={contato.idLead === detalhesLeads?.idLead ? "gray.100" : ""}
+                onClick={() => {
+                  openDetailsLeads(contato);
+                }}
+                cursor={"pointer"}
+                p={2}
+                boxShadow={"lg"}
+                key={index}
               >
                 <Flex
-                  mb={4}
-                  mt={2}
-                  boxShadow={"lg"}
-                  rounded={"xl"}
-                  pr={2}
-                  pl={2}
-                  gap={2}
+                  w={"100%"}
                   alignItems={"center"}
-                  justifyContent={"center"}
+                  justifyContent={"space-between"}
                 >
-                  <Box boxShadow={"lg"} ml={-1.5} borderRadius={"50%"} p={2}>
-                    {contato.score === "Frio" && (
-                      <GiIceCube color="#44B3CF" size={22} />
-                    )}
-                    {contato.score === "Médio" && (
-                      <FaTemperatureArrowUp color="#F4B61D" size={22} />
-                    )}
-                    {contato.score === "Quente" && (
-                      <SiFireship color="#F44B1D" size={22} />
-                    )}
-                  </Box>
-                  <Text
-                    fontSize={14}
-                    fontWeight="semibold"
-                    isTruncated
-                    maxW="150px"
+                  <Flex
+                    mb={4}
+                    mt={2}
+                    boxShadow={"lg"}
+                    rounded={"xl"}
+                    pr={2}
+                    pl={2}
+                    gap={2}
+                    alignItems={"center"}
+                    justifyContent={"center"}
                   >
-                    {contato.nome}
-                  </Text>
+                    <Box boxShadow={"lg"} ml={-1.5} borderRadius={"50%"} p={2}>
+                      {contato.score === "Frio" && (
+                        <GiIceCube color="#44B3CF" size={22} />
+                      )}
+                      {contato.score === "Médio" && (
+                        <FaTemperatureArrowUp color="#F4B61D" size={22} />
+                      )}
+                      {contato.score === "Quente" && (
+                        <SiFireship color="#F44B1D" size={22} />
+                      )}
+                    </Box>
+                    <Text
+                      fontSize={14}
+                      fontWeight="semibold"
+                      isTruncated
+                      maxW="150px"
+                    >
+                      {contato.nome}
+                    </Text>
+                  </Flex>
+                  <Flex
+                    flexDir={"column"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    gap={2}
+                  >
+                    <Flex
+                      gap={1}
+                      flexDir={"column"}
+                      alignItems={"flex-end"}
+                      justifyContent={"flex-end"}
+                    >
+                      <Flex
+                        mt={4}
+                        alignItems={"center"}
+                        justifyContent={"flex-start"}
+                      >
+                        <FcClock size={18} />
+                        <Text fontSize={14} fontWeight={"semibold"}>
+                          {formatDataHora(
+                            contato.logs[0]?.data_atualizacao,
+                          ).slice(0, 6)}
+                        </Text>
+                      </Flex>
+                      <Badge
+                        variant={"solid"}
+                        bg={
+                          contato.status === "Novo"
+                            ? "#44B3CF"
+                            : contato.status === "Pendente"
+                              ? "#F4B61D"
+                              : contato.status === "Em Aberto"
+                                ? "#F44B1D"
+                                : contato.status === "Concluído"
+                                  ? "#229544"
+                                  : "black"
+                        }
+                      >
+                        {contato.status}
+                      </Badge>
+                    </Flex>
+                  </Flex>
                 </Flex>
                 <Flex
                   flexDir={"column"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  gap={2}
+                  alignItems={"flex-start"}
+                  justifyContent={"flex-start"}
                 >
                   <Flex
+                    alignItems={"center"}
+                    justifyContent={"flex-start"}
                     gap={1}
-                    flexDir={"column"}
-                    alignItems={"flex-end"}
-                    justifyContent={"flex-end"}
                   >
-                    <Flex
-                      mt={4}
-                      alignItems={"center"}
-                      justifyContent={"flex-start"}
-                    >
-                      <FcClock size={18} />
-                      <Text fontSize={14} fontWeight={"semibold"}>
-                        {formatDataHora(
-                          contato.logs[0]?.data_atualizacao,
-                        ).slice(0, 6)}
-                      </Text>
-                    </Flex>
-                    <Badge
-                      variant={"solid"}
-                      bg={
-                        contato.status === "Novo"
-                          ? "#44B3CF"
-                          : contato.status === "Pendente"
-                          ? "#F4B61D"
-                          : contato.status === "Em Aberto"
-                          ? "#F44B1D"
-                          : contato.status === "Concluído"
-                          ? "#229544"
-                          : "black"
-                      }
-                    >
-                      {contato.status}
-                    </Badge>
+                    <FcVlc size={18} />
+                    <Text fontSize={14} fontWeight={"semibold"}>
+                      {contato.produto}
+                    </Text>
+                  </Flex>
+                  <Flex
+                    mt={-1}
+                    alignItems={"center"}
+                    justifyContent={"flex-start"}
+                    gap={1}
+                  >
+                    <FcNeutralTrading size={18} />
+                    <Text fontSize={14} fontWeight={"semibold"}>
+                      {contato.origem}
+                    </Text>
+                  </Flex>
+                  <Flex
+                    mt={-1}
+                    alignItems={"center"}
+                    justifyContent={"flex-start"}
+                    gap={1}
+                  >
+                    <FcGenealogy size={18} />
+                    <Text fontSize={14} fontWeight={"semibold"}>
+                      {contato.substatus}
+                    </Text>
                   </Flex>
                 </Flex>
-              </Flex>
-              <Flex
-                flexDir={"column"}
-                alignItems={"flex-start"}
-                justifyContent={"flex-start"}
-              >
-                <Flex
-                  alignItems={"center"}
-                  justifyContent={"flex-start"}
-                  gap={1}
-                >
-                  <FcVlc size={18} />
-                  <Text fontSize={14} fontWeight={"semibold"}>
-                    {contato.produto}
-                  </Text>
-                </Flex>
-                <Flex
-                  mt={-1}
-                  alignItems={"center"}
-                  justifyContent={"flex-start"}
-                  gap={1}
-                >
-                  <FcNeutralTrading size={18} />
-                  <Text fontSize={14} fontWeight={"semibold"}>
-                    {contato.origem}
-                  </Text>
-                </Flex>
-                <Flex
-                  mt={-1}
-                  alignItems={"center"}
-                  justifyContent={"flex-start"}
-                  gap={1}
-                >
-                  <FcGenealogy size={18} />
-                  <Text fontSize={14} fontWeight={"semibold"}>
-                    {contato.substatus}
-                  </Text>
-                </Flex>
-              </Flex>
-            </Box>
-          );
-        })}
+              </Box>
+            );
+          },
+        )}
       </Flex>
     </Box>
   );
