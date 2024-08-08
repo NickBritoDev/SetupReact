@@ -20,6 +20,7 @@ import { useToast } from "@chakra-ui/react";
 import RelatoriosFinalizadosCrm from "@modules/admin/relatorios/leads-finalizados";
 import RelatoriosPorUsuarioCrm from "@modules/admin/relatorios/leads-por-usuario";
 import RelatoriosRecebidosCrm from "@modules/admin/relatorios/leads-recebidos";
+import Login from "@pages/public/login";
 
 const Routes: React.FC = () => {
   const { updateKeyStatus } = useKey();
@@ -165,6 +166,7 @@ const Routes: React.FC = () => {
       path: "/public",
       element: <LayoutPublic />,
       children: [
+        { path: "login", element: <Login /> },
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },
