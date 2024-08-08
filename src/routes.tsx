@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useRoutes, useLocation } from "react-router-dom";
 import { useKey } from "./context/auth/token-login/authContext";
 import { useGetValidacaoToken } from "@pages/public/token-login/hooks/getValidacaoToken";
@@ -23,14 +23,13 @@ import RelatoriosRecebidosCrm from "@modules/admin/relatorios/leads-recebidos";
 import Login from "@pages/public/login";
 
 const Routes: React.FC = () => {
-  const { updateKeyStatus } = useKey();
   const location = useLocation();
-  const toast = useToast();
-  const { keyStatus } = useKey();
-  const { isAdmin, temPermissao, isMatriz, isLoading } = useAuthHelpers();
   const query = new URLSearchParams(location.search);
   const tokenFromUrl = query.get("TK");
   const { data, isError } = useGetValidacaoToken(tokenFromUrl);
+  const toast = useToast();
+  const { keyStatus, updateKeyStatus } = useKey();
+  const { isAdmin, temPermissao, isMatriz, isLoading } = useAuthHelpers();
 
   useEffect(() => {
     if (data) {
@@ -77,12 +76,23 @@ const Routes: React.FC = () => {
         setTimeout(() => {
           window.location.href =
             "https://www.portalmaisvalor.com/paginas/login.html";
-        }, 1500);
+        }, 3000);
       }
     }, 60000);
 
     return () => clearInterval(intervalId);
   }, [keyStatus, toast]);
+
+  const [redirect, setRedirect] = useState(false);
+
+  useEffect(() => {
+    if (!keyStatus) {
+      const timer = setTimeout(() => {
+        setRedirect(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [keyStatus]);
 
   const routing = useRoutes([
     {
@@ -90,8 +100,12 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <LayoutAdmin />
       ) : (
-        (window.location.href =
-          "https://www.portalmaisvalor.com/paginas/login.html")
+        redirect && (
+          <Navigate
+            to="https://www.portalmaisvalor.com/paginas/login.html"
+            replace
+          />
+        )
       ),
       children: [
         {
@@ -185,8 +199,12 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <Navigate to="/admin/crm" replace />
       ) : (
-        (window.location.href =
-          "https://www.portalmaisvalor.com/paginas/login.html")
+        redirect && (
+          <Navigate
+            to="https://www.portalmaisvalor.com/paginas/login.html"
+            replace
+          />
+        )
       ),
     },
   ]);

@@ -23,7 +23,7 @@ const useGetValidacaoToken = (token: string | null) => {
       }
     },
     {
-      enabled: !!token, // Habilita a requisição apenas se o token estiver disponível
+      enabled: !!token,
       refetchOnWindowFocus: true,
       staleTime: 5000,
       refetchInterval: 30000,
