@@ -83,7 +83,7 @@ const Routes: React.FC = () => {
     return () => clearInterval(intervalId);
   }, [keyStatus, toast]);
 
-  const [redirect, setRedirect] = useState(false);
+  const [, setRedirect] = useState(false);
 
   useEffect(() => {
     if (!keyStatus) {
@@ -100,12 +100,8 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <LayoutAdmin />
       ) : (
-        redirect && (
-          <Navigate
-            to="https://www.portalmaisvalor.com/paginas/login.html"
-            replace
-          />
-        )
+        (window.location.href =
+          "https://www.portalmaisvalor.com/paginas/login.html")
       ),
       children: [
         {
@@ -199,12 +195,8 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <Navigate to="/admin/crm" replace />
       ) : (
-        redirect && (
-          <Navigate
-            to="https://www.portalmaisvalor.com/paginas/login.html"
-            replace
-          />
-        )
+        (window.location.href =
+          "https://www.portalmaisvalor.com/paginas/login.html")
       ),
     },
   ]);
