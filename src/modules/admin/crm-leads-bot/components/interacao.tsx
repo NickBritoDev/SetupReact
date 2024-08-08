@@ -84,14 +84,34 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
             produto={detalhesLeads?.produto}
             email={detalhesLeads?.email}
           />
-          {minhaConta.nome === "BRUNO CEZAR PEREIRA DE SOUZA" ? (
-            <>
-              <DialogWhatsappComponent
-                produto={detalhesLeads?.produto}
-                telefone={removePrefix(detalhesLeads.telefone)}
-                idLead={detalhesLeads.idLead}
-                nome={detalhesLeads?.nome}
-              />
+          {minhaConta.nome === "BRUNO CEZAR PEREIRA DE SOUZA" || minhaConta.nome === 'ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED'
+            ? (
+              <>
+                <DialogWhatsappComponent
+                  produto={detalhesLeads?.produto}
+                  telefone={removePrefix(detalhesLeads.telefone)}
+                  idLead={detalhesLeads.idLead}
+                  nome={detalhesLeads?.nome}
+                />
+                <Tooltip hasArrow placement="top" label="Enviar whatsapp">
+                  <Button
+                    as="a"
+                    href={`https://api.whatsapp.com/send?phone=+55${removePrefix(detalhesLeads.telefone)}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    w={"100%"}
+                    colorScheme="green"
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"space-between"}
+                    gap={2}
+                  >
+                    <Text>Abrir WhatsApp</Text>
+                    <SiWhatsapp size={22} />
+                  </Button>
+                </Tooltip>
+              </>
+            ) : (
               <Tooltip hasArrow placement="top" label="Enviar whatsapp">
                 <Button
                   as="a"
@@ -109,26 +129,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
                   <SiWhatsapp size={22} />
                 </Button>
               </Tooltip>
-            </>
-          ) : (
-            <Tooltip hasArrow placement="top" label="Enviar whatsapp">
-              <Button
-                as="a"
-                href={`https://api.whatsapp.com/send?phone=+55${removePrefix(detalhesLeads.telefone)}&text=Olá, ${detalhesLeads.nome}, me chamo ${nomeFormatado} e vim pelo seu interesse em contratar ${detalhesLeads.produto} e gostaria de te ajudar a escolher a melhor opção, podemos conversar?`}
-                target="_blank"
-                rel="noopener noreferrer"
-                w={"100%"}
-                colorScheme="green"
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                gap={2}
-              >
-                <Text>Abrir WhatsApp</Text>
-                <SiWhatsapp size={22} />
-              </Button>
-            </Tooltip>
-          )}
+            )}
         </Flex>
         {/* // <AgendaComponent detalhesLeads={detalhesLeads} /> */}
 

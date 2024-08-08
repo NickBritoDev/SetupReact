@@ -114,7 +114,6 @@ export default function DialogStatusComponent({ detalhesLeads }: any) {
     <>
       <Tooltip hasArrow placement="left" label="Alterar etapa do lead">
         <Button
-          mt={-4}
           onClick={onOpen}
           colorScheme="blue"
           w={"100%"}

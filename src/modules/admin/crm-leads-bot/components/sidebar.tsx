@@ -7,29 +7,31 @@ import { Contato } from "../types/types";
 import { FaTemperatureArrowUp } from "react-icons/fa6";
 import { formatDataHora } from "../../../../utils/mask/mascaras";
 import { FcClock, FcGenealogy, FcNeutralTrading, FcVlc } from "react-icons/fc";
+import { useGetLeads } from "../hooks/useGetLeads";
 
 export default function SidebarComponent({
+  payload,
   detalhesLeads,
-  filteredContatos,
   openDetailsLeads,
 }: {
+  payload: any,
   detalhesLeads: any;
-  filteredContatos: Contato[];
   openDetailsLeads: (contato: Contato) => void;
 }) {
+  const { data: contatos } = useGetLeads(payload);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const cleanString = (str: string) => str.replace(/[^a-zA-Z0-9]/g, "");
 
-  const sortedContatos = filteredContatos
-    .filter((contato) =>
+  const sortedContatos = contatos
+    ?.filter((contato: { [s: string]: unknown; } | ArrayLike<unknown>) =>
       Object.values(contato).some((value) =>
         cleanString(String(value).toLowerCase()).includes(
           cleanString(searchTerm).toLowerCase(),
         ),
       ),
     )
-    .sort((a, b) => {
+    .sort((a: { logs: { data_atualizacao: any; }[]; }, b: { logs: { data_atualizacao: any; }[]; }) => {
       const aDate = new Date(a.logs[0]?.data_atualizacao || 0);
       const bDate = new Date(b.logs[0]?.data_atualizacao || 0);
       return bDate.getTime() - aDate.getTime();
@@ -68,13 +70,13 @@ export default function SidebarComponent({
         />
       </Box>
       <Flex pt={7} position={"relative"} h={"100vh"} flexDir={"column"}>
-        {sortedContatos.length <= 0 && (
+        {sortedContatos?.length <= 0 && (
           <Text mx={"auto"} mt={2} fontWeight={"semibold"}>
             😅 Nenhum lead até o momento...
           </Text>
         )}
 
-        {sortedContatos.map((contato, index: Key | null | undefined) => {
+        {sortedContatos?.map((contato: Contato, index: Key | null | undefined) => {
           return (
             <Box
               bg={contato.idLead === detalhesLeads?.idLead ? "gray.100" : ""}
@@ -152,12 +154,12 @@ export default function SidebarComponent({
                         contato.status === "Novo"
                           ? "#44B3CF"
                           : contato.status === "Pendente"
-                            ? "#F4B61D"
-                            : contato.status === "Em Aberto"
-                              ? "#F44B1D"
-                              : contato.status === "Concluído"
-                                ? "#229544"
-                                : "black"
+                          ? "#F4B61D"
+                          : contato.status === "Em Aberto"
+                          ? "#F44B1D"
+                          : contato.status === "Concluído"
+                          ? "#229544"
+                          : "black"
                       }
                     >
                       {contato.status}

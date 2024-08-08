@@ -36,7 +36,7 @@ export default function InfosComponent({
         <OraculoComponent />
       </Flex>
 
-      <Flex mb={2} gap={1} w={"100%"}>
+      <Flex mt={-4} mb={2} gap={1} w={"100%"} alignItems={"center"} justifyContent={"center"}>
         <DialogStatusComponent detalhesLeads={detalhesLeads} />
         <OraculoComponent detalhesLeads={detalhesLeads} />
       </Flex>
