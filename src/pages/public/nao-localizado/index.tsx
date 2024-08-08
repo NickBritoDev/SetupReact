@@ -10,10 +10,8 @@ import {
 import imgNaoLocalizado from "./image/nao-localizado.png";
 import { useMobile } from "../../../helpers/responsividade/useMediaQuery";
 import { MdLogout } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 export default function NaoLocalizado404() {
-  const navigate = useNavigate();
   return (
     <Flex
       flexDir={"column"}
@@ -57,7 +55,8 @@ export default function NaoLocalizado404() {
       <Tooltip mr={-4} hasArrow label="Sair" placement="right">
         <Button
           onClick={() => {
-            navigate("/");
+            window.location.href =
+              "https://www.portalmaisvalor.com/paginas/login.html";
           }}
           mt={4}
           gap={2}

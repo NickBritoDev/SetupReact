@@ -6,6 +6,7 @@ import { useGetValidacaoToken } from "@pages/public/token-login/hooks/getValidac
 import LayoutAdmin from "./layout/admin";
 import LayoutPublic from "./layout/public";
 
+// import Login from "@pages/public/login";
 import Home from "./pages/admin/home";
 import Perfil from "./pages/admin/perfil";
 import TokenLogin from "./pages/public/token-login";
@@ -20,7 +21,6 @@ import { useToast } from "@chakra-ui/react";
 import RelatoriosFinalizadosCrm from "@modules/admin/relatorios/leads-finalizados";
 import RelatoriosPorUsuarioCrm from "@modules/admin/relatorios/leads-por-usuario";
 import RelatoriosRecebidosCrm from "@modules/admin/relatorios/leads-recebidos";
-import Login from "@pages/public/login";
 
 const Routes: React.FC = () => {
   const location = useLocation();
@@ -83,7 +83,7 @@ const Routes: React.FC = () => {
     return () => clearInterval(intervalId);
   }, [keyStatus, toast]);
 
-  const [redirect, setRedirect] = useState(false);
+  const [, setRedirect] = useState(false);
 
   useEffect(() => {
     if (!keyStatus) {
@@ -100,12 +100,7 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <LayoutAdmin />
       ) : (
-        redirect && (
-          <Navigate
-            to="https://www.portalmaisvalor.com/paginas/login.html"
-            replace
-          />
-        )
+        <Navigate to="/public/nao-autorizado" replace />
       ),
       children: [
         {
@@ -180,7 +175,7 @@ const Routes: React.FC = () => {
       path: "/public",
       element: <LayoutPublic />,
       children: [
-        { path: "login", element: <Login /> },
+        // { path: "login", element: <Login /> },
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },
@@ -199,12 +194,7 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <Navigate to="/admin/crm" replace />
       ) : (
-        redirect && (
-          <Navigate
-            to="https://www.portalmaisvalor.com/paginas/login.html"
-            replace
-          />
-        )
+        <Navigate to="/public/nao-autorizado" replace />
       ),
     },
   ]);
