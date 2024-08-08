@@ -20,7 +20,7 @@ import { useToast } from "@chakra-ui/react";
 import RelatoriosFinalizadosCrm from "@modules/admin/relatorios/leads-finalizados";
 import RelatoriosPorUsuarioCrm from "@modules/admin/relatorios/leads-por-usuario";
 import RelatoriosRecebidosCrm from "@modules/admin/relatorios/leads-recebidos";
-// import Login from "@pages/public/login";
+import Login from "@pages/public/login";
 
 const Routes: React.FC = () => {
   const location = useLocation();
@@ -83,7 +83,7 @@ const Routes: React.FC = () => {
     return () => clearInterval(intervalId);
   }, [keyStatus, toast]);
 
-  const [, setRedirect] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     if (!keyStatus) {
@@ -100,8 +100,12 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <LayoutAdmin />
       ) : (
-        (window.location.href =
-          "https://www.portalmaisvalor.com/paginas/login.html")
+        redirect && (
+          <Navigate
+            to="https://www.portalmaisvalor.com/paginas/login.html"
+            replace
+          />
+        )
       ),
       children: [
         {
@@ -176,7 +180,7 @@ const Routes: React.FC = () => {
       path: "/public",
       element: <LayoutPublic />,
       children: [
-        // { path: "login", element: <Login /> },
+        { path: "login", element: <Login /> },
         { path: "token/login", element: <TokenLogin /> },
         { path: "nao-localizado", element: <NaoLocalizado404 /> },
         { path: "nao-autorizado", element: <NaoAutorizado401 /> },
@@ -195,8 +199,12 @@ const Routes: React.FC = () => {
       element: keyStatus ? (
         <Navigate to="/admin/crm" replace />
       ) : (
-        (window.location.href =
-          "https://www.portalmaisvalor.com/paginas/login.html")
+        redirect && (
+          <Navigate
+            to="https://www.portalmaisvalor.com/paginas/login.html"
+            replace
+          />
+        )
       ),
     },
   ]);
