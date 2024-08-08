@@ -5,6 +5,10 @@ const useGetValidacaoToken = (token: string | null) => {
   return useQuery(
     "login_useGetValidacaoToken",
     async () => {
+      if (!token) {
+        throw new Error("Token not available");
+      }
+
       try {
         const response = await connectApi.get(
           `/v1/usuarios/auth/login?h=${token}`,
@@ -19,7 +23,7 @@ const useGetValidacaoToken = (token: string | null) => {
       }
     },
     {
-      enabled: !!token,
+      enabled: !!token, // Habilita a requisição apenas se o token estiver disponível
       refetchOnWindowFocus: true,
       staleTime: 5000,
       refetchInterval: 30000,
