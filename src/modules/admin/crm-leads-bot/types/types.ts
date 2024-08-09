@@ -28,6 +28,7 @@ export interface Log {
 }
 
 export interface Contato {
+  [x: string]: any;
   payload?: any;
   substatus: string;
   idLead: number;

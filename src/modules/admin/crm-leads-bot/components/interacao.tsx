@@ -34,7 +34,7 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
         justifyContent={"center"}
       >
         <Image w={"130px"} src={user} alt="foto do usuario card" />
-        <Heading textAlign={"center"} mt={-4}>
+        <Heading size={"md"} textAlign={"center"} mt={-4}>
           {detalhesLeads?.nome}
         </Heading>
         <Text
