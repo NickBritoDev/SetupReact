@@ -45,8 +45,7 @@ import { useMobile } from "@helpers/responsividade/useMediaQuery";
 import { FcFilledFilter } from "react-icons/fc";
 
 const ModalComponent: React.FC = () => {
-  const hoje = new Date().toISOString().split("T")[0];
-  const [rangeData, setRangeData] = useState<string>(hoje);
+  const [rangeData, setRangeData] = useState<string>("");
   const [produtosSelecionados, setProdutosSelecionados] = useState<string[]>(
     [],
   );
@@ -150,7 +149,8 @@ const ModalComponent: React.FC = () => {
               minhaConta.nome ===
                 "ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED" ||
               minhaConta.nome ===
-                "CAIO CASTRO PORFIRO DE ALMEIDA /X-PARCEIRO RC CRED"
+                "CAIO CASTRO PORFIRO DE ALMEIDA /X-PARCEIRO RC CRED" ||
+              minhaConta.nome === "RAFAEL PEREIRA DOS SANTOS"
                 ? "flex"
                 : "none"
             }
@@ -268,7 +268,7 @@ const ModalComponent: React.FC = () => {
                 <Drawer
                   size={"sm"}
                   isOpen={isOpenFiltros}
-                  placement="left"
+                  placement="right"
                   onClose={onCloseFiltros}
                 >
                   <DrawerOverlay />

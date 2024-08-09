@@ -63,13 +63,11 @@ export default function EnviarArquivosComponents({ idLead, telefone }: any) {
   return (
     <Menu>
       <MenuButton
-        _hover={{ bg: "gray.300" }}
-        borderRadius={"50%"}
         w={"45px"}
         h={"40px"}
-        bg={"gray.200"}
+        colorScheme="blue"
         as={IconButton}
-        icon={<FaPlus color="gray" />}
+        icon={<FaPlus color="white" />}
       ></MenuButton>
       <MenuList>
         <MenuItem

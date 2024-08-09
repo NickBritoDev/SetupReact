@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Spinner } from "@chakra-ui/react";
+import { Button, Flex, Spinner, Textarea } from "@chakra-ui/react";
 import { LuSendHorizonal } from "react-icons/lu";
 import EnviarArquivosComponents from "./enviarArquivos";
 import GravarAudioComponent from "./gravarAudio";
@@ -11,6 +11,17 @@ export default function InputWhatsappConponent({
   isLoading,
   enviarMensagem,
 }: any) {
+  const handleKeyUp = (e: {
+    [x: string]: any;
+    key: string;
+    shiftKey: boolean;
+  }) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      enviarMensagem();
+    }
+  };
+
   return (
     <Flex
       borderRadius={"10px 10px 0 0"}
@@ -18,15 +29,17 @@ export default function InputWhatsappConponent({
       align={"center"}
       justifyContent={"center"}
       pos={"fixed"}
-      bottom={0}
+      bottom={-1}
       right={0}
       w={"100%"}
       p={2}
       zIndex={99}
       bg={"white"}
     >
-      <EnviarArquivosComponents telefone={telefone} idLead={idLead} />
-      <Input
+      <Textarea
+        onKeyDown={handleKeyUp}
+        maxH={"1px"}
+        resize={"none"}
         value={mensagemOut}
         onChange={(e) => {
           setMensagemOut(e.target.value);
@@ -36,21 +49,21 @@ export default function InputWhatsappConponent({
         variant={"ghost"}
         placeholder="Digite a sua mensagem..."
       />
-      <Button
-        onClick={enviarMensagem}
-        colorScheme="none"
-        _hover={{ bg: "gray.300" }}
-        borderRadius={"50%"}
-        w={"50px"}
-        h={"50px"}
-        bg={"gray.200"}
-      >
-        {isLoading ? (
-          <Spinner size={"sm"} color="green" />
-        ) : (
-          <LuSendHorizonal color="gray" size={32} />
-        )}
-      </Button>
+      <Flex flexDir={"column"} gap={1}>
+        <EnviarArquivosComponents telefone={telefone} idLead={idLead} />
+        <Button
+          onClick={enviarMensagem}
+          colorScheme="green"
+          w={"45px"}
+          h={"40px"}
+        >
+          {isLoading ? (
+            <Spinner size={"sm"} color="green" />
+          ) : (
+            <LuSendHorizonal size={42} />
+          )}
+        </Button>
+      </Flex>
       <GravarAudioComponent telefone={telefone} idLead={idLead} />
     </Flex>
   );

@@ -88,7 +88,8 @@ export default function InteracaoComponent({ user, detalhesLeads }: any) {
           minhaConta.nome ===
             "ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED" ||
           minhaConta.nome ===
-            "CAIO CASTRO PORFIRO DE ALMEIDA /X-PARCEIRO RC CRED" ? (
+            "CAIO CASTRO PORFIRO DE ALMEIDA /X-PARCEIRO RC CRED" ||
+          minhaConta.nome === "RAFAEL PEREIRA DOS SANTOS" ? (
             <>
               <DialogWhatsappComponent
                 produto={detalhesLeads?.produto}

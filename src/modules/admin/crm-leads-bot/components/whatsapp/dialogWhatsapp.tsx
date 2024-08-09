@@ -159,7 +159,7 @@ export default function DialogWhatsappComponent({
             </Flex>
           </Flex>
 
-          <DrawerBody py={20} w={"100%"} pos={"relative"} ref={mensagemRef}>
+          <DrawerBody py={24} w={"100%"} pos={"relative"} ref={mensagemRef}>
             {carregamentoMsgs ? (
               <Flex alignItems={"center"} justifyContent={"center"} mt={"35%"}>
                 <Spinner size={"xl"} color="white" />
