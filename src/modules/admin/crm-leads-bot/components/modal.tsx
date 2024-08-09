@@ -147,8 +147,6 @@ const ModalComponent: React.FC = () => {
             display={
               minhaConta.nome === "BRUNO CEZAR PEREIRA DE SOUZA" ||
               minhaConta.nome ===
-                "ANNA CAROLINA BIGARELLI DE PAIVA / X-PARCEIRO RC CRED" ||
-              minhaConta.nome ===
                 "CAIO CASTRO PORFIRO DE ALMEIDA /X-PARCEIRO RC CRED" ||
               minhaConta.nome === "RAFAEL PEREIRA DOS SANTOS"
                 ? "flex"
